@@ -15,6 +15,9 @@ This project contains custom rules, configurations, and best practices for enhan
 
 ```
 cursor/
+├── .github/        # GitHub templates and workflows
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── SECURITY.md
 ├── rules/          # Cursor IDE rules and configurations
 ├── LICENSE         # MIT License
 └── README.md       # Project documentation
@@ -29,6 +32,17 @@ cursor/
 ## 📝 Rules Directory
 
 The `rules/` directory contains Cursor IDE-specific rules and configurations that help streamline your development workflow.
+
+### Available Rules
+
+- **[semantic-commits.md](rules/semantic-commits.md)**: Guidelines for writing semantic commit messages following conventional commit standards
+
+## 📋 GitHub Templates
+
+This project includes GitHub templates to standardize contributions:
+
+- **[Pull Request Template](.github/PULL_REQUEST_TEMPLATE.md)**: Standard template for pull requests with checklists and guidelines
+- **[Security Policy](.github/SECURITY.md)**: Security vulnerability reporting guidelines and policy
 
 ## 🤝 Contributing
 
