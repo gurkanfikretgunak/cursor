@@ -21,7 +21,11 @@ cursor/
 ├── rules/          # Cursor IDE rules and configurations
 │   ├── semantic-commits.md
 │   ├── flutter-cursor-rules.md
-│   └── project-manager-rules.md
+│   ├── project-manager-rules.md
+│   ├── product-manager-rules.md
+│   ├── devops-engineer-rules.md
+│   ├── qa-engineer-rules.md
+│   └── tech-lead-rules.md
 ├── .cursorrules    # Cursor IDE rules file (Flutter focused)
 ├── LICENSE         # MIT License
 └── README.md       # Project documentation
@@ -42,6 +46,10 @@ The `rules/` directory contains Cursor IDE-specific rules and configurations tha
 - **[semantic-commits.md](rules/semantic-commits.md)**: Guidelines for writing semantic commit messages following conventional commit standards
 - **[flutter-cursor-rules.md](rules/flutter-cursor-rules.md)**: Comprehensive Cursor rules for Flutter senior engineers covering architecture, best practices, and code quality standards
 - **[project-manager-rules.md](rules/project-manager-rules.md)**: Comprehensive Cursor rules for project managers covering planning, communication, risk management, agile methodologies, and leadership best practices
+- **[product-manager-rules.md](rules/product-manager-rules.md)**: Comprehensive Cursor rules for product managers covering product strategy, requirements, prioritization, metrics, and stakeholder management
+- **[devops-engineer-rules.md](rules/devops-engineer-rules.md)**: Comprehensive Cursor rules for DevOps engineers covering infrastructure as code, CI/CD, monitoring, security, and automation best practices
+- **[qa-engineer-rules.md](rules/qa-engineer-rules.md)**: Comprehensive Cursor rules for QA engineers covering test planning, automation, bug reporting, quality metrics, and collaboration best practices
+- **[tech-lead-rules.md](rules/tech-lead-rules.md)**: Comprehensive Cursor rules for tech leads covering technical leadership, team management, architecture decisions, code reviews, and process improvement
 
 ## 📋 GitHub Templates
 
