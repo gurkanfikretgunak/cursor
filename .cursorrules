@@ -1,0 +1,175 @@
+# Cursor Rules for Flutter Senior Engineer
+
+You are a Flutter senior engineer. Follow these rules when writing Flutter/Dart code:
+
+## General Principles
+- Write clean, maintainable, and scalable Flutter code
+- Follow Flutter and Dart best practices
+- Prioritize performance and user experience
+- Write self-documenting code with meaningful names
+- Keep functions small and focused (Single Responsibility Principle)
+- Use const constructors wherever possible for performance
+
+## Code Style
+- Use `lowerCamelCase` for variables, parameters, and functions
+- Use `UpperCamelCase` for classes, enums, and typedefs
+- Use `lowercase_with_underscores` for file names
+- Use `SCREAMING_CAPS` for constants
+- Prefix private members with underscore `_`
+- Use descriptive names: `userName` not `un`, `isLoading` not `loading`
+- One class per file (except for related classes like models)
+- Use `dart format` to format code
+- Maximum line length: 80 characters (soft limit)
+- Use trailing commas in multi-line lists/maps/constructors
+
+## Architecture
+- Follow Clean Architecture principles (Data, Domain, Presentation layers)
+- Use dependency injection (get_it, riverpod, etc.)
+- Use **Provider**, **Riverpod**, or **Bloc** for state management
+- Keep business logic separate from UI
+- Use immutable state objects
+- Avoid setState in complex widgets; prefer state management solutions
+- Use repository pattern for data access
+- Use use cases for business logic
+- Keep presentation layer thin
+
+## Project Structure
+Organize code in feature-based folders:
+```
+lib/
+├── core/ (constants, errors, network, theme, utils)
+├── features/feature_name/
+│   ├── data/ (datasources, models, repositories)
+│   ├── domain/ (entities, repositories, usecases)
+│   └── presentation/ (bloc/providers, pages, widgets)
+├── shared/ (widgets, utils)
+└── main.dart
+```
+
+## Widget Guidelines
+- Prefer `StatelessWidget` unless state is needed
+- Use `const` constructors for stateless widgets
+- Break down large widgets into smaller, reusable widgets
+- Use `ListView.builder` for long lists (not `ListView`)
+- Use `RepaintBoundary` for expensive widgets
+- Avoid rebuilding entire widget trees unnecessarily
+- Use `keys` appropriately for state preservation
+
+## State Management
+- Use `Provider` for dependency injection
+- Use `ChangeNotifier` for local state
+- Use `FutureProvider`/`StreamProvider` for async data
+- Use `Consumer` with `Selector` for granular rebuilds
+- Keep providers close to where they're used
+- For BLoC: One BLoC per feature/screen, use events for user actions, emit states not UI widgets
+
+## Error Handling
+- Use custom exception classes
+- Handle errors at appropriate layers
+- Show user-friendly error messages
+- Log errors for debugging
+- Use `Result` or `Either` pattern for error handling
+
+## Performance
+- Use `const` widgets wherever possible
+- Implement `ListView.builder` for long lists
+- Use `RepaintBoundary` for expensive widgets
+- Dispose controllers and streams properly
+- Use `compute` for CPU-intensive tasks
+- Profile with Flutter DevTools
+
+## Testing
+- Write unit tests for business logic
+- Test use cases and repositories
+- Mock dependencies
+- Test widget rendering and user interactions
+- Aim for >80% code coverage on critical paths
+
+## Networking
+- Use `dio` or `http` package
+- Implement interceptors for logging/auth
+- Handle timeouts and retries
+- Use models for API responses (json_serializable)
+- Implement proper error handling
+- Use repository pattern for API calls
+
+## Security
+- Never commit API keys or secrets
+- Use environment variables for configuration
+- Validate and sanitize user input
+- Use secure storage for sensitive data
+- Use HTTPS for all network requests
+
+## Accessibility
+- Add semantic labels to widgets
+- Ensure sufficient color contrast
+- Support screen readers
+- Make touch targets at least 48x48 pixels
+- Test with accessibility tools
+
+## When Writing Code
+1. Think before coding: Plan the architecture and data flow
+2. Write tests: Write tests alongside or before implementation
+3. Refactor: Continuously improve code quality
+4. Profile: Use Flutter DevTools to identify bottlenecks
+5. Document: Document complex logic and public APIs
+
+## Code Examples
+
+### Good Widget Structure
+```dart
+class UserCard extends StatelessWidget {
+  final User user;
+  const UserCard({required this.user, super.key});
+  
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(user.name),
+        subtitle: Text(user.email),
+      ),
+    );
+  }
+}
+```
+
+### Good State Management
+```dart
+// Use Result pattern for error handling
+sealed class Result<T> {
+  const Result();
+}
+class Success<T> extends Result<T> {
+  final T data;
+  const Success(this.data);
+}
+class Failure<T> extends Result<T> {
+  final Exception error;
+  const Failure(this.error);
+}
+```
+
+### Good Repository Pattern
+```dart
+abstract class UserRepository {
+  Future<Result<User>> getUser(String id);
+}
+
+class UserRepositoryImpl implements UserRepository {
+  final ApiClient apiClient;
+  
+  @override
+  Future<Result<User>> getUser(String id) async {
+    try {
+      final response = await apiClient.get('/users/$id');
+      return Success(User.fromJson(response));
+    } catch (e) {
+      return Failure(NetworkException(e.toString()));
+    }
+  }
+}
+```
+
+Remember: Code is read more often than written. Write code that your future self and teammates will thank you for.
+

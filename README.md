@@ -19,6 +19,9 @@ cursor/
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   └── SECURITY.md
 ├── rules/          # Cursor IDE rules and configurations
+│   ├── semantic-commits.md
+│   └── cursor-rules.md
+├── .cursorrules    # Cursor IDE rules file (Flutter focused)
 ├── LICENSE         # MIT License
 └── README.md       # Project documentation
 ```
@@ -36,6 +39,7 @@ The `rules/` directory contains Cursor IDE-specific rules and configurations tha
 ### Available Rules
 
 - **[semantic-commits.md](rules/semantic-commits.md)**: Guidelines for writing semantic commit messages following conventional commit standards
+- **[cursor-rules.md](rules/flutter-cursor-rules.md)**: Comprehensive Cursor rules for Flutter senior engineers covering architecture, best practices, and code quality standards
 
 ## 📋 GitHub Templates
 
