@@ -32,7 +32,8 @@ cursor/
 │   ├── product-manager-rules.md
 │   ├── devops-engineer-rules.md
 │   ├── qa-engineer-rules.md
-│   └── tech-lead-rules.md
+│   ├── tech-lead-rules.md
+│   └── ai-efficiency-rules.md
 ├── tools/          # Development tools
 │   └── cli/        # Gurkan CLI tool (npx gurkan)
 │       ├── bin/
@@ -95,6 +96,7 @@ The `rules/` directory contains Cursor IDE-specific rules and configurations tha
 - **[devops-engineer-rules.md](rules/devops-engineer-rules.md)**: Comprehensive Cursor rules for DevOps engineers covering infrastructure as code, CI/CD, monitoring, security, and automation best practices
 - **[qa-engineer-rules.md](rules/qa-engineer-rules.md)**: Comprehensive Cursor rules for QA engineers covering test planning, automation, bug reporting, quality metrics, and collaboration best practices
 - **[tech-lead-rules.md](rules/tech-lead-rules.md)**: Comprehensive Cursor rules for tech leads covering technical leadership, team management, architecture decisions, code reviews, and process improvement
+- **[ai-efficiency-rules.md](rules/ai-efficiency-rules.md)**: Comprehensive rules for efficient AI prompt usage and code execution, focusing on minimizing token consumption, direct code implementation over planning, and orchestrating time and process consumption efficiently
 
 ## 📋 GitHub Templates
 
