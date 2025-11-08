@@ -1,0 +1,36 @@
+{
+  "agent": {
+    "enabled": true,
+    "autonomousMode": false,
+    "maxFileChanges": 5,
+    "allowedCommands": [
+      "flutter",
+      "dart",
+      "flutter test",
+      "dart format",
+      "dart analyze",
+      "flutter pub get",
+      "flutter pub upgrade"
+    ],
+    "restrictedPaths": [
+      "build",
+      ".dart_tool",
+      "ios/Pods",
+      "android/.gradle",
+      ".git",
+      "node_modules",
+      "*.key",
+      "*.pem",
+      ".env"
+    ],
+    "preferredPatterns": [
+      "lib/**/*.dart",
+      "test/**/*.dart",
+      "integration_test/**/*.dart"
+    ],
+    "autoApply": false,
+    "requireConfirmation": true,
+    "description": "Flutter development agent configuration with conservative settings for code review"
+  }
+}
+
