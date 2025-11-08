@@ -10,21 +10,21 @@ const info = {
   githubUrl: 'https://github.com/gurkanfikretgunak',
   location: 'Türkiye',
   company: {
-    name: 'Masterfabric',
+    name: 'MasterFabric',
     website: 'https://masterfabric.co',
-    description: 'Masterfabric is a technology company focused on innovative mobile and web solutions. We specialize in building scalable applications using modern technologies like Flutter, providing end-to-end development services from concept to deployment.',
+    description: 'MasterFabric is a technology company focused on innovative mobile and web solutions. We specialize in building scalable applications using modern technologies like Flutter, providing end-to-end development services from concept to deployment.',
     email: 'gurkanfikretgunak@masterfabric.co'
   },
   repositories: [
     {
       name: 'masterfabric',
-      url: 'https://github.com/gurkanfikretgunak/masterfabric',
-      description: 'Main Masterfabric repository - Core platform and infrastructure'
+      url: 'https://github.com/masterfabric',
+      description: 'Main MasterFabric repositories - Core platform and infrastructure'
     },
     {
       name: 'masterfabric-mobile',
-      url: 'https://github.com/gurkanfikretgunak/masterfabric-mobile',
-      description: 'Masterfabric Mobile App - Flutter-based mobile application'
+      url: 'https://github.com/masterfabric-mobile',
+      description: 'MasterFabric Mobile App - Flutter-based mobile application'
     }
   ],
   skills: [
