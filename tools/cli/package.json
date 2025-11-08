@@ -1,0 +1,35 @@
+{
+  "name": "gurkan",
+  "version": "1.0.0",
+  "description": "CLI tool to get information about Gurkan Fikret Gunak",
+  "main": "index.js",
+  "bin": {
+    "gurkan": "./bin/gurkan.js"
+  },
+  "scripts": {
+    "start": "node bin/gurkan.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "gurkan",
+    "profile",
+    "developer",
+    "flutter",
+    "mobile"
+  ],
+  "author": "Gurkan Fikret Gunak",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gurkanfikretgunak/cursor.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "boxen": "^5.1.2"
+  }
+}
+

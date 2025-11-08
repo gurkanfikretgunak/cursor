@@ -33,6 +33,12 @@ cursor/
 │   ├── devops-engineer-rules.md
 │   ├── qa-engineer-rules.md
 │   └── tech-lead-rules.md
+├── tools/          # Development tools
+│   └── cli/        # Gurkan CLI tool (npx gurkan)
+│       ├── bin/
+│       │   └── gurkan.js
+│       ├── package.json
+│       └── README.md
 ├── .cursorrules    # Cursor IDE rules file (Flutter focused)
 ├── LICENSE         # MIT License
 └── README.md       # Project documentation
@@ -43,6 +49,27 @@ cursor/
 1. Clone this repository
 2. Explore the `rules/` directory for Cursor IDE configurations
 3. Customize the rules according to your development needs
+
+## 🛠️ Tools
+
+### CLI Tool
+
+A personal CLI tool that can be run via `npx`:
+
+```bash
+npx gurkan
+```
+
+This displays information about Gurkan Fikret Gunak including skills, contact information, and more.
+
+**Location**: [tools/cli/](tools/cli/)
+
+**Usage**:
+- `npx gurkan` - Display full information
+- `npx gurkan --skills` - Show skills only
+- `npx gurkan --contact` - Show contact info
+- `npx gurkan --github` - Open GitHub profile
+- `npx gurkan --help` - Show help
 
 ## 📚 Learning Resources
 
