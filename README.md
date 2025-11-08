@@ -18,6 +18,10 @@ cursor/
 ├── .github/        # GitHub templates and workflows
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   └── SECURITY.md
+├── learn/          # Learning resources and configurations
+│   └── mcp/        # Model Context Protocol configurations
+│       ├── flutter-mcp.json
+│       └── README.md
 ├── rules/          # Cursor IDE rules and configurations
 │   ├── semantic-commits.md
 │   ├── flutter-cursor-rules.md
@@ -36,6 +40,13 @@ cursor/
 1. Clone this repository
 2. Explore the `rules/` directory for Cursor IDE configurations
 3. Customize the rules according to your development needs
+
+## 📚 Learning Resources
+
+The `learn/` directory contains learning resources and configurations:
+
+- **[MCP Configuration](learn/mcp/)**: Model Context Protocol configurations for Flutter developers
+  - **[flutter-mcp.json](learn/mcp/flutter-mcp.json)**: MCP server configuration for Flutter development tools
 
 ## 📝 Rules Directory
 

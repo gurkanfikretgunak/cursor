@@ -1,0 +1,50 @@
+{
+  "mcpServers": {
+    "flutter-tools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-flutter"
+      ],
+      "env": {
+        "FLUTTER_SDK_PATH": "${FLUTTER_SDK_PATH:-}"
+      }
+    },
+    "dart-analyzer": {
+      "command": "dart",
+      "args": [
+        "run",
+        "mcp_server_dart"
+      ],
+      "env": {
+        "DART_SDK_PATH": "${DART_SDK_PATH:-}"
+      }
+    },
+    "pub-dev": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-pub-dev"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/gurkanfikretgunak/Documents/GitHub"
+      ]
+    }
+  }
+}
+
