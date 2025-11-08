@@ -8,7 +8,25 @@ const info = {
   role: 'Mobile Team Lead',
   github: 'gurkanfikretgunak',
   githubUrl: 'https://github.com/gurkanfikretgunak',
-  location: 'Turkey',
+  location: 'Türkiye',
+  company: {
+    name: 'Masterfabric',
+    website: 'https://masterfabric.co',
+    description: 'Masterfabric is a technology company focused on innovative mobile and web solutions. We specialize in building scalable applications using modern technologies like Flutter, providing end-to-end development services from concept to deployment.',
+    email: 'gurkanfikretgunak@masterfabric.co'
+  },
+  repositories: [
+    {
+      name: 'masterfabric',
+      url: 'https://github.com/gurkanfikretgunak/masterfabric',
+      description: 'Main Masterfabric repository - Core platform and infrastructure'
+    },
+    {
+      name: 'masterfabric-mobile',
+      url: 'https://github.com/gurkanfikretgunak/masterfabric-mobile',
+      description: 'Masterfabric Mobile App - Flutter-based mobile application'
+    }
+  ],
   skills: [
     'Flutter',
     'Dart',
@@ -17,31 +35,47 @@ const info = {
     'Project Management',
     'Clean Architecture',
     'State Management',
-    'CI/CD'
+    'CI/CD',
+    'RESTful APIs',
+    'Firebase',
+    'Git',
+    'Agile/Scrum'
   ],
   interests: [
     'Mobile App Development',
     'Flutter Ecosystem',
     'Software Architecture',
     'Team Leadership',
-    'Open Source'
+    'Open Source',
+    'Innovative Solutions',
+    'Cross-platform Development'
   ],
   contact: {
     github: 'https://github.com/gurkanfikretgunak',
-    email: 'gurkanfikretgunak@masterfabric.co'
+    email: 'gurkanfikretgunak@masterfabric.co',
+    company: 'https://masterfabric.co'
   }
 };
 
 function displayInfo() {
   const output = `
-${chalk.bold.cyan('╔════════════════════════════════════════╗')}
-${chalk.bold.cyan('║')}   ${chalk.bold.white('GURKAN FIKRET GUNAK - Mobile Team Lead')}  ${chalk.bold.cyan('║')}
-${chalk.bold.cyan('╚════════════════════════════════════════╝')}
+${chalk.bold.cyan('╔══════════════════════════════════════════╗')}
+${chalk.bold.cyan('║')}  ${chalk.bold.white('GURKAN FIKRET GUNAK - Mobile Team Lead')}  ${chalk.bold.cyan('║')}
+${chalk.bold.cyan('╚══════════════════════════════════════════╝')}
 
 ${chalk.bold('👤 Name:')}        ${info.name}
 ${chalk.bold('💼 Role:')}        ${info.role}
+${chalk.bold('🏢 Company:')}     ${chalk.magenta(info.company.name)} - ${chalk.cyan(info.company.website)}
 ${chalk.bold('📍 Location:')}    ${info.location}
 ${chalk.bold('🔗 GitHub:')}      ${chalk.cyan(info.githubUrl)}
+
+${chalk.bold('🏢 About Masterfabric:')}
+   ${chalk.dim(info.company.description)}
+
+${chalk.bold('📦 Key Repositories:')}
+${info.repositories.map(repo => `   ${chalk.green('•')} ${chalk.bold(repo.name)}`)
+  .join('\n')}
+   ${chalk.dim('Run --repos for details')}
 
 ${chalk.bold('🛠️  Skills:')}
 ${info.skills.map(skill => `   • ${chalk.green(skill)}`).join('\n')}
@@ -52,8 +86,9 @@ ${info.interests.map(interest => `   • ${chalk.yellow(interest)}`).join('\n')}
 ${chalk.bold('📧 Contact:')}
    ${chalk.cyan('GitHub:')} ${info.contact.github}
    ${chalk.cyan('Email:')}  ${info.contact.email}
+   ${chalk.cyan('Company:')} ${info.contact.company}
 
-${chalk.dim('────────────────────────────────────────')}
+${chalk.dim('───────────────────────────────────────────────────────────')}
 ${chalk.dim('Run with --help for more options')}
 `;
 
@@ -74,17 +109,22 @@ ${chalk.bold('Usage:')}
   npx gurkan [options]
 
 ${chalk.bold('Options:')}
-  --help, -h     Show this help message
-  --github, -g   Open GitHub profile
-  --skills, -s   Show skills only
-  --contact, -c  Show contact information only
-  --version, -v  Show version number
+  --help, -h           Show this help message
+  --github, -g         Open GitHub profile
+  --skills, -s         Show skills only
+  --contact, -c        Show contact information only
+  --repos, -r          Show repositories information
+  --projects, -p        Show projects and repositories
+  --masterfabric, -m   Show Masterfabric company information
+  --version, -v        Show version number
 
 ${chalk.bold('Examples:')}
   npx gurkan
   npx gurkan --skills
   npx gurkan --contact
   npx gurkan --github
+  npx gurkan --repos
+  npx gurkan --masterfabric
 `;
   console.log(help);
 }
@@ -101,7 +141,59 @@ function displayContact() {
   console.log(chalk.bold.cyan('\n📧 Contact Information:\n'));
   console.log(`   ${chalk.bold('GitHub:')} ${chalk.cyan(info.contact.github)}`);
   console.log(`   ${chalk.bold('Email:')}  ${chalk.yellow(info.contact.email)}`);
+  console.log(`   ${chalk.bold('Company:')} ${chalk.magenta(info.contact.company)}`);
   console.log('');
+}
+
+function displayRepositories() {
+  console.log(chalk.bold.cyan('\n📦 Repositories:\n'));
+  info.repositories.forEach(repo => {
+    console.log(`   ${chalk.bold.green(repo.name)}`);
+    console.log(`   ${chalk.dim('URL:')} ${chalk.cyan(repo.url)}`);
+    console.log(`   ${chalk.dim('Description:')} ${chalk.yellow(repo.description)}`);
+    console.log('');
+  });
+}
+
+function displayMasterfabric() {
+  const output = `
+${chalk.bold.magenta('╔═══════════════════════════════════════════════════════╗')}
+${chalk.bold.magenta('║')}              ${chalk.bold.white('MASTERFABRIC')}              ${chalk.bold.magenta('║')}
+${chalk.bold.magenta('╚═══════════════════════════════════════════════════════╝')}
+
+${chalk.bold('🏢 Company:')}     ${chalk.magenta(info.company.name)}
+${chalk.bold('🌐 Website:')}      ${chalk.cyan(info.company.website)}
+${chalk.bold('📧 Email:')}       ${chalk.yellow(info.contact.email)}
+
+${chalk.bold('📝 About:')}
+   ${info.company.description}
+
+${chalk.bold('👨‍💼 Team Lead:')}  ${info.name}
+${chalk.bold('💼 Role:')}        ${info.role}
+
+${chalk.bold('📦 Key Projects:')}
+${info.repositories.map(repo => 
+  `   ${chalk.green('•')} ${chalk.bold(repo.name)} - ${chalk.dim(repo.description)}`
+).join('\n')}
+
+${chalk.bold('🛠️  Technologies:')}
+   ${chalk.green('•')} Flutter & Dart
+   ${chalk.green('•')} Mobile App Development
+   ${chalk.green('•')} Cross-platform Solutions
+   ${chalk.green('•')} Modern Web Technologies
+   ${chalk.green('•')} Scalable Architecture
+
+${chalk.dim('───────────────────────────────────────────────────────────')}
+${chalk.dim('Visit:')} ${chalk.cyan(info.company.website)}
+`;
+
+  console.log(boxen(output, {
+    padding: 1,
+    margin: 1,
+    borderStyle: 'round',
+    borderColor: 'magenta',
+    backgroundColor: '#1a1a1a'
+  }));
 }
 
 function openGitHub() {
@@ -133,6 +225,10 @@ if (args.includes('--help') || args.includes('-h')) {
   displaySkills();
 } else if (args.includes('--contact') || args.includes('-c')) {
   displayContact();
+} else if (args.includes('--repos') || args.includes('-r') || args.includes('--projects') || args.includes('-p')) {
+  displayRepositories();
+} else if (args.includes('--masterfabric') || args.includes('-m')) {
+  displayMasterfabric();
 } else if (args.includes('--github') || args.includes('-g')) {
   openGitHub();
 } else if (args.includes('--version') || args.includes('-v')) {

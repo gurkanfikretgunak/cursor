@@ -68,6 +68,8 @@ This displays information about Gurkan Fikret Gunak including skills, contact in
 - `npx gurkan` - Display full information
 - `npx gurkan --skills` - Show skills only
 - `npx gurkan --contact` - Show contact info
+- `npx gurkan --repos` - Show repositories (masterfabric, masterfabric-mobile)
+- `npx gurkan --masterfabric` - Show Masterfabric company info
 - `npx gurkan --github` - Open GitHub profile
 - `npx gurkan --help` - Show help
 

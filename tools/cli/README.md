@@ -1,6 +1,6 @@
 # Gurkan CLI Tool
 
-A simple CLI tool to get information about Gurkan Fikret Gunak - Mobile Team Lead and Flutter Developer.
+A simple CLI tool to get information about Gurkan Fikret Gunak - Mobile Team Lead at Masterfabric and Flutter Developer.
 
 ## Installation
 
@@ -32,6 +32,12 @@ npx gurkan --skills
 # Show contact information
 npx gurkan --contact
 
+# Show repositories
+npx gurkan --repos
+
+# Show Masterfabric company information
+npx gurkan --masterfabric
+
 # Open GitHub profile
 npx gurkan --github
 
@@ -45,12 +51,32 @@ npx gurkan --version
 - `--github, -g` - Open GitHub profile in browser
 - `--skills, -s` - Display skills only
 - `--contact, -c` - Display contact information only
+- `--repos, -r` - Show repositories information (masterfabric, masterfabric-mobile)
+- `--projects, -p` - Alias for --repos
+- `--masterfabric, -m` - Show Masterfabric company information
 - `--version, -v` - Show version number
+
+## Features
+
+### Company Information
+- **Masterfabric**: Technology company focused on innovative mobile and web solutions
+- Specializes in Flutter-based mobile applications
+- End-to-end development services
+
+### Repositories
+- **masterfabric**: Main Masterfabric repository - Core platform and infrastructure
+- **masterfabric-mobile**: Masterfabric Mobile App - Flutter-based mobile application
+
+### Personal Information
+- Name, role, location
+- Skills and technologies
+- Interests and expertise
+- Contact information
 
 ## Examples
 
 ```bash
-# Basic usage
+# Basic usage - shows all information
 npx gurkan
 
 # Quick skills check
@@ -58,6 +84,12 @@ npx gurkan --skills
 
 # Get contact info
 npx gurkan --contact
+
+# View repositories
+npx gurkan --repos
+
+# Learn about Masterfabric
+npx gurkan --masterfabric
 ```
 
 ## Publishing to npm
@@ -122,5 +154,5 @@ MIT
 
 ## Author
 
-Gurkan Fikret Gunak
+Gurkan Fikret Gunak - Mobile Team Lead at Masterfabric
 
