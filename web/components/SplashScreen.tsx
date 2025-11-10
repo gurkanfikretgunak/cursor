@@ -1,35 +1,34 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import MatrixRain from './MatrixRain'
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true)
   const [isFading, setIsFading] = useState(false)
-  const [loadingDots, setLoadingDots] = useState('')
 
-  useEffect(() => {
-    // Matrix-style loading dots animation
-    const dotInterval = setInterval(() => {
-      setLoadingDots((prev) => {
-        if (prev.length >= 3) return ''
-        return prev + '.'
-      })
-    }, 300)
-
-    const fadeTimer = setTimeout(() => {
-      setIsFading(true)
-    }, 2000) // Start fading after 2 seconds
-
-    const hideTimer = setTimeout(() => {
+  const handleAnimationComplete = useCallback(() => {
+    // Start fading out when animation completes
+    setIsFading(true)
+    
+    // Hide completely after fade transition
+    setTimeout(() => {
       setIsVisible(false)
-    }, 2500) // Hide completely after 2.5 seconds
+    }, 500) // Match the fade transition duration
+  }, [])
+
+  // Fallback: If animation doesn't complete, fade after max time
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (isVisible && !isFading) {
+        handleAnimationComplete()
+      }
+    }, 3000) // Max 3 seconds fallback
 
     return () => {
-      clearInterval(dotInterval)
-      clearTimeout(fadeTimer)
-      clearTimeout(hideTimer)
+      clearTimeout(fallbackTimer)
     }
-  }, [])
+  }, [isVisible, isFading, handleAnimationComplete])
 
   if (!isVisible) return null
 
@@ -88,24 +87,12 @@ export default function SplashScreen() {
         >
           Cursor Ambassador
         </p>
-        <div
-          style={{
-            fontSize: 'clamp(0.9rem, 3vw, 1rem)',
-            color: '#00d4ff',
-            fontFamily: 'var(--font-jetbrains-mono), monospace',
-            letterSpacing: '0.1em',
-            minHeight: '1.5rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-          }}
-        >
-          <span style={{ color: '#00d4ff' }}>LOADING{loadingDots}</span>
-          <span className="matrix-cursor" />
-        </div>
+        <MatrixRain 
+          text="LOADING" 
+          columns={10} 
+          onAnimationComplete={handleAnimationComplete}
+        />
       </div>
     </div>
   )
 }
-
