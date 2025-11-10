@@ -11,6 +11,16 @@ A curated collection of Cursor IDE configurations, rules, and developer experien
 
 This project contains custom rules, configurations, and best practices for enhancing the development experience in Cursor IDE. It serves as a personal repository for Cursor-specific settings and workflows.
 
+## 🚀 Projects Built with Cursor
+
+These projects were developed and built using Cursor IDE, showcasing the power of AI-assisted development:
+
+- **[Share Your Note](https://github.com/gurkanfikretgunak/share-your-note)**: A real-time, Kahoot-like web application where attendees can join events managed by hosts to share notes, images, and emotions in real-time. Built with Next.js, Supabase, and TypeScript.
+
+- **[Developer Candidate](https://github.com/gurkanfikretgunak/developer-candicate)**: A project showcasing developer candidate evaluation and assessment tools. Built with modern web technologies.
+
+These projects demonstrate how Cursor IDE can accelerate development workflows and help create production-ready applications efficiently.
+
 ## 📁 Project Structure
 
 ```
@@ -132,7 +142,7 @@ The `web/` directory contains a Next.js web application that displays this proje
   - Redirect page with 3-second countdown for external links
   - Mobile-optimized responsive layout
   - Markdown content rendering
-  - Splash screen animation
+  - Splash screen animation with Matrix-style effects
 
 **Location**: [web/](web/)
 
