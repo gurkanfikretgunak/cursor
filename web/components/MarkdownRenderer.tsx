@@ -2,6 +2,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import * as Sentry from '@sentry/nextjs'
 
 const GITHUB_REPO_URL = 'https://github.com/gurkanfikretgunak/cursor/blob/main'
 
@@ -91,11 +92,38 @@ export function getReadmeContent(): string {
         return content
       }
     } catch (error) {
+      // Log to Sentry if available and configured
+      if (error instanceof Error && 
+          process.env.NEXT_PUBLIC_SENTRY_DSN && 
+          process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
+        Sentry.captureException(error, {
+          tags: {
+            component: 'MarkdownRenderer',
+            action: 'readReadme',
+          },
+          extra: {
+            filePath,
+          },
+        })
+      }
       // Continue to next path
       continue
     }
   }
 
+  const errorMessage = 'Could not find README.md in any expected location'
+  
+  // Log to Sentry if available and configured
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
+      process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
+    Sentry.captureMessage(errorMessage, {
+      level: 'error',
+      tags: {
+        component: 'MarkdownRenderer',
+      },
+    })
+  }
+  
   console.error('Error: Could not find README.md in any expected location')
   return '# Error\n\nCould not load README.md content. Please ensure README.md exists in the project root.'
 }

@@ -143,10 +143,13 @@ The `web/` directory contains a Next.js web application that displays this proje
   - Mobile-optimized responsive layout
   - Markdown content rendering
   - Splash screen animation with Matrix-style effects
+  - **Error Tracking & Analytics**: Integrated with Sentry for error monitoring and performance analytics
 
 **Location**: [web/](web/)
 
 **Deployment**: Configured for Vercel deployment via `vercel.json`
+
+**Monitoring**: Error tracking and analytics powered by [Sentry](https://sentry.io)
 
 ## 🤝 Contributing
 

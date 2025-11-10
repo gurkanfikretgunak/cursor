@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, Suspense } from 'react'
+import { useEffect, useState, Suspense, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import BlurTransition from '@/components/BlurTransition'
 
@@ -9,6 +9,8 @@ function RedirectContent() {
   const router = useRouter()
   const [countdown, setCountdown] = useState(3)
   const destination = searchParams.get('url') || '/'
+  const redirectStartTime = useRef<number>(Date.now())
+  const redirectType = useRef<'auto' | 'manual'>('auto')
 
   useEffect(() => {
     if (!destination || destination === '/') {
@@ -16,10 +18,79 @@ function RedirectContent() {
       return
     }
 
+    // Track redirect start with Sentry
+    if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
+        process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
+      import('@sentry/nextjs').then((Sentry) => {
+        try {
+          const url = new URL(destination)
+          Sentry.setTag('redirect_domain', url.hostname)
+          Sentry.setTag('redirect_protocol', url.protocol.replace(':', ''))
+          Sentry.setContext('redirect', {
+            destination,
+            start_time: new Date().toISOString(),
+            referrer: typeof window !== 'undefined' ? document.referrer : 'unknown',
+            user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
+          })
+          
+          Sentry.captureMessage('Redirect initiated', {
+            level: 'info',
+            tags: {
+              component: 'RedirectPage',
+              action: 'redirect_start',
+            },
+            extra: {
+              destination,
+              referrer: typeof window !== 'undefined' ? document.referrer : 'unknown',
+            },
+          })
+        } catch (error) {
+          // Invalid URL, still track but without domain parsing
+          if (error instanceof Error) {
+            Sentry.setContext('redirect', {
+              destination,
+              start_time: new Date().toISOString(),
+              error: error.message,
+            })
+          }
+        }
+      })
+    }
+
     const interval = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(interval)
+          
+          // Track redirect completion with timing
+          if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
+              process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
+            import('@sentry/nextjs').then((Sentry) => {
+              const duration = Date.now() - redirectStartTime.current
+              
+              Sentry.setTag('redirect_type', redirectType.current)
+              Sentry.setContext('redirect_completion', {
+                destination,
+                duration_ms: duration,
+                countdown_completed: true,
+                completion_time: new Date().toISOString(),
+              })
+              
+              Sentry.captureMessage('Redirect completed (auto)', {
+                level: 'info',
+                tags: {
+                  component: 'RedirectPage',
+                  action: 'redirect_complete',
+                  redirect_type: 'auto',
+                },
+                extra: {
+                  destination,
+                  duration_ms: duration,
+                },
+              })
+            })
+          }
+          
           window.location.href = destination
           return 0
         }
@@ -29,6 +100,39 @@ function RedirectContent() {
 
     return () => clearInterval(interval)
   }, [destination, router])
+
+  // Track manual link click
+  const handleManualClick = () => {
+    redirectType.current = 'manual'
+    const duration = Date.now() - redirectStartTime.current
+    
+    if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
+        process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
+      import('@sentry/nextjs').then((Sentry) => {
+        Sentry.setTag('redirect_type', 'manual')
+        Sentry.setContext('redirect_completion', {
+          destination,
+          duration_ms: duration,
+          countdown_value: countdown,
+          completion_time: new Date().toISOString(),
+        })
+        
+        Sentry.captureMessage('Redirect completed (manual)', {
+          level: 'info',
+          tags: {
+            component: 'RedirectPage',
+            action: 'redirect_complete',
+            redirect_type: 'manual',
+          },
+          extra: {
+            destination,
+            duration_ms: duration,
+            countdown_at_click: countdown,
+          },
+        })
+      })
+    }
+  }
 
   return (
     <div
@@ -109,6 +213,7 @@ function RedirectContent() {
             Click{' '}
             <a
               href={destination}
+              onClick={handleManualClick}
               style={{
                 color: '#0066cc',
                 textDecoration: 'underline',

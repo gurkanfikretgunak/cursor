@@ -40,6 +40,32 @@ export default function LinkInterceptor({ children }: LinkInterceptorProps) {
         if (href.startsWith('http://') || href.startsWith('https://')) {
           e.preventDefault()
           e.stopPropagation()
+          
+          // Track link click with Sentry
+          if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
+              process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
+            import('@sentry/nextjs').then((Sentry) => {
+              Sentry.setTag('link_type', 'external')
+              Sentry.setContext('link_click', {
+                href,
+                source_page: pathname,
+                timestamp: new Date().toISOString(),
+              })
+              
+              Sentry.captureMessage('External link clicked', {
+                level: 'info',
+                tags: {
+                  component: 'LinkInterceptor',
+                  action: 'external_link_click',
+                },
+                extra: {
+                  destination: href,
+                  source: pathname,
+                },
+              })
+            })
+          }
+          
           router.push(`/redirect?url=${encodeURIComponent(href)}`)
           return
         }
