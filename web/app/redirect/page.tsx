@@ -57,10 +57,15 @@ function RedirectContent() {
       })
     }
 
-    const interval = setInterval(() => {
+    let intervalId: NodeJS.Timeout | null = null
+    
+    intervalId = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          clearInterval(interval)
+          if (intervalId) {
+            clearInterval(intervalId)
+            intervalId = null
+          }
           
           // Track redirect completion with timing
           if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
@@ -91,14 +96,21 @@ function RedirectContent() {
             })
           }
           
-          window.location.href = destination
+          // Small delay before redirect for smoother transition
+          setTimeout(() => {
+            window.location.href = destination
+          }, 100)
           return 0
         }
         return prev - 1
       })
     }, 1000)
 
-    return () => clearInterval(interval)
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+      }
+    }
   }, [destination, router])
 
   // Track manual link click
@@ -149,9 +161,10 @@ function RedirectContent() {
         backgroundColor: '#fff',
         zIndex: 10000,
         padding: '1rem',
+        animation: 'fadeIn 300ms ease-in',
       }}
     >
-      <BlurTransition duration={800} delay={0} blurAmount={20}>
+      <BlurTransition duration={600} delay={0} blurAmount={20}>
         <div
           style={{
             textAlign: 'center',

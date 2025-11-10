@@ -76,13 +76,14 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
 
 export async function getReadmeContent(): Promise<string> {
   // Try multiple paths to find README.md
+  // Prioritize root README.md (source of truth) over web/README.md (copy)
   const possiblePaths = [
-    // In production build (after prebuild copy)
-    join(process.cwd(), 'README.md'),
-    // From parent directory (root of repo)
+    // From parent directory (root of repo) - prioritize this as source of truth
     join(process.cwd(), '..', 'README.md'),
     // Alternative parent path
     join(process.cwd(), '../README.md'),
+    // In production build (after prebuild copy) - fallback only
+    join(process.cwd(), 'README.md'),
   ]
 
   for (const filePath of possiblePaths) {

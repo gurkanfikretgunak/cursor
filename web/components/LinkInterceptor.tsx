@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { ReactNode } from 'react'
 
@@ -11,6 +11,12 @@ interface LinkInterceptorProps {
 export default function LinkInterceptor({ children }: LinkInterceptorProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const [isNavigating, setIsNavigating] = useState(false)
+
+  useEffect(() => {
+    // Reset navigation state when pathname changes
+    setIsNavigating(false)
+  }, [pathname])
 
   useEffect(() => {
     // Don't intercept on the redirect page itself
@@ -41,6 +47,9 @@ export default function LinkInterceptor({ children }: LinkInterceptorProps) {
           e.preventDefault()
           e.stopPropagation()
           
+          // Add fade-out animation before navigation
+          setIsNavigating(true)
+          
           // Track link click with Sentry
           if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
               process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
@@ -66,7 +75,10 @@ export default function LinkInterceptor({ children }: LinkInterceptorProps) {
             })
           }
           
-          router.push(`/redirect?url=${encodeURIComponent(href)}`)
+          // Small delay for fade-out animation, then navigate
+          setTimeout(() => {
+            router.push(`/redirect?url=${encodeURIComponent(href)}`)
+          }, 150)
           return
         }
 
@@ -81,7 +93,10 @@ export default function LinkInterceptor({ children }: LinkInterceptorProps) {
           if (targetUrl.pathname !== currentUrl.pathname) {
             e.preventDefault()
             e.stopPropagation()
-            router.push(`/redirect?url=${encodeURIComponent(targetUrl.href)}`)
+            setIsNavigating(true)
+            setTimeout(() => {
+              router.push(`/redirect?url=${encodeURIComponent(targetUrl.href)}`)
+            }, 150)
           }
         } catch {
           // If URL parsing fails, let it navigate normally
@@ -96,6 +111,16 @@ export default function LinkInterceptor({ children }: LinkInterceptorProps) {
     }
   }, [router, pathname])
 
-  return <>{children}</>
+  return (
+    <div
+      style={{
+        opacity: isNavigating ? 0.3 : 1,
+        transition: 'opacity 150ms ease-out',
+        pointerEvents: isNavigating ? 'none' : 'auto',
+      }}
+    >
+      {children}
+    </div>
+  )
 }
 
