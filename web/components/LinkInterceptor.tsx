@@ -1,0 +1,75 @@
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import { ReactNode } from 'react'
+
+interface LinkInterceptorProps {
+  children: ReactNode
+}
+
+export default function LinkInterceptor({ children }: LinkInterceptorProps) {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  useEffect(() => {
+    // Don't intercept on the redirect page itself
+    if (pathname === '/redirect') {
+      return
+    }
+
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      const link = target.closest('a')
+
+      if (link && link.href) {
+        const href = link.getAttribute('href')
+        
+        // Skip if it's an anchor link, mailto, tel, or javascript
+        if (
+          !href ||
+          href.startsWith('#') ||
+          href.startsWith('mailto:') ||
+          href.startsWith('tel:') ||
+          href.startsWith('javascript:')
+        ) {
+          return
+        }
+
+        // Intercept all external links (http/https)
+        if (href.startsWith('http://') || href.startsWith('https://')) {
+          e.preventDefault()
+          e.stopPropagation()
+          router.push(`/redirect?url=${encodeURIComponent(href)}`)
+          return
+        }
+
+        // For relative links, you can also intercept if needed
+        // Uncomment the following to intercept ALL links:
+        /*
+        try {
+          const currentUrl = new URL(window.location.href)
+          const targetUrl = new URL(href, currentUrl.origin)
+          
+          // Only intercept if it's going to a different page
+          if (targetUrl.pathname !== currentUrl.pathname) {
+            e.preventDefault()
+            e.stopPropagation()
+            router.push(`/redirect?url=${encodeURIComponent(targetUrl.href)}`)
+          }
+        } catch {
+          // If URL parsing fails, let it navigate normally
+        }
+        */
+      }
+    }
+
+    document.addEventListener('click', handleClick, true)
+    return () => {
+      document.removeEventListener('click', handleClick, true)
+    }
+  }, [router, pathname])
+
+  return <>{children}</>
+}
+
