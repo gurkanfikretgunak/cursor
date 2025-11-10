@@ -75,11 +75,18 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
 
 export function getReadmeContent(): string {
   try {
-    const filePath = join(process.cwd(), '..', 'README.md')
+    // Try reading from current directory (after prebuild copy)
+    const filePath = join(process.cwd(), 'README.md')
     return readFileSync(filePath, 'utf-8')
   } catch (error) {
-    console.error('Error reading README.md:', error)
-    return '# Error\n\nCould not load README.md content.'
+    // Fallback: try reading from parent directory
+    try {
+      const altPath = join(process.cwd(), '..', 'README.md')
+      return readFileSync(altPath, 'utf-8')
+    } catch (altError) {
+      console.error('Error reading README.md:', error, altError)
+      return '# Error\n\nCould not load README.md content.'
+    }
   }
 }
 
