@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "cp ../README.md ./README.md || echo 'README.md copy skipped'",
-    "prebuild": "cp ../README.md ./README.md || echo 'README.md copy skipped'",
+    "predev": "node scripts/copy-readme.js",
+    "prebuild": "node scripts/copy-readme.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
