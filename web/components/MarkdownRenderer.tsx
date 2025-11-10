@@ -74,19 +74,28 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
 }
 
 export function getReadmeContent(): string {
-  try {
-    // Try reading from current directory (after prebuild copy)
-    const filePath = join(process.cwd(), 'README.md')
-    return readFileSync(filePath, 'utf-8')
-  } catch (error) {
-    // Fallback: try reading from parent directory
+  // Try multiple paths to find README.md
+  const possiblePaths = [
+    // In production build (after prebuild copy)
+    join(process.cwd(), 'README.md'),
+    // From parent directory (root of repo)
+    join(process.cwd(), '..', 'README.md'),
+    // Alternative parent path
+    join(process.cwd(), '../README.md'),
+  ]
+
+  for (const filePath of possiblePaths) {
     try {
-      const altPath = join(process.cwd(), '..', 'README.md')
-      return readFileSync(altPath, 'utf-8')
-    } catch (altError) {
-      console.error('Error reading README.md:', error, altError)
-      return '# Error\n\nCould not load README.md content.'
+      const content = readFileSync(filePath, 'utf-8')
+      if (content && content.trim().length > 0) {
+        return content
+      }
+    } catch (error) {
+      // Continue to next path
+      continue
     }
   }
-}
 
+  console.error('Error: Could not find README.md in any expected location')
+  return '# Error\n\nCould not load README.md content. Please ensure README.md exists in the project root.'
+}
