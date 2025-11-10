@@ -15,12 +15,10 @@ This project contains custom rules, configurations, and best practices for enhan
 
 ```
 cursor/
-├── .github/        # GitHub templates and workflows
-│   ├── PULL_REQUEST_TEMPLATE.md
-│   └── SECURITY.md
 ├── learn/          # Learning resources and configurations
 │   ├── mcp/        # Model Context Protocol configurations
 │   │   ├── flutter-mcp.json
+│   │   ├── mcp-servers.md
 │   │   └── README.md
 │   └── agent/      # Agent configurations
 │       ├── flutter-agent.json
@@ -39,8 +37,27 @@ cursor/
 │       ├── bin/
 │       │   └── gurkan.js
 │       ├── package.json
+│       ├── PUBLISH.md
 │       └── README.md
+├── web/            # Next.js web application
+│   ├── app/        # Next.js app directory
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── redirect/
+│   │       └── page.tsx
+│   ├── components/ # React components
+│   │   ├── BlurTransition.tsx
+│   │   ├── Footer.tsx
+│   │   ├── LinkInterceptor.tsx
+│   │   ├── MarkdownRenderer.tsx
+│   │   └── SplashScreen.tsx
+│   ├── package.json
+│   ├── next.config.js
+│   ├── tsconfig.json
+│   └── README.md
 ├── .cursorrules    # Cursor IDE rules file (Flutter focused)
+├── vercel.json     # Vercel deployment configuration
 ├── LICENSE         # MIT License
 └── README.md       # Project documentation
 ```
@@ -64,6 +81,10 @@ npx gurkan
 This displays information about Gurkan Fikret Gunak including skills, contact information, and more.
 
 **Location**: [tools/cli/](tools/cli/)
+
+**Documentation**:
+- **[README.md](tools/cli/README.md)**: CLI tool usage and documentation
+- **[PUBLISH.md](tools/cli/PUBLISH.md)**: Publishing guide for npm package
 
 **Usage**:
 - `npx gurkan` - Display full information
@@ -100,12 +121,22 @@ The `rules/` directory contains Cursor IDE-specific rules and configurations tha
 - **[tech-lead-rules.md](rules/tech-lead-rules.md)**: Comprehensive Cursor rules for tech leads covering technical leadership, team management, architecture decisions, code reviews, and process improvement
 - **[ai-efficiency-rules.md](rules/ai-efficiency-rules.md)**: Comprehensive rules for efficient AI prompt usage and code execution, focusing on minimizing token consumption, direct code implementation over planning, and orchestrating time and process consumption efficiently
 
-## 📋 GitHub Templates
+## 🌐 Web Application
 
-This project includes GitHub templates to standardize contributions:
+The `web/` directory contains a Next.js web application that displays this project's content:
 
-- **[Pull Request Template](.github/PULL_REQUEST_TEMPLATE.md)**: Standard template for pull requests with checklists and guidelines
-- **[Security Policy](.github/SECURITY.md)**: Security vulnerability reporting guidelines and policy
+- **Framework**: Next.js 14+ with App Router
+- **Styling**: Custom CSS with mobile-first responsive design
+- **Features**:
+  - Pixel-style blur-to-clear page transitions
+  - Redirect page with 3-second countdown for external links
+  - Mobile-optimized responsive layout
+  - Markdown content rendering
+  - Splash screen animation
+
+**Location**: [web/](web/)
+
+**Deployment**: Configured for Vercel deployment via `vercel.json`
 
 ## 🤝 Contributing
 
