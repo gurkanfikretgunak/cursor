@@ -79,7 +79,9 @@ This displays information about Gurkan Fikret Gunak including skills, contact in
 The `learn/` directory contains learning resources and configurations:
 
 - **[MCP Configuration](learn/mcp/)**: Model Context Protocol configurations for Flutter developers
+  - **[mcp-servers.md](learn/mcp/mcp-servers.md)**: Comprehensive guide to MCP servers in Cursor IDE (based on [official Cursor documentation](https://cursor.com/docs/context/mcp#servers))
   - **[flutter-mcp.json](learn/mcp/flutter-mcp.json)**: MCP server configuration for Flutter development tools
+  - **[README.md](learn/mcp/README.md)**: MCP setup guide for Flutter developers
 - **[Agent Configuration](learn/agent/)**: Agent configurations and settings for Cursor IDE
   - **[flutter-agent.json](learn/agent/flutter-agent.json)**: Flutter development agent configuration
 

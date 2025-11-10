@@ -76,8 +76,9 @@ You can customize the configuration by:
 
 ## Resources
 
+- **[MCP Servers Guide](mcp-servers.md)**: Comprehensive guide to MCP servers in Cursor IDE based on [official Cursor documentation](https://cursor.com/docs/context/mcp#servers)
 - [Model Context Protocol Documentation](https://modelcontextprotocol.io/)
-- [Cursor MCP Documentation](https://cursor.sh/docs/mcp)
+- [Cursor MCP Documentation](https://cursor.com/docs/context/mcp#servers)
 - [Flutter Documentation](https://flutter.dev/docs)
 
 ## Notes
