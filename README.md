@@ -15,9 +15,23 @@ This project contains custom rules, configurations, and best practices for enhan
 
 These projects were developed and built using Cursor IDE, showcasing the power of AI-assisted development:
 
-- **[Share Your Note](https://github.com/gurkanfikretgunak/share-your-note)**: A real-time, Kahoot-like web application where attendees can join events managed by hosts to share notes, images, and emotions in real-time. Built with Next.js, Supabase, and TypeScript.
+### Share Your Note
 
-- **[Developer Candidate](https://github.com/gurkanfikretgunak/developer-candicate)**: A project showcasing developer candidate evaluation and assessment tools. Built with modern web technologies.
+**Live:** [share-your-note.vercel.app](https://share-your-note.vercel.app/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/share-your-note)
+
+A real-time event participation platform where attendees can join events managed by hosts to share notes, images, and emotions in real-time. Features include QR code-based event joining, host dashboard for event management, and live interaction capabilities.
+
+**Tech Stack:** Next.js, Supabase, TypeScript
+
+### Developer Candidate
+
+**Live:** [developer-candicate.vercel.app](https://developer-candicate.vercel.app/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/developer-candicate)
+
+An open-source hiring platform that standardizes the hiring process by measuring technical and behavioral competencies. Features include standardized evaluation methodology, department-based technical criteria, a 4-step detailed assessment process, and data-driven hiring decisions.
+
+**Tech Stack:** Modern web technologies
+
+---
 
 These projects demonstrate how Cursor IDE can accelerate development workflows and help create production-ready applications efficiently.
 
