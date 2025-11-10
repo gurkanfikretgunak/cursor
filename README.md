@@ -39,15 +39,15 @@ These projects demonstrate how Cursor IDE can accelerate development workflows a
 
 ```
 cursor/
-├── learn/          # Learning resources and configurations
-│   ├── mcp/        # Model Context Protocol configurations
+├── learn/                    # Learning resources and configurations
+│   ├── mcp/                  # Model Context Protocol configurations
 │   │   ├── flutter-mcp.json
 │   │   ├── mcp-servers.md
 │   │   └── README.md
-│   └── agent/      # Agent configurations
+│   └── agent/                # Agent configurations
 │       ├── flutter-agent.json
 │       └── README.md
-├── rules/          # Cursor IDE rules and configurations
+├── rules/                    # Cursor IDE rules and configurations
 │   ├── semantic-commits.md
 │   ├── flutter-cursor-rules.md
 │   ├── project-manager-rules.md
@@ -56,34 +56,51 @@ cursor/
 │   ├── qa-engineer-rules.md
 │   ├── tech-lead-rules.md
 │   └── ai-efficiency-rules.md
-├── tools/          # Development tools
-│   └── cli/        # Gurkan CLI tool (npx gurkan)
+├── tools/                    # Development tools
+│   └── cli/                  # Gurkan CLI tool (npx gurkan)
 │       ├── bin/
 │       │   └── gurkan.js
 │       ├── package.json
 │       ├── PUBLISH.md
 │       └── README.md
-├── web/            # Next.js web application
-│   ├── app/        # Next.js app directory
+├── web/                      # Next.js web application
+│   ├── app/                  # Next.js app directory
+│   │   ├── error.tsx
+│   │   ├── global-error.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   ├── page.tsx
-│   │   └── redirect/
-│   │       └── page.tsx
-│   ├── components/ # React components
+│   │   ├── redirect/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components/           # React components
 │   │   ├── BlurTransition.tsx
 │   │   ├── Footer.tsx
 │   │   ├── LinkInterceptor.tsx
 │   │   ├── MarkdownRenderer.tsx
+│   │   ├── MatrixRain.tsx
 │   │   └── SplashScreen.tsx
+│   ├── lib/                  # Utility libraries
+│   │   └── git.ts            # Git commit information utilities
+│   ├── scripts/              # Build scripts
+│   │   └── copy-readme.js   # Script to copy README.md for build
+│   ├── public/               # Static assets
+│   │   └── images/          # Image assets
 │   ├── package.json
 │   ├── next.config.js
 │   ├── tsconfig.json
+│   ├── instrumentation.ts
+│   ├── sentry.client.config.ts
+│   ├── sentry.edge.config.ts
+│   ├── sentry.server.config.ts
+│   ├── SENTRY_SETUP.md
 │   └── README.md
-├── .cursorrules    # Cursor IDE rules file (Flutter focused)
-├── vercel.json     # Vercel deployment configuration
-├── LICENSE         # MIT License
-└── README.md       # Project documentation
+├── .cursorrules.example        # Cursor IDE rules file example (Flutter focused)
+├── vercel.json                  # Vercel deployment configuration
+├── LICENSE                      # MIT License
+└── README.md                    # Project documentation
 ```
 
 ## 🚀 Getting Started
