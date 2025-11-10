@@ -5,8 +5,8 @@ import BlurTransition from '@/components/BlurTransition'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0 // Disable caching
 
-export default function Home() {
-  const readmeContent = getReadmeContent()
+export default async function Home() {
+  const readmeContent = await getReadmeContent()
 
   return (
     <main>

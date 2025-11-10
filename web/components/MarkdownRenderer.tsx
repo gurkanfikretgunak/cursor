@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { readFileSync } from 'fs'
+import { promises as fs } from 'fs'
 import { join } from 'path'
 import * as Sentry from '@sentry/nextjs'
 
@@ -74,7 +74,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   )
 }
 
-export function getReadmeContent(): string {
+export async function getReadmeContent(): Promise<string> {
   // Try multiple paths to find README.md
   const possiblePaths = [
     // In production build (after prebuild copy)
@@ -87,7 +87,7 @@ export function getReadmeContent(): string {
 
   for (const filePath of possiblePaths) {
     try {
-      const content = readFileSync(filePath, 'utf-8')
+      const content = await fs.readFile(filePath, 'utf-8')
       if (content && content.trim().length > 0) {
         return content
       }
