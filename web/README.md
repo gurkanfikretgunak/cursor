@@ -31,6 +31,30 @@ An open-source hiring platform that standardizes the hiring process by measuring
 
 **Tech Stack:** Modern web technologies
 
+### MasterFabric Welcome
+
+**Live:** [welcome.masterfabric.co](https://welcome.masterfabric.co/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/welcome)
+
+An open-source developer onboarding and internal ops portal that consolidates developer onboarding, worklogs, event management, and support into one place. Features include GitHub-based authentication, dynamic onboarding checklists, worklog tracking, internal event management, integrated support ticket system, and company email verification (OTP).
+
+**Tech Stack:** Next.js 15, React 19, TypeScript, Supabase, Tailwind CSS, Sentry
+
+### Developer Manifesto
+
+**Live:** [manifesto.masterfabric.co](https://manifesto.masterfabric.co/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/manifesto)
+
+A minimalist Next.js website for publishing developer manifestos with clean typography, interactive 3D animations, and GitHub-based signature system. Features include Markdown-driven content, JetBrains Mono typography, interactive Three.js animations with mouse interactions, GitHub authentication, dynamic signature system with Supabase, public RESTful API, and SEO optimization.
+
+**Tech Stack:** Next.js 15+, TypeScript, TailwindCSS, Three.js with React Three Fiber, Supabase, Gray Matter, Remark
+
+### PathBunny
+
+**Source:** [GitHub](https://github.com/gurkanfikretgunak/pathbunny)
+
+A lightning-fast CLI tool for creating directory shortcuts in your terminal. Jump to any directory instantly with memorable shortcuts instead of typing long paths. Features include quick navigation with aliases, persistent shortcuts storage, cross-platform support (macOS/Linux), and easy installation via npm.
+
+**Tech Stack:** TypeScript, Node.js, Shell Scripts
+
 ---
 
 These projects demonstrate how Cursor IDE can accelerate development workflows and help create production-ready applications efficiently.
@@ -39,15 +63,15 @@ These projects demonstrate how Cursor IDE can accelerate development workflows a
 
 ```
 cursor/
-├── learn/          # Learning resources and configurations
-│   ├── mcp/        # Model Context Protocol configurations
+├── learn/                    # Learning resources and configurations
+│   ├── mcp/                  # Model Context Protocol configurations
 │   │   ├── flutter-mcp.json
 │   │   ├── mcp-servers.md
 │   │   └── README.md
-│   └── agent/      # Agent configurations
+│   └── agent/                # Agent configurations
 │       ├── flutter-agent.json
 │       └── README.md
-├── rules/          # Cursor IDE rules and configurations
+├── rules/                    # Cursor IDE rules and configurations
 │   ├── semantic-commits.md
 │   ├── flutter-cursor-rules.md
 │   ├── project-manager-rules.md
@@ -56,34 +80,51 @@ cursor/
 │   ├── qa-engineer-rules.md
 │   ├── tech-lead-rules.md
 │   └── ai-efficiency-rules.md
-├── tools/          # Development tools
-│   └── cli/        # Gurkan CLI tool (npx gurkan)
+├── tools/                    # Development tools
+│   └── cli/                  # Gurkan CLI tool (npx gurkan)
 │       ├── bin/
 │       │   └── gurkan.js
 │       ├── package.json
 │       ├── PUBLISH.md
 │       └── README.md
-├── web/            # Next.js web application
-│   ├── app/        # Next.js app directory
+├── web/                      # Next.js web application
+│   ├── app/                  # Next.js app directory
+│   │   ├── error.tsx
+│   │   ├── global-error.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   ├── page.tsx
-│   │   └── redirect/
-│   │       └── page.tsx
-│   ├── components/ # React components
+│   │   ├── redirect/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components/           # React components
 │   │   ├── BlurTransition.tsx
 │   │   ├── Footer.tsx
 │   │   ├── LinkInterceptor.tsx
 │   │   ├── MarkdownRenderer.tsx
+│   │   ├── MatrixRain.tsx
 │   │   └── SplashScreen.tsx
+│   ├── lib/                  # Utility libraries
+│   │   └── git.ts            # Git commit information utilities
+│   ├── scripts/              # Build scripts
+│   │   └── copy-readme.js   # Script to copy README.md for build
+│   ├── public/               # Static assets
+│   │   └── images/          # Image assets
 │   ├── package.json
 │   ├── next.config.js
 │   ├── tsconfig.json
+│   ├── instrumentation.ts
+│   ├── sentry.client.config.ts
+│   ├── sentry.edge.config.ts
+│   ├── sentry.server.config.ts
+│   ├── SENTRY_SETUP.md
 │   └── README.md
-├── .cursorrules    # Cursor IDE rules file (Flutter focused)
-├── vercel.json     # Vercel deployment configuration
-├── LICENSE         # MIT License
-└── README.md       # Project documentation
+├── .cursorrules.example        # Cursor IDE rules file example (Flutter focused)
+├── vercel.json                  # Vercel deployment configuration
+├── LICENSE                      # MIT License
+└── README.md                    # Project documentation
 ```
 
 ## 🚀 Getting Started

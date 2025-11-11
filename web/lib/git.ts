@@ -10,9 +10,29 @@ export interface CommitInfo {
 /**
  * Gets the last commit hash and message from git
  * Falls back gracefully if git is not available or not in a git repo
+ * 
+ * Priority:
+ * 1. Vercel environment variables (VERCEL_GIT_COMMIT_SHA, VERCEL_GIT_COMMIT_MESSAGE)
+ * 2. Git commands (for local development)
  */
 export function getLastCommit(): CommitInfo | null {
-  // Try multiple paths - git repo might be in current dir or parent
+  // First, try Vercel environment variables (available during build/deployment)
+  const vercelCommitSha = process.env.VERCEL_GIT_COMMIT_SHA
+  
+  if (vercelCommitSha) {
+    // VERCEL_GIT_COMMIT_MESSAGE might not always be available
+    const vercelCommitMessage = process.env.VERCEL_GIT_COMMIT_MESSAGE || 
+                                 process.env.VERCEL_GIT_COMMIT_REF || 
+                                 'Deployed to Vercel'
+    
+    return {
+      hash: vercelCommitSha,
+      shortHash: vercelCommitSha.substring(0, 7),
+      message: vercelCommitMessage,
+    }
+  }
+
+  // Fallback: Try git commands (for local development)
   const possiblePaths = [
     process.cwd(), // Current directory (web/)
     join(process.cwd(), '..'), // Parent directory (root of repo)
