@@ -31,6 +31,30 @@ An open-source hiring platform that standardizes the hiring process by measuring
 
 **Tech Stack:** Modern web technologies
 
+### MasterFabric Welcome
+
+**Live:** [welcome.masterfabric.co](https://welcome.masterfabric.co/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/welcome)
+
+An open-source developer onboarding and internal ops portal that consolidates developer onboarding, worklogs, event management, and support into one place. Features include GitHub-based authentication, dynamic onboarding checklists, worklog tracking, internal event management, integrated support ticket system, and company email verification (OTP).
+
+**Tech Stack:** Next.js 15, React 19, TypeScript, Supabase, Tailwind CSS, Sentry
+
+### Developer Manifesto
+
+**Live:** [manifesto.masterfabric.co](https://manifesto.masterfabric.co/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/manifesto)
+
+A minimalist Next.js website for publishing developer manifestos with clean typography, interactive 3D animations, and GitHub-based signature system. Features include Markdown-driven content, JetBrains Mono typography, interactive Three.js animations with mouse interactions, GitHub authentication, dynamic signature system with Supabase, public RESTful API, and SEO optimization.
+
+**Tech Stack:** Next.js 15+, TypeScript, TailwindCSS, Three.js with React Three Fiber, Supabase, Gray Matter, Remark
+
+### PathBunny
+
+**Source:** [GitHub](https://github.com/gurkanfikretgunak/pathbunny)
+
+A lightning-fast CLI tool for creating directory shortcuts in your terminal. Jump to any directory instantly with memorable shortcuts instead of typing long paths. Features include quick navigation with aliases, persistent shortcuts storage, cross-platform support (macOS/Linux), and easy installation via npm.
+
+**Tech Stack:** TypeScript, Node.js, Shell Scripts
+
 ---
 
 These projects demonstrate how Cursor IDE can accelerate development workflows and help create production-ready applications efficiently.
