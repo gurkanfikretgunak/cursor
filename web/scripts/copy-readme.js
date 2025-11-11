@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const sourcePath = path.join(__dirname, '../README.md');
-const destPath = path.join(__dirname, './README.md');
+// Copy from root README.md (two levels up from scripts/) to web/README.md
+const sourcePath = path.join(__dirname, '../../README.md');
+const destPath = path.join(__dirname, '../README.md');
 
 try {
   if (fs.existsSync(sourcePath)) {
