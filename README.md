@@ -68,9 +68,11 @@ cursor/
 │   │   ├── flutter-mcp.json
 │   │   ├── mcp-servers.md
 │   │   └── README.md
-│   └── agent/                # Agent configurations
-│       ├── flutter-agent.json
-│       └── README.md
+│   ├── agent/                # Agent configurations
+│   │   ├── flutter-agent.json
+│   │   └── README.md
+│   └── extensions/           # Extension guides
+│       └── remote-ssh.md
 ├── rules/                    # Cursor IDE rules and configurations
 │   ├── semantic-commits.md
 │   ├── flutter-cursor-rules.md
@@ -170,6 +172,8 @@ The `learn/` directory contains learning resources and configurations:
   - **[README.md](learn/mcp/README.md)**: MCP setup guide for Flutter developers
 - **[Agent Configuration](learn/agent/)**: Agent configurations and settings for Cursor IDE
   - **[flutter-agent.json](learn/agent/flutter-agent.json)**: Flutter development agent configuration
+- **[Extension Guides](learn/extensions/)**: Guides for essential extensions
+  - **[remote-ssh.md](learn/extensions/remote-ssh.md)**: Guide to using Remote - SSH for remote development
 
 ## 📝 Rules Directory
 
