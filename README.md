@@ -15,13 +15,29 @@ This project contains custom rules, configurations, and best practices for enhan
 
 These projects were developed and built using Cursor IDE, showcasing the power of AI-assisted development:
 
-### Share Your Note
+### MasterFabric Platform
 
-**Live:** [share-your-note.vercel.app](https://share-your-note.vercel.app/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/share-your-note)
+**Source:** [GitHub](https://github.com/masterfabric/masterfabric)
 
-A real-time event participation platform where attendees can join events managed by hosts to share notes, images, and emotions in real-time. Features include QR code-based event joining, host dashboard for event management, and live interaction capabilities.
+A self-hosted, scalable Backend-as-a-Service (BaaS) platform built with NestJS microservices, providing Authentication, dynamic GraphQL APIs, and Real-time functionality for multi-tenant applications. Features include comprehensive health monitoring, hot reload for live development, and a modular microservices architecture.
 
-**Tech Stack:** Next.js, Supabase, TypeScript
+**Tech Stack:** NestJS, GraphQL, TypeScript, PostgreSQL, Redis, Docker
+
+### OSMEA
+
+**Live:** [osmea.masterfabric.co](https://osmea.masterfabric.co) | **Source:** [GitHub](https://github.com/masterfabric/osmea)
+
+A Mobile E-commerce Architecture Framework designed for building scalable, customizable, and cross-platform e-commerce applications using Flutter. It integrates with platforms like Shopify and WooCommerce, emphasizing modularity and security.
+
+**Tech Stack:** Flutter, Dart
+
+### MasterFabric Welcome
+
+**Live:** [welcome.masterfabric.co](https://welcome.masterfabric.co/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/welcome)
+
+An open-source developer onboarding and internal ops portal that consolidates developer onboarding, worklogs, event management, and support into one place. Features include GitHub-based authentication, dynamic onboarding checklists, worklog tracking, internal event management, integrated support ticket system, and company email verification (OTP).
+
+**Tech Stack:** Next.js 15, React 19, TypeScript, Supabase, Tailwind CSS, Sentry
 
 ### Developer Candidate
 
@@ -31,13 +47,13 @@ An open-source hiring platform that standardizes the hiring process by measuring
 
 **Tech Stack:** Modern web technologies
 
-### MasterFabric Welcome
+### Share Your Note
 
-**Live:** [welcome.masterfabric.co](https://welcome.masterfabric.co/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/welcome)
+**Live:** [share-your-note.vercel.app](https://share-your-note.vercel.app/) | **Source:** [GitHub](https://github.com/gurkanfikretgunak/share-your-note)
 
-An open-source developer onboarding and internal ops portal that consolidates developer onboarding, worklogs, event management, and support into one place. Features include GitHub-based authentication, dynamic onboarding checklists, worklog tracking, internal event management, integrated support ticket system, and company email verification (OTP).
+A real-time event participation platform where attendees can join events managed by hosts to share notes, images, and emotions in real-time. Features include QR code-based event joining, host dashboard for event management, and live interaction capabilities.
 
-**Tech Stack:** Next.js 15, React 19, TypeScript, Supabase, Tailwind CSS, Sentry
+**Tech Stack:** Next.js, Supabase, TypeScript
 
 ### Developer Manifesto
 
@@ -173,6 +189,8 @@ The `learn/` directory contains learning resources and configurations:
   - **[README.md](learn/mcp/README.md)**: MCP setup guide for Flutter developers
 - **[Agent Configuration](learn/agent/)**: Agent configurations and settings for Cursor IDE
   - **[flutter-agent.json](learn/agent/flutter-agent.json)**: Flutter development agent configuration
+- **[Rule Guides](learn/rules/)**: Guides for mastering Cursor rules
+  - **[mastering-cursor-rules.md](learn/rules/mastering-cursor-rules.md)**: Management strategies and 20 tips/tricks for effective rules
 - **[Extension Guides](learn/extensions/)**: Guides for essential extensions
   - **[remote-ssh.md](learn/extensions/remote-ssh.md)**: Guide to using Remote - SSH for remote development
 
