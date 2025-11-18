@@ -6,6 +6,10 @@ const boxen = require('boxen');
 const info = {
   name: 'Gurkan Fikret Gunak',
   role: 'Mobile Team Lead',
+  roles: [
+    'Ticimax Mobile Team Lead',
+    'MasterFabric Open Sourced Development Lead'
+  ],
   github: 'gurkanfikretgunak',
   githubUrl: 'https://github.com/gurkanfikretgunak',
   location: 'Türkiye',
@@ -13,7 +17,17 @@ const info = {
     name: 'MasterFabric',
     website: 'https://masterfabric.co',
     description: 'MasterFabric is a technology company focused on innovative mobile and web solutions. We specialize in building scalable applications using modern technologies like Flutter, providing end-to-end development services from concept to deployment.',
-    email: 'gurkanfikretgunak@masterfabric.co'
+    email: 'gurkanfikretgunak@masterfabric.co',
+    openSource: {
+      title: 'MasterFabric Open Sourced Development',
+      description: 'MasterFabric actively contributes to open source development, creating and maintaining various open-source projects including BaaS platforms, mobile frameworks, and developer tools. Our open-source initiatives focus on building scalable, production-ready solutions for the developer community.',
+      projects: [
+        'MasterFabric Platform - Self-hosted BaaS platform',
+        'OSMEA - Mobile E-commerce Architecture Framework',
+        'MasterFabric Welcome - Developer onboarding portal',
+        'Developer Manifesto - Manifesto publishing platform'
+      ]
+    }
   },
   repositories: [
     {
@@ -64,13 +78,17 @@ ${chalk.bold.cyan('║')}  ${chalk.bold.white('GURKAN FIKRET GUNAK - Mobile Team
 ${chalk.bold.cyan('╚══════════════════════════════════════════╝')}
 
 ${chalk.bold('👤 Name:')}        ${info.name}
-${chalk.bold('💼 Role:')}        ${info.role}
+${chalk.bold('💼 Roles:')}       ${info.roles.map(r => chalk.green(r)).join(chalk.dim(' | '))}
 ${chalk.bold('🏢 Company:')}     ${chalk.magenta(info.company.name)} - ${chalk.cyan(info.company.website)}
 ${chalk.bold('📍 Location:')}    ${info.location}
 ${chalk.bold('🔗 GitHub:')}      ${chalk.cyan(info.githubUrl)}
 
 ${chalk.bold('🏢 About Masterfabric:')}
    ${chalk.dim(info.company.description)}
+
+${chalk.bold('🌐 Open Source Development:')}
+   ${chalk.dim(info.company.openSource.description)}
+   ${chalk.dim('Run --opensource for details')}
 
 ${chalk.bold('📦 Key Repositories:')}
 ${info.repositories.map(repo => `   ${chalk.green('•')} ${chalk.bold(repo.name)}`)
@@ -116,6 +134,7 @@ ${chalk.bold('Options:')}
   --repos, -r          Show repositories information
   --projects, -p        Show projects and repositories
   --masterfabric, -m   Show Masterfabric company information
+  --opensource, -o     Show MasterFabric open source projects
   --version, -v        Show version number
 
 ${chalk.bold('Examples:')}
@@ -125,6 +144,7 @@ ${chalk.bold('Examples:')}
   npx gurkan --github
   npx gurkan --repos
   npx gurkan --masterfabric
+  npx gurkan --opensource
 `;
   console.log(help);
 }
@@ -169,7 +189,10 @@ ${chalk.bold('📝 About:')}
    ${info.company.description}
 
 ${chalk.bold('👨‍💼 Team Lead:')}  ${info.name}
-${chalk.bold('💼 Role:')}        ${info.role}
+${chalk.bold('💼 Roles:')}       ${info.roles.map(r => chalk.green(r)).join(chalk.dim(' | '))}
+
+${chalk.bold('🌐 Open Source Development:')}
+   ${info.company.openSource.description}
 
 ${chalk.bold('📦 Key Projects:')}
 ${info.repositories.map(repo => 
@@ -182,9 +205,11 @@ ${chalk.bold('🛠️  Technologies:')}
    ${chalk.green('•')} Cross-platform Solutions
    ${chalk.green('•')} Modern Web Technologies
    ${chalk.green('•')} Scalable Architecture
+   ${chalk.green('•')} Open Source Contributions
 
 ${chalk.dim('───────────────────────────────────────────────────────────')}
 ${chalk.dim('Visit:')} ${chalk.cyan(info.company.website)}
+${chalk.dim('Run --opensource for open source projects')}
 `;
 
   console.log(boxen(output, {
@@ -192,6 +217,40 @@ ${chalk.dim('Visit:')} ${chalk.cyan(info.company.website)}
     margin: 1,
     borderStyle: 'round',
     borderColor: 'magenta',
+    backgroundColor: '#1a1a1a'
+  }));
+}
+
+function displayOpenSource() {
+  const output = `
+${chalk.bold.green('╔═══════════════════════════════════════════════════════╗')}
+${chalk.bold.green('║')}      ${chalk.bold.white('MASTERFABRIC OPEN SOURCE')}      ${chalk.bold.green('║')}
+${chalk.bold.green('╚═══════════════════════════════════════════════════════╝')}
+
+${chalk.bold('🌐 ' + info.company.openSource.title + ':')}
+   ${info.company.openSource.description}
+
+${chalk.bold('📦 Open Source Projects:')}
+${info.company.openSource.projects.map(project => 
+  `   ${chalk.green('•')} ${chalk.bold(project)}`
+).join('\n')}
+
+${chalk.bold('👨‍💼 Maintained by:')}  ${info.name}
+${chalk.bold('💼 Roles:')}       ${info.roles.map(r => chalk.green(r)).join(chalk.dim(' | '))}
+
+${chalk.bold('🔗 Explore More:')}
+   ${chalk.cyan('GitHub:')} ${info.githubUrl}
+   ${chalk.cyan('Company:')} ${info.company.website}
+
+${chalk.dim('───────────────────────────────────────────────────────────')}
+${chalk.dim('All projects are open source and available on GitHub')}
+`;
+
+  console.log(boxen(output, {
+    padding: 1,
+    margin: 1,
+    borderStyle: 'round',
+    borderColor: 'green',
     backgroundColor: '#1a1a1a'
   }));
 }
@@ -229,6 +288,8 @@ if (args.includes('--help') || args.includes('-h')) {
   displayRepositories();
 } else if (args.includes('--masterfabric') || args.includes('-m')) {
   displayMasterfabric();
+} else if (args.includes('--opensource') || args.includes('-o')) {
+  displayOpenSource();
 } else if (args.includes('--github') || args.includes('-g')) {
   openGitHub();
 } else if (args.includes('--version') || args.includes('-v')) {

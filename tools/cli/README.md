@@ -38,6 +38,9 @@ npx gurkan --repos
 # Show Masterfabric company information
 npx gurkan --masterfabric
 
+# Show MasterFabric open source projects
+npx gurkan --opensource
+
 # Open GitHub profile
 npx gurkan --github
 
@@ -54,6 +57,7 @@ npx gurkan --version
 - `--repos, -r` - Show repositories information (masterfabric, masterfabric-mobile)
 - `--projects, -p` - Alias for --repos
 - `--masterfabric, -m` - Show Masterfabric company information
+- `--opensource, -o` - Show MasterFabric open source projects
 - `--version, -v` - Show version number
 
 ## Features
@@ -62,6 +66,11 @@ npx gurkan --version
 - **Masterfabric**: Technology company focused on innovative mobile and web solutions
 - Specializes in Flutter-based mobile applications
 - End-to-end development services
+- **Open Source Development**: Actively contributes to open source with various projects
+
+### Roles
+- **Ticimax Mobile Team Lead**: Leading mobile development at Ticimax
+- **MasterFabric Mobile Team Lead**: Leading mobile development at MasterFabric
 
 ### Repositories
 - **masterfabric**: Main Masterfabric repository - Core platform and infrastructure
@@ -90,6 +99,9 @@ npx gurkan --repos
 
 # Learn about Masterfabric
 npx gurkan --masterfabric
+
+# View open source projects
+npx gurkan --opensource
 ```
 
 ## Publishing to npm
