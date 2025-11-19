@@ -76,14 +76,15 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
 
 export async function getReadmeContent(): Promise<string> {
   // Try multiple paths to find README.md
-  // In Vercel: prioritize copied README.md (from prebuild), then parent directory
+  // Priority: root README.md (always fresh) > copied README.md (fallback)
   const possiblePaths = [
-    // In production build (after prebuild copy) - prioritize this for Vercel
-    join(process.cwd(), 'README.md'),
-    // From parent directory (root of repo) - fallback for local dev
+    // From parent directory (root of repo) - ALWAYS prioritize this for fresh content
+    // This works in Vercel when rootDirectory is set to "web"
     join(process.cwd(), '..', 'README.md'),
     // Alternative parent path
     join(process.cwd(), '../README.md'),
+    // In production build (after prebuild copy) - fallback
+    join(process.cwd(), 'README.md'),
   ]
 
   for (const filePath of possiblePaths) {
