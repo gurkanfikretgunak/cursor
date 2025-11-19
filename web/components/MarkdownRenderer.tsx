@@ -5,6 +5,7 @@ import { join } from 'path'
 import * as Sentry from '@sentry/nextjs'
 
 const GITHUB_REPO_URL = 'https://github.com/gurkanfikretgunak/cursor/blob/main'
+const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/gurkanfikretgunak/cursor/main'
 
 interface MarkdownRendererProps {
   content: string
@@ -75,15 +76,36 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
 }
 
 export async function getReadmeContent(): Promise<string> {
-  // Try multiple paths to find README.md
-  // Priority: root README.md (always fresh) > copied README.md (fallback)
+  // In production/Vercel: Always fetch from GitHub raw API for latest content
+  // In local development: Try file system first, then fallback to GitHub
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1'
+  
+  if (isProduction) {
+    // Always fetch from GitHub in production to get the latest version
+    try {
+      const response = await fetch(`${GITHUB_RAW_URL}/README.md`, {
+        cache: 'no-store', // Always fetch fresh content, no caching
+      })
+      
+      if (response.ok) {
+        const content = await response.text()
+        if (content && content.trim().length > 0) {
+          return content
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch README from GitHub:', error)
+      // Fall through to file system fallback
+    }
+  }
+  
+  // Fallback: Try file system (for local development or if GitHub fetch fails)
   const possiblePaths = [
-    // From parent directory (root of repo) - ALWAYS prioritize this for fresh content
-    // This works in Vercel when rootDirectory is set to "web"
+    // From parent directory (root of repo)
     join(process.cwd(), '..', 'README.md'),
     // Alternative parent path
     join(process.cwd(), '../README.md'),
-    // In production build (after prebuild copy) - fallback
+    // In production build (after prebuild copy)
     join(process.cwd(), 'README.md'),
   ]
 
@@ -94,26 +116,38 @@ export async function getReadmeContent(): Promise<string> {
         return content
       }
     } catch (error) {
-      // Log to Sentry if available and configured
-      if (error instanceof Error && 
-          process.env.NEXT_PUBLIC_SENTRY_DSN && 
-          process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
-        Sentry.captureException(error, {
-          tags: {
-            component: 'MarkdownRenderer',
-            action: 'readReadme',
-          },
-          extra: {
-            filePath,
-          },
-        })
-      }
       // Continue to next path
       continue
     }
   }
 
-  const errorMessage = 'Could not find README.md in any expected location'
+  // Last resort: Try GitHub API even in development if file system fails
+  try {
+    const response = await fetch(`${GITHUB_RAW_URL}/README.md`, {
+      cache: 'no-store',
+    })
+    
+    if (response.ok) {
+      const content = await response.text()
+      if (content && content.trim().length > 0) {
+        return content
+      }
+    }
+  } catch (error) {
+    // Log to Sentry if available and configured
+    if (error instanceof Error && 
+        process.env.NEXT_PUBLIC_SENTRY_DSN && 
+        process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
+      Sentry.captureException(error, {
+        tags: {
+          component: 'MarkdownRenderer',
+          action: 'readReadme',
+        },
+      })
+    }
+  }
+
+  const errorMessage = 'Could not load README.md from GitHub or file system'
   
   // Log to Sentry if available and configured
   if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
@@ -126,6 +160,6 @@ export async function getReadmeContent(): Promise<string> {
     })
   }
   
-  console.error('Error: Could not find README.md in any expected location')
-  return '# Error\n\nCould not load README.md content. Please ensure README.md exists in the project root.'
+  console.error('Error: Could not load README.md content')
+  return '# Error\n\nCould not load README.md content. Please ensure README.md exists in the repository.'
 }
