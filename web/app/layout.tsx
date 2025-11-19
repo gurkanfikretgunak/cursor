@@ -2,8 +2,6 @@ import type { Metadata, Viewport } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/Footer'
-import SplashScreen from '@/components/SplashScreen'
-import BlurTransition from '@/components/BlurTransition'
 import LinkInterceptor from '@/components/LinkInterceptor'
 import { getLastCommit } from '@/lib/git'
 
@@ -128,11 +126,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={jetbrainsMono.variable}>
         <LinkInterceptor>
-          <SplashScreen />
           {children}
-          <BlurTransition duration={1500} delay={800} blurAmount={40}>
-            <Footer commitInfo={commitInfo} />
-          </BlurTransition>
+          <Footer commitInfo={commitInfo} />
         </LinkInterceptor>
       </body>
     </html>

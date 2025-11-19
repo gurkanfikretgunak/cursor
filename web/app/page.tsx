@@ -1,5 +1,4 @@
 import MarkdownRenderer, { getReadmeContent } from '@/components/MarkdownRenderer'
-import BlurTransition from '@/components/BlurTransition'
 
 // Force dynamic rendering to always get fresh content
 export const dynamic = 'force-dynamic'
@@ -10,9 +9,7 @@ export default async function Home() {
 
   return (
     <main>
-      <BlurTransition duration={1500} delay={400} blurAmount={40}>
-        <MarkdownRenderer content={readmeContent} />
-      </BlurTransition>
+      <MarkdownRenderer content={readmeContent} />
     </main>
   )
 }
