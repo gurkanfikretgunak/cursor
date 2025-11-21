@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import GitHubHoverCard from './GitHubHoverCard'
+import ServiceHealth from './ServiceHealth'
 
 interface FooterProps {
   commitInfo?: {
@@ -118,6 +119,8 @@ export default function Footer({ commitInfo }: FooterProps) {
             View Source Code
           </a>
         </GitHubHoverCard>
+        {' | '}
+        <ServiceHealth />
         {commitInfo && (
           <>
             {' | '}

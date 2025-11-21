@@ -25,7 +25,7 @@ A self-hosted, scalable Backend-as-a-Service (BaaS) platform built with NestJS m
 
 ### OSMEA
 
-**Live:** [osmea.masterfabric.co](https://osmea.masterfabric.co) | **Source:** [GitHub](https://github.com/masterfabric/osmea)
+**Live:** [osmea.masterfabric.co](https://osmea.masterfabric.co) | **Source:** [GitHub](https://github.com/masterfabric-mobile/osmea)
 
 A Mobile E-commerce Architecture Framework designed for building scalable, customizable, and cross-platform e-commerce applications using Flutter. It integrates with platforms like Shopify and WooCommerce, emphasizing modularity and security.
 
