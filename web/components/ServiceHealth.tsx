@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 type HealthStatus = 'idle' | 'checking' | 'healthy' | 'problem'
 
@@ -9,6 +9,16 @@ export default function ServiceHealth() {
   const [showTooltip, setShowTooltip] = useState(false)
   const [showCheckingText, setShowCheckingText] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [hasChecked, setHasChecked] = useState(false)
+
+  // Auto-check on component mount (only once)
+  useEffect(() => {
+    if (!hasChecked) {
+      checkVercelStatus()
+      setHasChecked(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Empty dependency array - run only once on mount
 
   const checkVercelStatus = async () => {
     // First: Show pulsing dot (blue pulse animation)
@@ -143,11 +153,24 @@ export default function ServiceHealth() {
     return baseStyle
   }
 
+  const getStatusText = () => {
+    switch (status) {
+      case 'healthy':
+        return 'well'
+      case 'problem':
+        return 'problem'
+      case 'checking':
+        return 'checking...'
+      default:
+        return 'unknown'
+    }
+  }
+
   return (
     <span
         onClick={handleClick}
         onMouseEnter={() => {
-          if (status === 'problem') {
+          if (status !== 'idle' && status !== 'checking') {
             setShowTooltip(true)
           }
         }}
@@ -176,7 +199,7 @@ export default function ServiceHealth() {
             checking
           </span>
         )}
-        {showTooltip && status === 'problem' && (
+        {showTooltip && (status === 'healthy' || status === 'problem') && (
               <span
                 style={{
                   position: 'absolute',
@@ -184,7 +207,7 @@ export default function ServiceHealth() {
                   left: '50%',
                   transform: 'translateX(-50%)',
                   marginBottom: '4px',
-                  padding: '4px 8px',
+                  padding: '6px 10px',
                   backgroundColor: '#333',
                   color: '#fff',
                   borderRadius: '4px',
@@ -193,9 +216,10 @@ export default function ServiceHealth() {
                   zIndex: 1000,
                   pointerEvents: 'none',
                   fontFamily: 'var(--font-jetbrains-mono), monospace',
+                  animation: 'fadeIn 0.15s ease-out',
                 }}
               >
-                problem
+                Vercel status: {getStatusText()}
                 <span
                   style={{
                     position: 'absolute',

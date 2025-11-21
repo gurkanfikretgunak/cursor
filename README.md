@@ -140,7 +140,6 @@ cursor/
 │   ├── SENTRY_SETUP.md
 │   └── README.md
 ├── .cursorrules.example        # Cursor IDE rules file example (Flutter focused)
-├── vercel.json                  # Vercel deployment configuration
 ├── LICENSE                      # MIT License
 └── README.md                    # Project documentation
 ```
@@ -224,8 +223,6 @@ The `web/` directory contains a Next.js web application that displays this proje
   - **Error Tracking & Analytics**: Integrated with Sentry for error monitoring and performance analytics
 
 **Location**: [web/](web/)
-
-**Deployment**: Configured for Vercel deployment via `vercel.json`
 
 **Monitoring**: Error tracking and analytics powered by [Sentry](https://sentry.io)
 
