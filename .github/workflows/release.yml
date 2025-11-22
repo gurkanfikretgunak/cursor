@@ -1,0 +1,85 @@
+name: Automated Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./web
+        run: npm ci
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run standard-version
+        working-directory: ./web
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release
+        continue-on-error: true
+
+      - name: Extract version from package.json
+        id: version
+        working-directory: ./web
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Read changelog entry
+        id: changelog
+        run: |
+          if [ -f CHANGELOG.md ]; then
+            CHANGELOG_ENTRY=$(awk '/^## \[/{flag=1} flag && /^## \[/{flag=0} flag' CHANGELOG.md | sed '1d' | sed '/^$/d' | head -50)
+            echo "changelog<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGELOG_ENTRY" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "changelog=No changelog entry found" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Release ${{ steps.version.outputs.tag }}
+          body: |
+            ## Changes in ${{ steps.version.outputs.tag }}
+
+            ${{ steps.changelog.outputs.changelog }}
+
+            ---
+            Full changelog: [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
+          draft: false
+          prerelease: false
+
+      - name: Push changes
+        run: |
+          git push origin main --follow-tags
+        continue-on-error: true
+
