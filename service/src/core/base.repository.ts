@@ -1,6 +1,7 @@
 import { PoolClient } from 'pg';
 import { getPool } from '../lib/db';
 
+
 /**
  * Base Repository Class
  * Provides common database operations and connection management

@@ -8,8 +8,10 @@ A standalone Fastify microservice for user management with NextAuth.js integrati
 - OAuth providers: Google, GitHub
 - Email/Password authentication
 - User profile management
+- Customer management (CRUD operations)
 - PostgreSQL database integration
 - TypeScript support
+- Clean Architecture with Singleton Pattern
 
 ## Setup
 
@@ -108,25 +110,76 @@ npm start
   }
   ```
 
+### Customers
+- `GET /customers/:id` - Get customer by ID
+- `GET /customers?email=...` - Get customer by email
+- `POST /customers` - Create new customer
+  ```json
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+1234567890",
+    "address": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001"
+  }
+  ```
+- `PATCH /customers/:id` - Update customer
+  ```json
+  {
+    "name": "Updated Name",
+    "phone": "+1234567890"
+  }
+  ```
+- `DELETE /customers/:id` - Delete customer
+
 ## Project Structure
 
 ```
 service/
 ├── src/
-│   ├── lib/
-│   │   ├── db.ts          # Database connection and initialization
-│   │   └── auth.ts         # NextAuth.js configuration
-│   ├── routes/
-│   │   ├── auth.ts         # Authentication routes
-│   │   ├── user.ts         # User management routes
-│   │   └── health.ts       # Health check route
-│   ├── services/
-│   │   └── user.service.ts # User business logic
-│   ├── types/
-│   │   └── user.types.ts   # TypeScript type definitions
-│   └── server.ts           # Fastify server setup
+│   ├── core/                    # Base classes and abstractions
+│   │   └── base.repository.ts   # Base repository with common DB operations
+│   ├── interfaces/              # Contract definitions (interfaces)
+│   │   ├── repository.interface.ts
+│   │   ├── user.repository.interface.ts
+│   │   ├── account.repository.interface.ts
+│   │   ├── customer.repository.interface.ts
+│   │   ├── user.service.interface.ts
+│   │   ├── customer.service.interface.ts
+│   │   └── index.ts
+│   ├── dtos/                    # Data Transfer Objects
+│   │   ├── user.dto.ts
+│   │   ├── account.dto.ts
+│   │   ├── customer.dto.ts
+│   │   └── index.ts
+│   ├── types/                   # TypeScript type definitions
+│   │   ├── user.types.ts
+│   │   └── customer.types.ts
+│   ├── repositories/            # Data Access Layer (Singleton)
+│   │   ├── user.repository.ts
+│   │   ├── account.repository.ts
+│   │   ├── customer.repository.ts
+│   │   └── index.ts            # Exports singleton instances
+│   ├── services/                # Business Logic Layer (Singleton)
+│   │   ├── user.service.ts
+│   │   ├── customer.service.ts
+│   │   └── index.ts            # Exports singleton instances
+│   ├── lib/                     # Infrastructure & utilities
+│   │   ├── db.ts               # Database connection and initialization
+│   │   └── auth.ts             # NextAuth.js configuration
+│   ├── routes/                  # API Route handlers
+│   │   ├── auth.ts             # Authentication routes
+│   │   ├── user.ts             # User management routes
+│   │   ├── customer.ts         # Customer management routes
+│   │   └── health.ts           # Health check route
+│   └── server.ts                # Fastify server setup
 ├── package.json
 ├── tsconfig.json
+├── .gitignore
+├── .env.example
+├── ARCHITECTURE.md
 └── README.md
 ```
 
@@ -138,6 +191,7 @@ The service creates the following tables:
 - `accounts` - OAuth provider accounts
 - `sessions` - User sessions
 - `verification_tokens` - Email verification tokens
+- `customers` - Customer records
 
 ## Integration with Next.js
 

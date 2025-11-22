@@ -7,4 +7,10 @@ export type {
 
 export type { CreateAccountData } from './account.dto';
 
+export type {
+  CreateCustomerData,
+  UpdateCustomerData,
+  Customer,
+} from './customer.dto';
+
 

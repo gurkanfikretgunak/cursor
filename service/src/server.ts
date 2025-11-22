@@ -5,6 +5,7 @@ import { initializeDatabase, closePool } from './lib/db';
 import { healthRoutes } from './routes/health';
 import { authRoutes } from './routes/auth';
 import { userRoutes } from './routes/user';
+import { customerRoutes } from './routes/customer';
 
 const server = Fastify({
   logger: {
@@ -39,6 +40,7 @@ async function build() {
   await server.register(healthRoutes);
   await server.register(authRoutes);
   await server.register(userRoutes);
+  await server.register(customerRoutes);
 
   // Root endpoint
   server.get('/', async () => {
@@ -58,6 +60,13 @@ async function build() {
           getById: 'GET /users/:id',
           getByEmail: 'GET /users?email=...',
           update: 'PATCH /users/:id',
+        },
+        customers: {
+          getById: 'GET /customers/:id',
+          getByEmail: 'GET /customers?email=...',
+          create: 'POST /customers',
+          update: 'PATCH /customers/:id',
+          delete: 'DELETE /customers/:id',
         },
       },
     };

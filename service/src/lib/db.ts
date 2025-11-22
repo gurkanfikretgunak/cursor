@@ -93,6 +93,22 @@ export async function initializeDatabase(): Promise<void> {
       )
     `);
 
+    // Customers table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS customers (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        phone TEXT NOT NULL,
+        address TEXT NOT NULL,
+        city TEXT NOT NULL,
+        state TEXT NOT NULL,
+        zip TEXT NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      )
+    `);
+
     // Create indexes for better performance
     await client.query(`
       CREATE INDEX IF NOT EXISTS idx_accounts_user_id ON accounts(user_id)
@@ -102,6 +118,9 @@ export async function initializeDatabase(): Promise<void> {
     `);
     await client.query(`
       CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(session_token)
+    `);
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_customers_email ON customers(email)
     `);
 
     await client.query('COMMIT');

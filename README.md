@@ -106,34 +106,61 @@ cursor/
 │       ├── package.json
 │       ├── PUBLISH.md
 │       └── README.md
+├── service/                  # Auth microservice (Fastify)
+│   ├── src/
+│   │   ├── core/            # Base classes and abstractions
+│   │   ├── interfaces/      # Contract definitions
+│   │   ├── dtos/            # Data Transfer Objects
+│   │   ├── types/           # TypeScript type definitions
+│   │   ├── repositories/    # Data Access Layer (Singleton)
+│   │   ├── services/        # Business Logic Layer (Singleton)
+│   │   ├── routes/          # API Route handlers
+│   │   ├── lib/             # Infrastructure & utilities
+│   │   └── server.ts        # Fastify server setup
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── ARCHITECTURE.md
+│   └── README.md
 ├── web/                      # Next.js web application
 │   ├── app/                  # Next.js app directory
+│   │   ├── api/             # API routes
 │   │   ├── error.tsx
 │   │   ├── global-error.tsx
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   ├── page.tsx
 │   │   ├── redirect/
-│   │   │   ├── layout.tsx
-│   │   │   └── page.tsx
 │   │   ├── robots.ts
 │   │   └── sitemap.ts
 │   ├── components/           # React components
 │   │   ├── BlurTransition.tsx
 │   │   ├── Footer.tsx
+│   │   ├── Header.tsx
 │   │   ├── LinkInterceptor.tsx
 │   │   ├── MarkdownRenderer.tsx
-│   │   ├── MatrixRain.tsx
-│   │   └── SplashScreen.tsx
+│   │   └── ServiceHealth.tsx
+│   ├── ui/                   # shadcn/ui components
+│   │   ├── button.tsx
+│   │   ├── input.tsx
+│   │   ├── card.tsx
+│   │   ├── form.tsx
+│   │   ├── dialog.tsx
+│   │   ├── auth-form.tsx
+│   │   ├── oauth-buttons.tsx
+│   │   └── user-menu.tsx
 │   ├── lib/                  # Utility libraries
-│   │   └── git.ts            # Git commit information utilities
-│   ├── scripts/              # Build scripts
-│   │   └── copy-readme.js   # Script to copy README.md for build
+│   │   ├── api.ts           # API client for auth service
+│   │   ├── db.ts
+│   │   ├── email.ts
+│   │   ├── git.ts
+│   │   └── utils.ts
 │   ├── public/               # Static assets
-│   │   └── images/          # Image assets
+│   │   └── images/
 │   ├── package.json
 │   ├── next.config.js
 │   ├── tsconfig.json
+│   ├── tailwind.config.ts
+│   ├── components.json
 │   ├── instrumentation.ts
 │   ├── sentry.client.config.ts
 │   ├── sentry.edge.config.ts

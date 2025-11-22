@@ -14,20 +14,26 @@ src/
 │   ├── repository.interface.ts
 │   ├── user.repository.interface.ts
 │   ├── account.repository.interface.ts
+│   ├── customer.repository.interface.ts
 │   ├── user.service.interface.ts
+│   ├── customer.service.interface.ts
 │   └── index.ts
 ├── dtos/                    # Data Transfer Objects
 │   ├── user.dto.ts
 │   ├── account.dto.ts
+│   ├── customer.dto.ts
 │   └── index.ts
 ├── types/                   # TypeScript type definitions
-│   └── user.types.ts
+│   ├── user.types.ts
+│   └── customer.types.ts
 ├── repositories/            # Data Access Layer (Singleton)
 │   ├── user.repository.ts
 │   ├── account.repository.ts
+│   ├── customer.repository.ts
 │   └── index.ts            # Exports singleton instances
 ├── services/                # Business Logic Layer (Singleton)
 │   ├── user.service.ts
+│   ├── customer.service.ts
 │   └── index.ts            # Exports singleton instances
 ├── lib/                     # Infrastructure & utilities
 │   ├── db.ts               # Database connection
@@ -35,6 +41,7 @@ src/
 ├── routes/                   # API Route handlers
 │   ├── auth.ts
 │   ├── user.ts
+│   ├── customer.ts
 │   └── health.ts
 └── server.ts                # Fastify server setup
 ```
@@ -50,7 +57,9 @@ src/
 - `repository.interface.ts` - Base repository contract
 - `user.repository.interface.ts` - User repository contract
 - `account.repository.interface.ts` - Account repository contract
+- `customer.repository.interface.ts` - Customer repository contract
 - `user.service.interface.ts` - User service contract
+- `customer.service.interface.ts` - Customer service contract
 
 ### 2. **DTOs Layer** (`dtos/`)
 - Data Transfer Objects for input/output
@@ -60,6 +69,7 @@ src/
 **Key Files:**
 - `user.dto.ts` - User-related DTOs
 - `account.dto.ts` - Account-related DTOs
+- `customer.dto.ts` - Customer-related DTOs
 
 ### 3. **Core Layer** (`core/`)
 - Base classes and shared abstractions
@@ -78,6 +88,7 @@ src/
 **Key Files:**
 - `user.repository.ts` - User data access (Singleton)
 - `account.repository.ts` - Account data access (Singleton)
+- `customer.repository.ts` - Customer data access (Singleton)
 
 **Usage:**
 ```typescript
@@ -93,6 +104,7 @@ import { userRepository } from '../repositories';
 
 **Key Files:**
 - `user.service.ts` - User business logic (Singleton)
+- `customer.service.ts` - Customer business logic (Singleton)
 
 **Usage:**
 ```typescript
@@ -210,6 +222,17 @@ const mockUserRepository: IUserRepository = {
 };
 
 const userService = new UserService(mockUserRepository);
+
+// Mock customer repository for testing
+const mockCustomerRepository: ICustomerRepository = {
+  findById: jest.fn(),
+  findByEmail: jest.fn(),
+  create: jest.fn(),
+  update: jest.fn(),
+  existsByEmail: jest.fn(),
+};
+
+const customerService = new CustomerService(mockCustomerRepository);
 ```
 
 ## Benefits
