@@ -4,6 +4,7 @@ import { promises as fs } from 'fs'
 import { join } from 'path'
 import * as Sentry from '@sentry/nextjs'
 import GitHubHoverCard from './GitHubHoverCard'
+import LinkedInHoverCard from './LinkedInHoverCard'
 
 const GITHUB_REPO_URL = 'https://github.com/gurkanfikretgunak/cursor/blob/main'
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/gurkanfikretgunak/cursor/main'
@@ -71,6 +72,26 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
     }
     return null
   }
+
+  // Helper function to extract LinkedIn username from URL
+  const extractLinkedInInfo = (href: string): string | null => {
+    if (!href) return null
+    
+    try {
+      const url = new URL(href)
+      // Handle linkedin.com and www.linkedin.com
+      if (url.hostname === 'linkedin.com' || url.hostname === 'www.linkedin.com') {
+        const pathParts = url.pathname.split('/').filter(Boolean)
+        // LinkedIn profile format: /in/username
+        if (pathParts.length >= 2 && pathParts[0] === 'in') {
+          return pathParts[1]
+        }
+      }
+    } catch {
+      // Invalid URL, ignore
+    }
+    return null
+  }
   
   return (
     <ReactMarkdown
@@ -78,6 +99,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
       components={{
         a: ({ node, href, children, ...props }: any) => {
           const githubInfo = href ? extractGitHubInfo(href) : null
+          const linkedInUsername = href ? extractLinkedInInfo(href) : null
           const link = (
             <a href={href} {...props} target="_blank" rel="noopener noreferrer">
               {children}
@@ -98,6 +120,14 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 </GitHubHoverCard>
               )
             }
+          }
+          
+          if (linkedInUsername) {
+            return (
+              <LinkedInHoverCard username={linkedInUsername}>
+                {link}
+              </LinkedInHoverCard>
+            )
           }
           
           return link
@@ -148,13 +178,16 @@ export async function getReadmeContent(): Promise<string> {
   }
   
   // Fallback: Try file system (for local development or if GitHub fetch fails)
+  const cwd = process.cwd()
   const possiblePaths = [
-    // From parent directory (root of repo)
-    join(process.cwd(), '..', 'README.md'),
+    // From parent directory (root of repo) - most common case when running from web/
+    join(cwd, '..', 'README.md'),
     // Alternative parent path
-    join(process.cwd(), '../README.md'),
-    // In production build (after prebuild copy)
-    join(process.cwd(), 'README.md'),
+    join(cwd, '../README.md'),
+    // In production build (after prebuild copy) or if README was copied to web/
+    join(cwd, 'README.md'),
+    // Try from web directory if cwd is already at root
+    join(cwd, 'web', 'README.md'),
   ]
 
   for (const filePath of possiblePaths) {

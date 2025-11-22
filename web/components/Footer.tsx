@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import GitHubHoverCard from './GitHubHoverCard'
+import LinkedInHoverCard from './LinkedInHoverCard'
 import ServiceHealth from './ServiceHealth'
 
 interface FooterProps {
@@ -84,21 +85,23 @@ export default function Footer({ commitInfo }: FooterProps) {
             X
           </a>
           {' | '}
-          <a
-            href="https://www.linkedin.com/in/gurkanfikretgunak"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              color: '#0066cc', 
-              textDecoration: 'underline',
-              minHeight: '44px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              padding: '0.25em 0',
-            }}
-          >
-            LinkedIn
-          </a>
+          <LinkedInHoverCard username="gurkanfikretgunak">
+            <a
+              href="https://www.linkedin.com/in/gurkanfikretgunak"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ 
+                color: '#0066cc', 
+                textDecoration: 'underline',
+                minHeight: '44px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '0.25em 0',
+              }}
+            >
+              LinkedIn
+            </a>
+          </LinkedInHoverCard>
         </p>
       </div>
       <div style={{ fontSize: 'clamp(0.8rem, 2vw, 0.85rem)', color: '#999' }}>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import LinkInterceptor from '@/components/LinkInterceptor'
 import { getLastCommit } from '@/lib/git'
@@ -126,6 +127,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={jetbrainsMono.variable}>
         <LinkInterceptor>
+          <Header />
           {children}
           <Footer commitInfo={commitInfo} />
         </LinkInterceptor>

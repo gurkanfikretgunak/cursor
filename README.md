@@ -5,7 +5,8 @@ A curated collection of Cursor IDE configurations, rules, and developer experien
 ## 👤 Mobile Team Lead
 
 **Name:** Gurkan Fikret Gunak  
-**GitHub:** [@gurkanfikretgunak](https://github.com/gurkanfikretgunak)
+**GitHub:** [@gurkanfikretgunak](https://github.com/gurkanfikretgunak)  
+**LinkedIn:** [gurkanfikretgunak](https://www.linkedin.com/in/gurkanfikretgunak)
 
 ## 📋 About
 
