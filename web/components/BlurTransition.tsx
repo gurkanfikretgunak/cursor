@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { cn } from '@/lib/utils'
 
 interface BlurTransitionProps {
   children: React.ReactNode
@@ -20,7 +21,6 @@ export default function BlurTransition({
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null
     
-    // Use requestAnimationFrame for smoother start
     const rafId = requestAnimationFrame(() => {
       timer = setTimeout(() => {
         setIsBlurred(false)
@@ -36,16 +36,19 @@ export default function BlurTransition({
   return (
     <div
       data-blur-transition
+      className={cn(
+        'transition-all ease-out',
+        isBlurred 
+          ? 'opacity-0 scale-105' 
+          : 'opacity-100 scale-100'
+      )}
       style={{
         filter: isBlurred ? `blur(${blurAmount}px)` : 'blur(0px)',
-        opacity: isBlurred ? 0 : 1,
-        transform: isBlurred ? 'scale(1.05)' : 'scale(1)',
-        transition: `filter ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 1), opacity ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 1), transform ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 1)`,
-        willChange: isBlurred ? 'filter, opacity, transform' : 'auto',
+        transitionDuration: `${duration}ms`,
+        transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 1)',
       }}
     >
       {children}
     </div>
   )
 }
-

@@ -1,9 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import GitHubHoverCard from './GitHubHoverCard'
 import LinkedInHoverCard from './LinkedInHoverCard'
 import ServiceHealth from './ServiceHealth'
+import { Separator } from '@/ui/separator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/ui/tooltip'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/ui/card'
 
 interface FooterProps {
   commitInfo?: {
@@ -14,225 +22,92 @@ interface FooterProps {
 }
 
 export default function Footer({ commitInfo }: FooterProps) {
-  const [showTooltip, setShowTooltip] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    setIsDarkMode(mediaQuery.matches)
-    
-    const handleChange = (e: MediaQueryListEvent) => setIsDarkMode(e.matches)
-    mediaQuery.addEventListener('change', handleChange)
-    
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
-
-  const tooltipStyles = {
-    backgroundColor: isDarkMode ? '#1c2128' : '#fff',
-    border: isDarkMode ? '1px solid #373e47' : '1px solid #d1d9e0',
-    color: isDarkMode ? '#adbac7' : '#24292f',
-    borderBottomColor: isDarkMode ? '#373e47' : '#d1d9e0',
-    mutedColor: isDarkMode ? '#768390' : '#656d76',
-    boxShadow: isDarkMode 
-      ? '0 8px 24px rgba(0, 0, 0, 0.4)' 
-      : '0 8px 24px rgba(140, 149, 159, 0.2)',
-  }
-
   return (
-    <footer style={{
-      marginTop: 'auto',
-      padding: '1.5rem 1rem',
-      textAlign: 'center',
-      borderTop: '1px solid #ddd',
-      fontSize: 'clamp(0.85rem, 2.5vw, 0.9rem)',
-      color: '#666',
-      position: 'relative',
-    }}>
-      <div style={{ marginBottom: '0.5rem' }}>
-        <p style={{ margin: '0 0 0.5rem 0', lineHeight: '1.6' }}>
-          Gurkan Fikret Gunak |{' '}
-          <GitHubHoverCard username="gurkanfikretgunak">
+    <footer className="mt-auto border-t border-border">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-col items-center gap-4 text-center">
+          {/* Main links */}
+          <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground">
+            <span>Gurkan Fikret Gunak</span>
+            <Separator orientation="vertical" className="h-4" />
+            <GitHubHoverCard username="gurkanfikretgunak">
+              <a
+                href="https://github.com/gurkanfikretgunak"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 underline-offset-4 hover:underline transition-colors min-h-[44px] inline-flex items-center px-1"
+              >
+                GitHub
+              </a>
+            </GitHubHoverCard>
+            <Separator orientation="vertical" className="h-4" />
             <a
-              href="https://github.com/gurkanfikretgunak"
+              href="https://x.com/gurkandev"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ 
-                color: '#0066cc', 
-                textDecoration: 'underline',
-                minHeight: '44px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '0.25em 0',
-              }}
+              className="text-primary hover:text-primary/80 underline-offset-4 hover:underline transition-colors min-h-[44px] inline-flex items-center px-1"
             >
-              GitHub
+              X
             </a>
-          </GitHubHoverCard>
-          {' | '}
-          <a
-            href="https://x.com/gurkandev"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              color: '#0066cc', 
-              textDecoration: 'underline',
-              minHeight: '44px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              padding: '0.25em 0',
-            }}
-          >
-            X
-          </a>
-          {' | '}
-          <LinkedInHoverCard username="gurkanfikretgunak">
-            <a
-              href="https://www.linkedin.com/in/gurkanfikretgunak"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ 
-                color: '#0066cc', 
-                textDecoration: 'underline',
-                minHeight: '44px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '0.25em 0',
-              }}
-            >
-              LinkedIn
-            </a>
-          </LinkedInHoverCard>
-        </p>
-      </div>
-      <div style={{ fontSize: 'clamp(0.8rem, 2vw, 0.85rem)', color: '#999' }}>
-        <GitHubHoverCard repo="gurkanfikretgunak/cursor">
-          <a
-            href="https://github.com/gurkanfikretgunak/cursor"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ 
-              color: '#999', 
-              textDecoration: 'underline',
-              minHeight: '44px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              padding: '0.25em 0',
-            }}
-          >
-            View Source Code
-          </a>
-        </GitHubHoverCard>
-        {' | '}
-        <ServiceHealth />
-        {commitInfo && (
-          <>
-            {' | '}
-            <span
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-              style={{
-                color: '#999',
-                fontFamily: 'var(--font-jetbrains-mono), monospace',
-                cursor: 'help',
-                textDecoration: 'underline',
-                textDecorationStyle: 'dotted',
-                position: 'relative',
-                display: 'inline-block',
-                minHeight: '44px',
-                alignItems: 'center',
-                padding: '0.25em 0',
-              }}
-            >
-              {commitInfo.shortHash}
-              {showTooltip && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: '100%',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    marginBottom: '8px',
-                    width: '300px',
-                    maxWidth: 'calc(100vw - 32px)',
-                    backgroundColor: tooltipStyles.backgroundColor,
-                    border: tooltipStyles.border,
-                    borderRadius: '6px',
-                    boxShadow: tooltipStyles.boxShadow,
-                    zIndex: 1000,
-                    pointerEvents: 'none',
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif',
-                    fontSize: '14px',
-                    lineHeight: '1.5',
-                    color: tooltipStyles.color,
-                    overflow: 'hidden',
-                    animation: 'fadeIn 0.15s ease-out',
-                  }}
-                >
-                  {/* Header */}
-                  <div style={{ 
-                    padding: '16px', 
-                    borderBottom: `1px solid ${tooltipStyles.borderBottomColor}`,
-                  }}>
-                    <div style={{ 
-                      fontWeight: 600, 
-                      fontSize: '14px', 
-                      marginBottom: '4px',
-                      fontFamily: 'var(--font-jetbrains-mono), monospace',
-                      color: tooltipStyles.color,
-                    }}>
-                      Commit Hash
-                    </div>
-                    <div style={{ 
-                      color: tooltipStyles.mutedColor, 
-                      fontSize: '12px',
-                      fontFamily: 'var(--font-jetbrains-mono), monospace',
-                      wordBreak: 'break-all',
-                    }}>
-                      {commitInfo.hash}
-                    </div>
-                  </div>
-                  
-                  {/* Message */}
-                  <div style={{ padding: '12px 16px' }}>
-                    <div style={{ fontSize: '14px', color: tooltipStyles.color }}>
-                      {commitInfo.message}
-                    </div>
-                  </div>
-                  
-                  {/* Arrow */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: '-6px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      width: 0,
-                      height: 0,
-                      borderLeft: '6px solid transparent',
-                      borderRight: '6px solid transparent',
-                      borderTop: `6px solid ${tooltipStyles.backgroundColor}`,
-                    }}
-                  />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: '-7px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      width: 0,
-                      height: 0,
-                      borderLeft: '7px solid transparent',
-                      borderRight: '7px solid transparent',
-                      borderTop: tooltipStyles.border,
-                    }}
-                  />
-                </div>
-              )}
-            </span>
-          </>
-        )}
+            <Separator orientation="vertical" className="h-4" />
+            <LinkedInHoverCard username="gurkanfikretgunak">
+              <a
+                href="https://www.linkedin.com/in/gurkanfikretgunak"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 underline-offset-4 hover:underline transition-colors min-h-[44px] inline-flex items-center px-1"
+              >
+                LinkedIn
+              </a>
+            </LinkedInHoverCard>
+          </div>
+
+          {/* Secondary links and info */}
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+            <GitHubHoverCard repo="gurkanfikretgunak/cursor">
+              <a
+                href="https://github.com/gurkanfikretgunak/cursor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground underline-offset-4 hover:underline transition-colors min-h-[44px] inline-flex items-center px-1"
+              >
+                View Source Code
+              </a>
+            </GitHubHoverCard>
+            <Separator orientation="vertical" className="h-4" />
+            <ServiceHealth />
+            {commitInfo && (
+              <>
+                <Separator orientation="vertical" className="h-4" />
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="cursor-help underline decoration-dotted underline-offset-2 min-h-[44px] inline-flex items-center px-1 font-mono">
+                        {commitInfo.shortHash}
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-sm">
+                      <Card className="border-0 shadow-none p-0">
+                        <CardHeader className="pb-3">
+                          <CardTitle className="text-sm font-mono">
+                            Commit Hash
+                          </CardTitle>
+                          <CardDescription className="text-xs font-mono break-all">
+                            {commitInfo.hash}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <p className="text-sm">{commitInfo.message}</p>
+                        </CardContent>
+                      </Card>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </footer>
   )
 }
-

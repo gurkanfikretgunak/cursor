@@ -1,40 +1,41 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { Badge } from '@/ui/badge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/ui/tooltip'
+import { Button } from '@/ui/button'
+import { cn } from '@/lib/utils'
 
 type HealthStatus = 'idle' | 'checking' | 'healthy' | 'problem'
 
 export default function ServiceHealth() {
   const [status, setStatus] = useState<HealthStatus>('idle')
-  const [showTooltip, setShowTooltip] = useState(false)
   const [showCheckingText, setShowCheckingText] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [hasChecked, setHasChecked] = useState(false)
 
-  // Auto-check on component mount (only once)
   useEffect(() => {
     if (!hasChecked) {
       checkVercelStatus()
       setHasChecked(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // Empty dependency array - run only once on mount
+  }, [hasChecked])
 
   const checkVercelStatus = async () => {
-    // First: Show pulsing dot (blue pulse animation)
     setStatus('checking')
     setShowCheckingText(false)
     
-    // After pulse animation, show "checking" text
     setTimeout(() => {
       setShowCheckingText(true)
-    }, 800) // Show pulse for 800ms
+    }, 800)
     
-    // Start checking after pulse
     setTimeout(async () => {
       try {
-        // Check Vercel status page API
-        // Using status.vercel.com status page API
         const statusResponse = await fetch('https://www.vercel-status.com/api/v2/status.json', {
           method: 'GET',
           headers: {
@@ -43,9 +44,8 @@ export default function ServiceHealth() {
           cache: 'no-store',
         })
 
-        // Also check if our own site is responding
         const controller = new AbortController()
-        const timeoutId = setTimeout(() => controller.abort(), 5000) // 5 second timeout
+        const timeoutId = setTimeout(() => controller.abort(), 5000)
         
         const siteResponse = await fetch(window.location.origin, {
           method: 'HEAD',
@@ -59,28 +59,23 @@ export default function ServiceHealth() {
 
         if (statusResponse.ok) {
           const statusData = await statusResponse.json()
-          // Check if Vercel status is operational
-          // status page returns: "none", "minor", "major", "critical"
           const indicator = statusData?.status?.indicator
           isHealthy = indicator === 'none' || indicator === 'minor'
         }
 
-        // Wait for "checking" text fade out animation (1.5s) before showing result
         if (siteResponse.ok && isHealthy) {
           setTimeout(() => {
             setIsTransitioning(true)
             setShowCheckingText(false)
-            // Smooth transition to healthy state
             setTimeout(() => {
               setStatus('healthy')
               setIsTransitioning(false)
-            }, 300) // Short delay for smooth transition
-          }, 2000) // Wait for fade animation to complete
+            }, 300)
+          }, 2000)
         } else {
           setTimeout(() => {
             setIsTransitioning(true)
             setShowCheckingText(false)
-            // Smooth transition to problem state
             setTimeout(() => {
               setStatus('problem')
               setIsTransitioning(false)
@@ -88,7 +83,6 @@ export default function ServiceHealth() {
           }, 2000)
         }
       } catch (error) {
-        // On error, show problem status
         setTimeout(() => {
           setIsTransitioning(true)
           setShowCheckingText(false)
@@ -98,7 +92,7 @@ export default function ServiceHealth() {
           }, 300)
         }, 2000)
       }
-    }, 800) // Start check after pulse
+    }, 800)
   }
 
   const handleClick = () => {
@@ -107,50 +101,17 @@ export default function ServiceHealth() {
     }
   }
 
-  const getDotColor = () => {
+  const getStatusVariant = (): 'default' | 'secondary' | 'destructive' | 'outline' => {
     switch (status) {
       case 'checking':
-        return '#0066cc' // Blue for checking
+        return 'secondary'
       case 'healthy':
-        return '#22c55e' // Green for healthy
+        return 'default'
       case 'problem':
-        return '#ea580c' // Dark orange for problem
+        return 'destructive'
       default:
-        return '#999' // Gray for idle
+        return 'outline'
     }
-  }
-
-  const getDotStyle = () => {
-    const baseStyle: React.CSSProperties = {
-      width: '8px',
-      height: '8px',
-      borderRadius: '50%',
-      backgroundColor: getDotColor(),
-      display: 'inline-block',
-      cursor: 'pointer',
-      transition: 'background-color 0.6s ease, opacity 0.6s ease, transform 0.6s ease',
-      position: 'relative',
-      verticalAlign: 'middle',
-      marginLeft: '4px',
-      opacity: isTransitioning ? 0.5 : 1,
-    }
-
-    if (status === 'checking') {
-      return {
-        ...baseStyle,
-        animation: 'pulse 1s ease-in-out infinite',
-        opacity: 1,
-      }
-    }
-
-    if (isTransitioning) {
-      return {
-        ...baseStyle,
-        animation: 'softShift 0.6s ease-out forwards',
-      }
-    }
-
-    return baseStyle
   }
 
   const getStatusText = () => {
@@ -167,75 +128,37 @@ export default function ServiceHealth() {
   }
 
   return (
-    <span
-        onClick={handleClick}
-        onMouseEnter={() => {
-          if (status !== 'idle' && status !== 'checking') {
-            setShowTooltip(true)
-          }
-        }}
-        onMouseLeave={() => setShowTooltip(false)}
-        style={{
-          position: 'relative',
-          display: 'inline-flex',
-          alignItems: 'center',
-          cursor: 'pointer',
-          minHeight: '44px',
-          padding: '0.25em 0',
-        }}
-      >
-        <span style={getDotStyle()} />
-        {showCheckingText && (
-          <span
-            style={{
-              fontSize: 'clamp(0.8rem, 2vw, 0.85rem)',
-              color: '#999',
-              marginLeft: '6px',
-              animation: 'fadeOut 1.5s ease-out forwards',
-              display: 'inline-block',
-              transition: 'opacity 0.5s ease',
-            }}
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClick}
+            className="h-auto p-0 min-h-[44px] inline-flex items-center gap-1.5"
+            disabled={status === 'checking'}
           >
-            checking
-          </span>
-        )}
-        {showTooltip && (status === 'healthy' || status === 'problem') && (
-              <span
-                style={{
-                  position: 'absolute',
-                  bottom: '100%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  marginBottom: '4px',
-                  padding: '6px 10px',
-                  backgroundColor: '#333',
-                  color: '#fff',
-                  borderRadius: '4px',
-                  fontSize: '11px',
-                  whiteSpace: 'nowrap',
-                  zIndex: 1000,
-                  pointerEvents: 'none',
-                  fontFamily: 'var(--font-jetbrains-mono), monospace',
-                  animation: 'fadeIn 0.15s ease-out',
-                }}
-              >
-                Vercel status: {getStatusText()}
-                <span
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: 0,
-                    height: 0,
-                    borderLeft: '4px solid transparent',
-                    borderRight: '4px solid transparent',
-                    borderTop: '4px solid #333',
-                  }}
-                />
+            <Badge
+              variant={getStatusVariant()}
+              className={cn(
+                'h-2 w-2 rounded-full p-0',
+                status === 'checking' && 'animate-pulse',
+                isTransitioning && 'opacity-50'
+              )}
+            />
+            {showCheckingText && (
+              <span className="text-xs text-muted-foreground animate-in fade-in-0 fade-out-0">
+                checking
               </span>
+            )}
+          </Button>
+        </TooltipTrigger>
+        {(status === 'healthy' || status === 'problem') && (
+          <TooltipContent>
+            <p className="text-sm">Vercel status: {getStatusText()}</p>
+          </TooltipContent>
         )}
-      </span>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
-

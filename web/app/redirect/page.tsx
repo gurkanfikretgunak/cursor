@@ -3,6 +3,9 @@
 import { useEffect, useState, Suspense, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import BlurTransition from '@/components/BlurTransition'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/ui/card'
+import { Button } from '@/ui/button'
+import { Badge } from '@/ui/badge'
 
 function RedirectContent() {
   const searchParams = useSearchParams()
@@ -18,7 +21,6 @@ function RedirectContent() {
       return
     }
 
-    // Track redirect start with Sentry
     if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
         process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
       import('@sentry/nextjs').then((Sentry) => {
@@ -45,7 +47,6 @@ function RedirectContent() {
             },
           })
         } catch (error) {
-          // Invalid URL, still track but without domain parsing
           if (error instanceof Error) {
             Sentry.setContext('redirect', {
               destination,
@@ -67,7 +68,6 @@ function RedirectContent() {
             intervalId = null
           }
           
-          // Track redirect completion with timing
           if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
               process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
             import('@sentry/nextjs').then((Sentry) => {
@@ -96,7 +96,6 @@ function RedirectContent() {
             })
           }
           
-          // Small delay before redirect for smoother transition
           setTimeout(() => {
             window.location.href = destination
           }, 100)
@@ -113,7 +112,6 @@ function RedirectContent() {
     }
   }, [destination, router])
 
-  // Track manual link click
   const handleManualClick = () => {
     redirectType.current = 'manual'
     const duration = Date.now() - redirectStartTime.current
@@ -147,101 +145,41 @@ function RedirectContent() {
   }
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        zIndex: 10000,
-        padding: '1rem',
-        animation: 'fadeIn 300ms ease-in',
-      }}
-    >
+    <div className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-background p-4 animate-in fade-in duration-300">
       <BlurTransition duration={600} delay={0} blurAmount={20}>
-        <div
-          style={{
-            textAlign: 'center',
-            padding: 'clamp(1rem, 4vw, 2rem)',
-            maxWidth: '600px',
-            width: '100%',
-          }}
-        >
-          <div
-            style={{
-              fontSize: 'clamp(1.25rem, 4vw, 1.5rem)',
-              fontWeight: 400,
-              marginBottom: '1.5rem',
-              color: '#333',
-              fontFamily: 'var(--font-jetbrains-mono), monospace',
-            }}
-          >
-            Redirecting to:
-          </div>
-          <div
-            style={{
-              fontSize: 'clamp(0.9rem, 3vw, 1.1rem)',
-              fontWeight: 300,
-              marginBottom: '2rem',
-              color: '#0066cc',
-              fontFamily: 'var(--font-jetbrains-mono), monospace',
-              wordBreak: 'break-all',
-              padding: '1rem',
-              backgroundColor: '#f5f5f5',
-              borderRadius: '8px',
-              border: '1px solid #ddd',
-              overflowWrap: 'break-word',
-            }}
-          >
-            {destination}
-          </div>
-          <div
-            style={{
-              fontSize: 'clamp(1.5rem, 6vw, 2rem)',
-              fontWeight: 600,
-              color: '#00d4ff',
-              fontFamily: 'var(--font-jetbrains-mono), monospace',
-              minHeight: '3rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {countdown > 0 ? countdown : 'Redirecting...'}
-          </div>
-          <div
-            style={{
-              marginTop: '2rem',
-              fontSize: 'clamp(0.85rem, 2.5vw, 0.9rem)',
-              color: '#666',
-              fontFamily: 'var(--font-jetbrains-mono), monospace',
-            }}
-          >
-            Click{' '}
-            <a
-              href={destination}
-              onClick={handleManualClick}
-              style={{
-                color: '#0066cc',
-                textDecoration: 'underline',
-                cursor: 'pointer',
-                minHeight: '44px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '0.25em 0',
-              }}
-            >
-              here
-            </a>{' '}
-            if you are not redirected automatically
-          </div>
-        </div>
+        <Card className="w-full max-w-lg">
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl sm:text-2xl font-normal">
+              Redirecting to:
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="rounded-lg border bg-muted p-4">
+              <p className="text-sm sm:text-base font-light break-all text-primary">
+                {destination}
+              </p>
+            </div>
+            <div className="flex items-center justify-center min-h-[3rem]">
+              <Badge variant="default" className="text-2xl sm:text-3xl font-semibold px-4 py-2">
+                {countdown > 0 ? countdown : 'Redirecting...'}
+              </Badge>
+            </div>
+          </CardContent>
+          <CardContent>
+            <CardDescription className="text-center text-sm sm:text-base">
+              Click{' '}
+              <Button
+                variant="link"
+                onClick={handleManualClick}
+                className="h-auto p-0 text-primary underline-offset-4"
+                asChild
+              >
+                <a href={destination}>here</a>
+              </Button>{' '}
+              if you are not redirected automatically
+            </CardDescription>
+          </CardContent>
+        </Card>
       </BlurTransition>
     </div>
   )
@@ -251,27 +189,8 @@ export default function RedirectPage() {
   return (
     <Suspense
       fallback={
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#fff',
-            padding: '1rem',
-          }}
-        >
-          <div
-            style={{
-              fontFamily: 'var(--font-jetbrains-mono), monospace',
-              color: '#333',
-              fontSize: 'clamp(0.9rem, 3vw, 1rem)',
-            }}
-          >
+        <div className="fixed inset-0 flex items-center justify-center bg-background p-4">
+          <div className="text-muted-foreground text-sm sm:text-base font-mono">
             Loading...
           </div>
         </div>
@@ -281,4 +200,3 @@ export default function RedirectPage() {
     </Suspense>
   )
 }
-

@@ -8,9 +8,6 @@ export default async function Home() {
   const readmeContent = await getReadmeContent()
 
   return (
-    <main>
-      <MarkdownRenderer content={readmeContent} />
-    </main>
+    <MarkdownRenderer content={readmeContent} />
   )
 }
-

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
-import { sendDeploymentNotification } from '@/lib/email';
 
 /**
  * POST /api/webhooks/vercel
@@ -87,7 +86,9 @@ export async function POST(request: NextRequest) {
     const changelogUrl = `${repoUrl}/blob/main/CHANGELOG.md`;
 
     // Send email notifications to all active subscribers
+    // Use dynamic import to avoid build-time execution
     try {
+      const { sendDeploymentNotification } = await import('@/lib/email');
       await sendDeploymentNotification({
         version,
         url,
@@ -134,6 +135,17 @@ export async function POST(request: NextRequest) {
  * Health check endpoint for webhook configuration
  */
 export async function GET() {
+  // Prevent execution during build time
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json(
+      {
+        message: 'Vercel webhook endpoint is active',
+        configured: false,
+      },
+      { status: 200 }
+    );
+  }
+
   return NextResponse.json(
     {
       message: 'Vercel webhook endpoint is active',

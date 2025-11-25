@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/ui/card'
+import { Button } from '@/ui/button'
 
 export default function GlobalError({
   error,
@@ -10,7 +12,6 @@ export default function GlobalError({
   reset: () => void
 }) {
   useEffect(() => {
-    // Log to Sentry if available and configured
     if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
         process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
       import('@sentry/nextjs').then((Sentry) => {
@@ -22,41 +23,22 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            padding: '2rem',
-            textAlign: 'center',
-            fontFamily: 'var(--font-jetbrains-mono), monospace',
-          }}
-        >
-          <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-            Something went wrong!
-          </h1>
-          <p style={{ marginBottom: '2rem', color: '#666' }}>
-            An error occurred. We've been notified and are looking into it.
-          </p>
-          <button
-            onClick={reset}
-            style={{
-              padding: '0.75rem 1.5rem',
-              backgroundColor: '#0066cc',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-            }}
-          >
-            Try again
-          </button>
+        <div className="flex flex-col items-center justify-center min-h-screen p-8">
+          <Card className="w-full max-w-md">
+            <CardHeader>
+              <CardTitle className="text-2xl">Something went wrong!</CardTitle>
+              <CardDescription>
+                An error occurred. We've been notified and are looking into it.
+              </CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <Button onClick={reset} className="w-full">
+                Try again
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </body>
     </html>
   )
 }
-
