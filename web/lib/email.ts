@@ -6,7 +6,14 @@
 import { Resend } from 'resend';
 import { getActiveSubscribers } from './db';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend lazily to avoid build-time errors when API key is missing
+function getResendClient(): Resend {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not configured');
+  }
+  return new Resend(apiKey);
+}
 
 export interface DeploymentNotificationData {
   version: string;
@@ -123,6 +130,7 @@ Unsubscribe: ${siteUrl}/api/unsubscribe?email={{email}}
   `;
 
   // Send emails to all subscribers
+  const resend = getResendClient();
   const emailPromises = subscribers.map(async (subscriber) => {
     try {
       // Replace {{email}} placeholder with actual email for unsubscribe link
@@ -202,6 +210,7 @@ Thank you for subscribing to deployment notifications! Please verify your email 
 Verify your email: ${verificationUrl}
   `;
 
+  const resend = getResendClient();
   await resend.emails.send({
     from: fromEmail,
     to: email,
@@ -210,4 +219,8 @@ Verify your email: ${verificationUrl}
     text: emailText,
   });
 }
+
+
+
+
 

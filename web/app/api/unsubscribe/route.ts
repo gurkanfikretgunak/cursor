@@ -19,6 +19,12 @@ export async function POST(request: NextRequest) {
     }
 
     const identifier = email || token;
+    if (!identifier) {
+      return NextResponse.json(
+        { error: 'Email or unsubscribe token is required' },
+        { status: 400 }
+      );
+    }
     const success = await unsubscribeSubscriber(identifier);
 
     if (!success) {
@@ -59,6 +65,12 @@ export async function GET(request: NextRequest) {
     }
 
     const identifier = email || token;
+    if (!identifier) {
+      return NextResponse.json(
+        { error: 'Email or unsubscribe token is required' },
+        { status: 400 }
+      );
+    }
     const success = await unsubscribeSubscriber(identifier);
 
     if (!success) {
@@ -121,4 +133,8 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+
+
+
 

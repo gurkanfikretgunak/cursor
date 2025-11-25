@@ -124,15 +124,16 @@ export default function RootLayout({
   const commitInfo = getLastCommit()
 
   return (
-    <html lang="en">
-      <body className={jetbrainsMono.variable}>
+    <html lang="en" className={jetbrainsMono.variable}>
+      <body className="min-h-screen flex flex-col antialiased">
         <LinkInterceptor>
           <Header />
-          {children}
+          <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {children}
+          </main>
           <Footer commitInfo={commitInfo} />
         </LinkInterceptor>
       </body>
     </html>
   )
 }
-

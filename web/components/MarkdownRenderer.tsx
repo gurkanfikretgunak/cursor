@@ -5,6 +5,7 @@ import { join } from 'path'
 import * as Sentry from '@sentry/nextjs'
 import GitHubHoverCard from './GitHubHoverCard'
 import LinkedInHoverCard from './LinkedInHoverCard'
+import { Card } from '@/ui/card'
 
 const GITHUB_REPO_URL = 'https://github.com/gurkanfikretgunak/cursor/blob/main'
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/gurkanfikretgunak/cursor/main'
@@ -14,32 +15,19 @@ interface MarkdownRendererProps {
 }
 
 function convertLinksToGitHub(markdown: string): string {
-  // Convert ALL relative links to GitHub URLs
-  // Pattern: [text](path/to/file.md) -> [text](https://github.com/.../path/to/file.md)
-  // Also handles: [text](path/to/file.json), [text](path/to/), etc.
   return markdown.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
     (match, text, path) => {
-      // Skip if already a full URL (http/https)
       if (path.startsWith('http://') || path.startsWith('https://')) {
         return match
       }
-      
-      // Skip anchor links (starting with #)
       if (path.startsWith('#')) {
         return match
       }
-      
-      // Skip mailto links
       if (path.startsWith('mailto:')) {
         return match
       }
-      
-      // Convert all relative paths to GitHub URLs
-      // Remove leading slash if present
       const cleanPath = path.startsWith('/') ? path.slice(1) : path
-      
-      // Convert to GitHub URL
       const githubUrl = `${GITHUB_REPO_URL}/${cleanPath}`
       return `[${text}](${githubUrl})`
     }
@@ -49,21 +37,16 @@ function convertLinksToGitHub(markdown: string): string {
 export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   const processedContent = convertLinksToGitHub(content)
   
-  // Helper function to extract GitHub username or repo from URL
   const extractGitHubInfo = (href: string): { username?: string; repo?: string } | null => {
     if (!href) return null
     
     try {
       const url = new URL(href)
-      // Handle both github.com and www.github.com
       if (url.hostname === 'github.com' || url.hostname === 'www.github.com') {
         const pathParts = url.pathname.split('/').filter(Boolean)
         if (pathParts.length === 1) {
-          // User profile: https://github.com/username or https://github.com/username/
           return { username: pathParts[0] }
         } else if (pathParts.length >= 2) {
-          // Repository: https://github.com/owner/repo or https://github.com/owner/repo/
-          // Ignore additional path parts like /tree/main, /blob/main, etc.
           return { repo: `${pathParts[0]}/${pathParts[1]}` }
         }
       }
@@ -73,16 +56,13 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
     return null
   }
 
-  // Helper function to extract LinkedIn username from URL
   const extractLinkedInInfo = (href: string): string | null => {
     if (!href) return null
     
     try {
       const url = new URL(href)
-      // Handle linkedin.com and www.linkedin.com
       if (url.hostname === 'linkedin.com' || url.hostname === 'www.linkedin.com') {
         const pathParts = url.pathname.split('/').filter(Boolean)
-        // LinkedIn profile format: /in/username
         if (pathParts.length >= 2 && pathParts[0] === 'in') {
           return pathParts[1]
         }
@@ -94,75 +74,132 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
   }
   
   return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      components={{
-        a: ({ node, href, children, ...props }: any) => {
-          const githubInfo = href ? extractGitHubInfo(href) : null
-          const linkedInUsername = href ? extractLinkedInInfo(href) : null
-          const link = (
-            <a href={href} {...props} target="_blank" rel="noopener noreferrer">
-              {children}
-            </a>
-          )
-          
-          if (githubInfo) {
-            if (githubInfo.username) {
+    <div className="prose prose-slate max-w-none dark:prose-invert">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          a: ({ node, href, children, ...props }: any) => {
+            const githubInfo = href ? extractGitHubInfo(href) : null
+            const linkedInUsername = href ? extractLinkedInInfo(href) : null
+            const link = (
+              <a 
+                href={href} 
+                {...props} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 underline-offset-4 hover:underline transition-colors"
+              >
+                {children}
+              </a>
+            )
+            
+            if (githubInfo) {
+              if (githubInfo.username) {
+                return (
+                  <GitHubHoverCard username={githubInfo.username}>
+                    {link}
+                  </GitHubHoverCard>
+                )
+              } else if (githubInfo.repo) {
+                return (
+                  <GitHubHoverCard repo={githubInfo.repo}>
+                    {link}
+                  </GitHubHoverCard>
+                )
+              }
+            }
+            
+            if (linkedInUsername) {
               return (
-                <GitHubHoverCard username={githubInfo.username}>
+                <LinkedInHoverCard username={linkedInUsername}>
                   {link}
-                </GitHubHoverCard>
-              )
-            } else if (githubInfo.repo) {
-              return (
-                <GitHubHoverCard repo={githubInfo.repo}>
-                  {link}
-                </GitHubHoverCard>
+                </LinkedInHoverCard>
               )
             }
-          }
-          
-          if (linkedInUsername) {
-            return (
-              <LinkedInHoverCard username={linkedInUsername}>
-                {link}
-              </LinkedInHoverCard>
-            )
-          }
-          
-          return link
-        },
-        code: ({ node, inline, className, children, ...props }: any) => {
-          const match = /language-(\w+)/.exec(className || '')
-          return !inline && match ? (
-            <pre>
-              <code className={className} {...props}>
+            
+            return link
+          },
+          code: ({ node, inline, className, children, ...props }: any) => {
+            const match = /language-(\w+)/.exec(className || '')
+            return !inline && match ? (
+              <Card className="p-4 my-4 overflow-x-auto">
+                <pre className="m-0">
+                  <code className={`${className} font-mono text-sm`} {...props}>
+                    {children}
+                  </code>
+                </pre>
+              </Card>
+            ) : (
+              <code 
+                className={`${className} font-mono text-sm bg-muted px-1.5 py-0.5 rounded`} 
+                {...props}
+              >
                 {children}
               </code>
-            </pre>
-          ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
-          )
-        },
-      }}
-    >
-      {processedContent}
-    </ReactMarkdown>
+            )
+          },
+          h1: ({ node, ...props }: any) => (
+            <h1 className="text-3xl font-bold mt-6 mb-4 first:mt-0" {...props} />
+          ),
+          h2: ({ node, ...props }: any) => (
+            <h2 className="text-2xl font-semibold mt-5 mb-3" {...props} />
+          ),
+          h3: ({ node, ...props }: any) => (
+            <h3 className="text-xl font-semibold mt-4 mb-2" {...props} />
+          ),
+          h4: ({ node, ...props }: any) => (
+            <h4 className="text-lg font-semibold mt-3 mb-2" {...props} />
+          ),
+          p: ({ node, ...props }: any) => (
+            <p className="mb-4 leading-relaxed" {...props} />
+          ),
+          ul: ({ node, ...props }: any) => (
+            <ul className="mb-4 pl-6 list-disc" {...props} />
+          ),
+          ol: ({ node, ...props }: any) => (
+            <ol className="mb-4 pl-6 list-decimal" {...props} />
+          ),
+          li: ({ node, ...props }: any) => (
+            <li className="mb-2" {...props} />
+          ),
+          blockquote: ({ node, ...props }: any) => (
+            <blockquote 
+              className="border-l-4 border-border pl-4 my-4 text-muted-foreground italic" 
+              {...props} 
+            />
+          ),
+          hr: ({ node, ...props }: any) => (
+            <hr className="border-t border-border my-8" {...props} />
+          ),
+          table: ({ node, ...props }: any) => (
+            <div className="my-4 overflow-x-auto">
+              <table className="w-full border-collapse" {...props} />
+            </div>
+          ),
+          th: ({ node, ...props }: any) => (
+            <th className="border-b border-border p-2 text-left font-semibold" {...props} />
+          ),
+          td: ({ node, ...props }: any) => (
+            <td className="border-b border-border p-2" {...props} />
+          ),
+          img: ({ node, ...props }: any) => (
+            <img className="max-w-full h-auto my-4 rounded" {...props} />
+          ),
+        }}
+      >
+        {processedContent}
+      </ReactMarkdown>
+    </div>
   )
 }
 
 export async function getReadmeContent(): Promise<string> {
-  // In production/Vercel: Always fetch from GitHub raw API for latest content
-  // In local development: Try file system first, then fallback to GitHub
   const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1'
   
   if (isProduction) {
-    // Always fetch from GitHub in production to get the latest version
     try {
       const response = await fetch(`${GITHUB_RAW_URL}/README.md`, {
-        cache: 'no-store', // Always fetch fresh content, no caching
+        cache: 'no-store',
       })
       
       if (response.ok) {
@@ -173,20 +210,14 @@ export async function getReadmeContent(): Promise<string> {
       }
     } catch (error) {
       console.error('Failed to fetch README from GitHub:', error)
-      // Fall through to file system fallback
     }
   }
   
-  // Fallback: Try file system (for local development or if GitHub fetch fails)
   const cwd = process.cwd()
   const possiblePaths = [
-    // From parent directory (root of repo) - most common case when running from web/
     join(cwd, '..', 'README.md'),
-    // Alternative parent path
     join(cwd, '../README.md'),
-    // In production build (after prebuild copy) or if README was copied to web/
     join(cwd, 'README.md'),
-    // Try from web directory if cwd is already at root
     join(cwd, 'web', 'README.md'),
   ]
 
@@ -197,12 +228,10 @@ export async function getReadmeContent(): Promise<string> {
         return content
       }
     } catch (error) {
-      // Continue to next path
       continue
     }
   }
 
-  // Last resort: Try GitHub API even in development if file system fails
   try {
     const response = await fetch(`${GITHUB_RAW_URL}/README.md`, {
       cache: 'no-store',
@@ -215,7 +244,6 @@ export async function getReadmeContent(): Promise<string> {
       }
     }
   } catch (error) {
-    // Log to Sentry if available and configured
     if (error instanceof Error && 
         process.env.NEXT_PUBLIC_SENTRY_DSN && 
         process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
@@ -230,7 +258,6 @@ export async function getReadmeContent(): Promise<string> {
 
   const errorMessage = 'Could not load README.md from GitHub or file system'
   
-  // Log to Sentry if available and configured
   if (process.env.NEXT_PUBLIC_SENTRY_DSN && 
       process.env.NEXT_PUBLIC_SENTRY_DSN !== 'your_sentry_dsn_here') {
     Sentry.captureMessage(errorMessage, {
