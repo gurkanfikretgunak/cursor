@@ -1,31 +1,13 @@
 import { BaseRepository } from '../core/base.repository';
+import { Singleton } from '../core/singleton.mixin';
 import { IAccountRepository } from '../interfaces/account.repository.interface';
 import { CreateAccountData } from '../dtos/account.dto';
 
 /**
  * Account Repository Implementation
  * Handles all account-related database operations
- * Singleton Pattern
  */
-class AccountRepository extends BaseRepository implements IAccountRepository {
-  private static instance: AccountRepository;
-
-  /**
-   * Private constructor for singleton pattern
-   */
-  private constructor() {
-    super();
-  }
-
-  /**
-   * Get singleton instance
-   */
-  public static getInstance(): AccountRepository {
-    if (!AccountRepository.instance) {
-      AccountRepository.instance = new AccountRepository();
-    }
-    return AccountRepository.instance;
-  }
+class AccountRepositoryBase extends BaseRepository implements IAccountRepository {
 
   /**
    * Create a new account
@@ -66,5 +48,11 @@ class AccountRepository extends BaseRepository implements IAccountRepository {
     return rows[0];
   }
 }
+
+/**
+ * Account Repository with Singleton Pattern
+ */
+const AccountRepository = Singleton(AccountRepositoryBase);
+type AccountRepository = InstanceType<typeof AccountRepository>;
 
 export default AccountRepository;
