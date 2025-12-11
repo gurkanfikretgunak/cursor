@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.2...v0.1.3) (2025-12-11)
+
+
+### Features
+
+* Add comprehensive guide on agentic code development without manual planning ([2077396](https://github.com/gurkanfikretgunak/cursor/commit/20773965fbf716d0d2bdb7c4b20d292eb03e8930))
+
 ### [0.1.2](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.1...v0.1.2) (2025-12-09)
 
 
