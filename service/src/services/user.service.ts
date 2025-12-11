@@ -1,26 +1,24 @@
+import { Singleton } from '../core/singleton.mixin';
 import { IUserService } from '../interfaces/user.service.interface';
 import { IUserRepository } from '../interfaces/user.repository.interface';
 import { IAccountRepository } from '../interfaces/account.repository.interface';
 import { User } from '../types/user.types';
 import { RegisterUserInput, UpdateUserInput } from '../dtos/user.dto';
 import { CreateUserData, CreateAccountData } from '../dtos';
+import { validateEmail, validatePassword, validateUpdateInput, isNotEmpty } from '../utils/validation';
+import { generateUserId, generateAccountId } from '../utils/id-generator';
 import bcrypt from 'bcryptjs';
 import { userRepository, accountRepository } from '../repositories';
 
 /**
  * User Service Implementation
  * Handles all user-related business logic
- * Singleton Pattern
  */
-class UserService implements IUserService {
-  private static instance: UserService;
+class UserServiceBase implements IUserService {
   private userRepository: IUserRepository;
   private accountRepository: IAccountRepository;
 
-  /**
-   * Private constructor for singleton pattern
-   */
-  private constructor(
+  constructor(
     userRepo?: IUserRepository,
     accountRepo?: IAccountRepository
   ) {
@@ -29,21 +27,12 @@ class UserService implements IUserService {
   }
 
   /**
-   * Get singleton instance
-   */
-  public static getInstance(): UserService {
-    if (!UserService.instance) {
-      UserService.instance = new UserService();
-    }
-    return UserService.instance;
-  }
-
-  /**
    * Register a new user with email and password
    */
   async registerUser(input: RegisterUserInput): Promise<User> {
     // Validate input
-    this.validateRegisterInput(input);
+    validateEmail(input.email);
+    validatePassword(input.password);
 
     // Check if user already exists
     const exists = await this.userRepository.existsByEmail(input.email);
@@ -52,10 +41,10 @@ class UserService implements IUserService {
     }
 
     // Hash password
-    const passwordHash = await this.hashPassword(input.password);
+    const passwordHash = await bcrypt.hash(input.password, 10);
 
     // Generate user ID
-    const userId = this.generateUserId();
+    const userId = generateUserId();
 
     // Create user
     const userData: CreateUserData = {
@@ -68,7 +57,7 @@ class UserService implements IUserService {
 
     // Create credentials account
     const accountData: CreateAccountData = {
-      id: this.generateAccountId(),
+      id: generateAccountId(),
       userId: user.id,
       type: 'credentials',
       provider: 'credentials',
@@ -85,10 +74,7 @@ class UserService implements IUserService {
    * Get user by ID
    */
   async getUserById(userId: string): Promise<User | null> {
-    if (!userId || userId.trim() === '') {
-      throw new Error('User ID is required');
-    }
-
+    isNotEmpty(userId, 'User ID');
     return await this.userRepository.findById(userId);
   }
 
@@ -96,10 +82,7 @@ class UserService implements IUserService {
    * Get user by email
    */
   async getUserByEmail(email: string): Promise<User | null> {
-    if (!email || email.trim() === '') {
-      throw new Error('Email is required');
-    }
-
+    validateEmail(email);
     return await this.userRepository.findByEmail(email);
   }
 
@@ -107,9 +90,7 @@ class UserService implements IUserService {
    * Update user profile
    */
   async updateUser(userId: string, input: UpdateUserInput): Promise<User> {
-    if (!userId || userId.trim() === '') {
-      throw new Error('User ID is required');
-    }
+    isNotEmpty(userId, 'User ID');
 
     // Verify user exists
     const user = await this.userRepository.findById(userId);
@@ -118,7 +99,7 @@ class UserService implements IUserService {
     }
 
     // Validate update input
-    this.validateUpdateInput(input);
+    validateUpdateInput(input);
 
     // Update user
     return await this.userRepository.update(userId, input);
@@ -154,64 +135,12 @@ class UserService implements IUserService {
     return user;
   }
 
-  /**
-   * Hash password using bcrypt
-   */
-  private async hashPassword(password: string): Promise<string> {
-    return await bcrypt.hash(password, 10);
-  }
-
-  /**
-   * Generate unique user ID
-   */
-  private generateUserId(): string {
-    return `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
-
-  /**
-   * Generate unique account ID
-   */
-  private generateAccountId(): string {
-    return `account_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
-
-  /**
-   * Validate register input
-   */
-  private validateRegisterInput(input: RegisterUserInput): void {
-    if (!input.email || input.email.trim() === '') {
-      throw new Error('Email is required');
-    }
-
-    if (!this.isValidEmail(input.email)) {
-      throw new Error('Invalid email format');
-    }
-
-    if (!input.password || input.password.trim() === '') {
-      throw new Error('Password is required');
-    }
-
-    if (input.password.length < 8) {
-      throw new Error('Password must be at least 8 characters');
-    }
-  }
-
-  /**
-   * Validate update input
-   */
-  private validateUpdateInput(input: UpdateUserInput): void {
-    if (Object.keys(input).length === 0) {
-      throw new Error('At least one field must be provided for update');
-    }
-  }
-
-  /**
-   * Validate email format
-   */
-  private isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
 }
+
+/**
+ * User Service with Singleton Pattern
+ */
+const UserService = Singleton(UserServiceBase);
+type UserService = InstanceType<typeof UserService>;
 
 export default UserService;

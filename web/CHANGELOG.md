@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.1...v0.1.2) (2025-12-09)
+
+
+### Code Refactoring
+
+* Extract common logic to base classes and utilities ([a7b9bf0](https://github.com/gurkanfikretgunak/cursor/commit/a7b9bf0bdcecd0bc3d4eef3b8a7254f1187e88ed))
+
 ### 0.1.1 (2025-11-25)
 
 
