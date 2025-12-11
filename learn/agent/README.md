@@ -17,6 +17,10 @@ Agents work alongside Cursor's chat and Composer features to provide more autono
 
 - **[flutter-agent.json](flutter-agent.json)**: Flutter development agent configuration with conservative settings for code review
 
+## Documentation
+
+- **[Agentic Code without Developer Planning](agentic-code-without-planning.md)**: Comprehensive guide on leveraging agentic development workflows, including autonomous task planning, triggering strategies, and Cursor-specific implementation
+
 ## Agent Configuration
 
 ### Agent Settings in Cursor
@@ -229,6 +233,7 @@ See [MCP Configuration](../mcp/README.md) for more details.
 
 ## Resources
 
+- **[Agentic Code without Developer Planning](agentic-code-without-planning.md)**: Complete guide to autonomous agentic development workflows
 - [Cursor Agent Documentation](https://cursor.sh/docs/agents)
 - [Cursor Settings Guide](https://cursor.sh/docs/settings)
 - [Best Practices for AI-Assisted Development](https://cursor.sh/docs/best-practices)
