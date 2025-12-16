@@ -28,7 +28,7 @@ export default function GlobalError({
             <CardHeader>
               <CardTitle className="text-2xl">Something went wrong!</CardTitle>
               <CardDescription>
-                An error occurred. We've been notified and are looking into it.
+                An error occurred. We&apos;ve been notified and are looking into it.
               </CardDescription>
             </CardHeader>
             <CardFooter>
