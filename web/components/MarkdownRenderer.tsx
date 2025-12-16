@@ -182,8 +182,8 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
           td: ({ node, ...props }: any) => (
             <td className="border-b border-border p-2" {...props} />
           ),
-          img: ({ node, ...props }: any) => (
-            <img className="max-w-full h-auto my-4 rounded" {...props} />
+          img: ({ node, alt, ...props }: any) => (
+            <img className="max-w-full h-auto my-4 rounded" alt={alt ?? ''} {...props} />
           ),
         }}
       >

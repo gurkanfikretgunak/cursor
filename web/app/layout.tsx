@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import LinkInterceptor from '@/components/LinkInterceptor'
+import InitialSplash from '@/components/InitialSplash'
 import { getLastCommit } from '@/lib/git'
 
 const jetbrainsMono = JetBrains_Mono({
@@ -126,6 +127,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={jetbrainsMono.variable}>
       <body className="min-h-screen flex flex-col antialiased">
+        <InitialSplash />
         <LinkInterceptor>
           <Header />
           <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
