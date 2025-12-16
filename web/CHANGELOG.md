@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.3...v0.1.4) (2025-12-16)
+
+
+### Features
+
+* Add initial splash screen and update dependencies ([4b1d820](https://github.com/gurkanfikretgunak/cursor/commit/4b1d820a3043e2c83086f8ea6c1738364479a302))
+
 ### [0.1.3](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.2...v0.1.3) (2025-12-11)
 
 
