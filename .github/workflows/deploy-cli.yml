@@ -1,0 +1,70 @@
+name: Deploy CLI Tool
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 1.0.0)'
+        required: false
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./tools/cli
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+          cache-dependency-path: tools/cli/package-lock.json
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Verify package
+        run: |
+          node bin/gurkan.js --help
+          npm pack --dry-run
+      
+      - name: Publish to npm
+        if: github.event_name == 'release' || github.event.inputs.version != ''
+        id: npm-publish
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            npm version ${{ github.event.release.tag_name }} --no-git-tag-version || true
+          elif [ "${{ github.event.inputs.version }}" != "" ]; then
+            npm version ${{ github.event.inputs.version }} --no-git-tag-version || true
+          fi
+          npm publish --access public
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Notify Telegram
+        if: always()
+        run: |
+          STATUS="${{ job.status == 'success' && '✅ Published' || '❌ Failed' }}"
+          if [ "${{ job.status }}" == "success" ]; then
+            VERSION=$(node -p "require('./package.json').version")
+            MESSAGE="<b>${STATUS}</b>%0A📦 <b>Repo:</b> ${{ github.repository }}%0A📌 <b>Package:</b> <a href='https://www.npmjs.com/package/gurkan'>gurkan</a>%0A🏷️ <b>Version:</b> ${VERSION}%0A👤 <b>By:</b> ${{ github.actor }}%0A🔗 <a href='${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'>View Run</a>"
+          else
+            MESSAGE="<b>${STATUS}</b>%0A📦 <b>Repo:</b> ${{ github.repository }}%0A👤 <b>By:</b> ${{ github.actor }}%0A🔗 <a href='${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'>View Run</a>"
+          fi
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d parse_mode="HTML" \
+            -d text="${MESSAGE}"
+

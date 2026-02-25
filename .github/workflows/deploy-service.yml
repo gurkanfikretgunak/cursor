@@ -1,0 +1,127 @@
+name: Deploy Service
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'service/**'
+      - '.github/workflows/deploy-service.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Service
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./service
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: service/package-lock.json
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build service
+        run: npm run build
+      
+      - name: Create deployment package
+        run: |
+          mkdir -p deploy
+          cp -r dist deploy/
+          cp package.json deploy/
+          cp package-lock.json deploy/
+          # Only copy production dependencies
+          cd deploy && npm ci --production
+      
+      - name: Upload deployment package
+        uses: actions/upload-artifact@v4
+        with:
+          name: service-deployment
+          path: service/deploy
+          retention-days: 7
+      
+      - name: Notify Telegram
+        if: always()
+        run: |
+          STATUS="${{ job.status == 'success' && '✅ Built' || '❌ Failed' }}"
+          MESSAGE="<b>${STATUS}</b>%0A📦 <b>Repo:</b> ${{ github.repository }}%0A🌿 <b>Branch:</b> ${{ github.ref_name }}%0A🔖 <b>Commit:</b> <a href='https://github.com/${{ github.repository }}/commit/${{ github.sha }}'>${{ github.sha }}</a>%0A👤 <b>By:</b> ${{ github.actor }}%0A🔗 <a href='${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'>View Run</a>"
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d parse_mode="HTML" \
+            -d text="${MESSAGE}"
+      
+      # Option 1: Deploy to Railway (uncomment if using Railway)
+      # - name: Deploy to Railway
+      #   uses: bervProject/railway-deploy@v1.0.0
+      #   with:
+      #     railway_token: ${{ secrets.RAILWAY_TOKEN }}
+      #     service: auth-service
+      #     dockerfile_path: ./Dockerfile
+      
+      # Option 2: Deploy to Render (uncomment if using Render)
+      # - name: Deploy to Render
+      #   uses: johnbeynon/render-deploy@v0.0.8
+      #   with:
+      #     service-id: ${{ secrets.RENDER_SERVICE_ID }}
+      #     api-key: ${{ secrets.RENDER_API_KEY }}
+      
+      # Option 3: Deploy via SSH (uncomment if deploying to your own server)
+      # - name: Deploy to server via SSH
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.DEPLOY_HOST }}
+      #     username: ${{ secrets.DEPLOY_USER }}
+      #     key: ${{ secrets.DEPLOY_SSH_KEY }}
+      #     source: "service/deploy/*"
+      #     target: "/opt/auth-service"
+      #     strip_components: 1
+      
+      # Option 4: Build and push Docker image to Docker Hub (uncomment if using Docker Hub)
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+      # 
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      # 
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: ./service
+      #     push: true
+      #     tags: ${{ secrets.DOCKER_USERNAME }}/auth-service:latest
+      #     cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/auth-service:latest
+      #     cache-to: type=inline
+      
+      # Option 5: Build and push Docker image to GitHub Container Registry (uncomment if using GHCR)
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+      # 
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      # 
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: ./service
+      #     push: true
+      #     tags: ghcr.io/${{ github.repository }}/auth-service:latest
+      #     cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/auth-service:latest
+      #     cache-to: type=inline
+

@@ -1,10 +1,10 @@
-# Gurkan CLI Tool
+# Gurkan CLI
 
-A simple CLI tool to get information about Gurkan Fikret Gunak - Mobile Team Lead at Masterfabric and Flutter Developer.
+CLI tool to get information about **Gurkan Fikret Gunak** — Mobile Team Lead at Ticimax, Open Source Development Lead at MasterFabric, Cursor Ambassador.
 
 ## Installation
 
-This package can be run directly via `npx` without installation:
+Run directly via `npx` (no installation required):
 
 ```bash
 npx gurkan
@@ -20,8 +20,16 @@ gurkan
 ## Usage
 
 ```bash
-# Display full information
+# Display full information (English)
 npx gurkan
+
+# Turkish version
+npx gurkan -tr
+npx gurkan --tr
+
+# With npm start (use -- to pass args to script)
+npm start -- -tr
+npm run start:tr
 
 # Show help
 npx gurkan --help
@@ -35,13 +43,13 @@ npx gurkan --contact
 # Show repositories
 npx gurkan --repos
 
-# Show Masterfabric company information
+# Show MasterFabric company information
 npx gurkan --masterfabric
 
 # Show MasterFabric open source projects
 npx gurkan --opensource
 
-# Open GitHub profile
+# Open GitHub profile in browser
 npx gurkan --github
 
 # Show version
@@ -50,87 +58,63 @@ npx gurkan --version
 
 ## Options
 
-- `--help, -h` - Show help message
-- `--github, -g` - Open GitHub profile in browser
-- `--skills, -s` - Display skills only
-- `--contact, -c` - Display contact information only
-- `--repos, -r` - Show repositories information (masterfabric, masterfabric-mobile)
-- `--projects, -p` - Alias for --repos
-- `--masterfabric, -m` - Show Masterfabric company information
-- `--opensource, -o` - Show MasterFabric open source projects
-- `--version, -v` - Show version number
+| Option | Description |
+|--------|-------------|
+| `--help, -h` | Show help message |
+| `--tr, -tr` | Turkish version (labels & content) |
+| `--github, -g` | Open GitHub profile in browser |
+| `--skills, -s` | Display skills only |
+| `--contact, -c` | Display contact information only |
+| `--repos, -r` | Show repositories information |
+| `--projects, -p` | Alias for --repos |
+| `--masterfabric, -m` | Show MasterFabric company information |
+| `--opensource, -o` | Show MasterFabric open source projects |
+| `--version, -v` | Show version number |
 
 ## Features
 
+### Multi-language
+- **English** (default)
+- **Turkish** (`-tr` or `--tr`) — labels, skills, interests, about sections
+
 ### Company Information
-- **Masterfabric**: Technology company focused on innovative mobile and web solutions
-- Specializes in Flutter-based mobile applications
-- End-to-end development services
-- **Open Source Development**: Actively contributes to open source with various projects
+- **Ticimax** — Turkey's leading e-commerce platform. 14,000+ companies. Omnichannel, B2B, marketplace integrations.
+- **MasterFabric** — AI-powered product development, education, open source first. Flutter, BaaS platforms, developer tools.
 
 ### Roles
-- **Ticimax Mobile Team Lead**: Leading mobile development at Ticimax
-- **MasterFabric Mobile Team Lead**: Leading mobile development at MasterFabric
+- Ticimax Mobile Team Lead
+- MasterFabric Open Sourced Development Lead
 
 ### Repositories
-- **masterfabric**: Main Masterfabric repository - Core platform and infrastructure
-- **masterfabric-mobile**: Masterfabric Mobile App - Flutter-based mobile application
+- **masterfabric** — Core platform and infrastructure
+- **masterfabric-mobile** — Flutter-based mobile application
 
-### Personal Information
-- Name, role, location
-- Skills and technologies
-- Interests and expertise
-- Contact information
+### Open Source Projects
+- MasterFabric Platform — Self-hosted BaaS platform
+- OSMEA — Mobile E-commerce Architecture Framework
+- MasterFabric Welcome — Developer onboarding portal
+- Developer Manifesto — Manifesto publishing platform
 
 ## Examples
 
 ```bash
-# Basic usage - shows all information
+# Full info in English
 npx gurkan
 
-# Quick skills check
-npx gurkan --skills
+# Full info in Turkish
+npx gurkan -tr
 
-# Get contact info
+# Skills in Turkish
+npx gurkan --skills -tr
+
+# Contact info
 npx gurkan --contact
 
-# View repositories
-npx gurkan --repos
-
-# Learn about Masterfabric
+# Learn about MasterFabric
 npx gurkan --masterfabric
-
-# View open source projects
-npx gurkan --opensource
 ```
 
-## Publishing to npm
-
-To publish this package to npm:
-
-1. **Login to npm**:
-   ```bash
-   npm login
-   ```
-
-2. **Check package name availability**:
-   ```bash
-   npm search gurkan
-   ```
-
-3. **Publish**:
-   ```bash
-   npm publish
-   ```
-
-4. **After publishing**, anyone can run:
-   ```bash
-   npx gurkan
-   ```
-
 ## Development
-
-### Local Development
 
 ```bash
 # Install dependencies
@@ -141,24 +125,36 @@ npm start
 
 # Or directly
 node bin/gurkan.js
+
+# Test Turkish
+node bin/gurkan.js -tr
+npm run start:tr
+
+# Test name & bio table
+node bin/gurkan.js --test
+npm run start:test
 ```
 
-### Testing Locally Before Publishing
-
-You can test the package locally using `npm link`:
+### Test before publishing
 
 ```bash
-# In the package directory
 npm link
-
-# Now you can run from anywhere
 gurkan
+gurkan -tr
 ```
 
 ## Dependencies
 
-- `chalk` - Terminal string styling
-- `boxen` - Create boxes in terminal
+- **chalk** — Terminal string styling
+- **boxen** — Create boxes in terminal
+
+## Publishing
+
+```bash
+npm login
+npm version patch
+npm publish
+```
 
 ## License
 
@@ -166,5 +162,4 @@ MIT
 
 ## Author
 
-Gurkan Fikret Gunak - Mobile Team Lead at Masterfabric
-
+Gurkan Fikret Gunak — [Ticimax](https://ticimax.com) · [MasterFabric](https://masterfabric.co)

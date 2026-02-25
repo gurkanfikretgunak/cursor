@@ -3,6 +3,40 @@
 const chalk = require('chalk');
 const boxen = require('boxen');
 
+const args = process.argv.slice(2);
+const lang = (args.includes('-tr') || args.includes('--tr')) ? 'tr' : 'en';
+
+const i18n = {
+  en: {
+    location: 'Turkey',
+    about: {
+      masterfabric: 'MasterFabric - AI-powered product development, education, open source first. Innovative mobile and web solutions with Flutter, BaaS platforms, and developer tools.',
+      ticimax: 'Ticimax - One of Turkey\'s leading e-commerce platforms. 14,000+ companies. Omnichannel, B2B, marketplace integrations, 99.9% uptime cloud.'
+    },
+    labels: { name: 'Name', roles: 'Roles', company: 'Company', ossCompany: 'OSS Company', location: 'Location',
+      aboutMasterfabric: 'About MasterFabric', aboutTicimax: 'About Ticimax', openSource: 'Open Source Development',
+      keyRepos: 'Key Repositories', volunteer: 'Volunteer', skills: 'Skills', interests: 'Interests', contact: 'Contact',
+      runOpensource: 'Run --opensource for details', runRepos: 'Run --repos for details', helpHint: 'Run with --help for more options' },
+    skills: ['Flutter', 'Dart', 'Mobile Development', 'AI', 'Cloud (Azure, AWS)', 'Project Planning', 'High-Traffic Backend Architects', 'Team Leadership', 'Clean Architecture', 'State Management', 'CI/CD', 'RESTful APIs', 'Firebase', 'Git', 'Agile/Scrum'],
+    interests: ['Mobile App Development', 'Flutter Ecosystem', 'Software Architecture', 'Team Leadership', 'Open Source', 'Innovative Solutions', 'Cross-platform Development']
+  },
+  tr: {
+    location: 'Türkiye',
+    about: {
+      masterfabric: 'MasterFabric - AI destekli ürün geliştirme, eğitim, açık kaynak öncelikli. Flutter, BaaS platformları ve geliştirici araçları.',
+      ticimax: 'Ticimax - Türkiye\'nin önde gelen e-ticaret platformlarından biri. 14.000+ şirket. Omnichannel, B2B, marketplace entegrasyonları.'
+    },
+    labels: { name: 'İsim', roles: 'Roller', company: 'Şirket', ossCompany: 'Açık Kaynak Şirketi', location: 'Konum',
+      aboutMasterfabric: 'MasterFabric Hakkında', aboutTicimax: 'Ticimax Hakkında', openSource: 'Açık Kaynak Geliştirme',
+      keyRepos: 'Ana Depolar', volunteer: 'Gönüllülük', skills: 'Yetenekler', interests: 'İlgi Alanları', contact: 'İletişim',
+      runOpensource: 'Detaylar için --opensource', runRepos: 'Detaylar için --repos', helpHint: 'Daha fazla seçenek için --help' },
+    skills: ['Flutter', 'Dart', 'Mobil Geliştirme', 'AI', 'Cloud (Azure, AWS)', 'Proje Planlama', 'Yüksek Trafikli Backend Mimarları', 'Takım Liderliği', 'Clean Architecture', 'State Management', 'CI/CD', 'RESTful APIs', 'Firebase', 'Git', 'Agile/Scrum'],
+    interests: ['Mobil Uygulama Geliştirme', 'Flutter Ekosistemi', 'Yazılım Mimarisi', 'Takım Liderliği', 'Açık Kaynak', 'Yenilikçi Çözümler', 'Cross-platform Geliştirme']
+  }
+};
+
+const t = i18n[lang];
+
 const info = {
   name: 'Gurkan Fikret Gunak',
   role: 'Mobile Team Lead',
@@ -14,22 +48,34 @@ const info = {
   githubUrl: 'https://github.com/gurkanfikretgunak',
   location: 'Türkiye',
   company: {
-    name: 'MasterFabric',
-    website: 'https://masterfabric.co',
-    description: 'MasterFabric is a technology company focused on innovative mobile and web solutions. We specialize in building scalable applications using modern technologies like Flutter, providing end-to-end development services from concept to deployment.',
-    email: 'gurkanfikretgunak@masterfabric.co',
-    openSource: {
-      title: 'MasterFabric Open Sourced Development',
-      description: 'MasterFabric actively contributes to open source development, creating and maintaining various open-source projects including BaaS platforms, mobile frameworks, and developer tools. Our open-source initiatives focus on building scalable, production-ready solutions for the developer community.',
-      projects: [
-        'MasterFabric Platform - Self-hosted BaaS platform',
-        'OSMEA - Mobile E-commerce Architecture Framework',
-        'MasterFabric Welcome - Developer onboarding portal',
-        'Developer Manifesto - Manifesto publishing platform'
-      ]
+    name: 'Ticimax',
+    website: 'https://ticimax.com',
+    ossCompany: {
+      name: 'MasterFabric',
+      website: 'https://masterfabric.co',
+      description: 'MasterFabric is a technology company focused on innovative mobile and web solutions. We specialize in building scalable applications using modern technologies like Flutter.',
+      openSource: {
+        title: 'MasterFabric Open Sourced Development',
+        description: 'MasterFabric actively contributes to open source development, creating and maintaining various open-source projects including BaaS platforms, mobile frameworks, and developer tools.',
+        projects: [
+          'MasterFabric Platform - Self-hosted BaaS platform',
+          'OSMEA - Mobile E-commerce Architecture Framework',
+          'MasterFabric Welcome - Developer onboarding portal',
+          'Developer Manifesto - Manifesto publishing platform'
+        ]
+      }
     }
   },
+  about: {
+    masterfabric: 'MasterFabric - AI-powered product development, education, open source first. Innovative mobile and web solutions with Flutter, BaaS platforms, and developer tools.',
+    ticimax: 'Ticimax - One of Turkey\'s leading e-commerce platforms. 14,000+ companies. Omnichannel, B2B, marketplace integrations, 99.9% uptime cloud.'
+  },
   repositories: [
+    {
+      name: 'gurkanfikretgunak',
+      url: 'https://github.com/gurkanfikretgunak',
+      description: 'Personal GitHub - Open source contributions and projects'
+    },
     {
       name: 'masterfabric',
       url: 'https://github.com/masterfabric',
@@ -45,8 +91,11 @@ const info = {
     'Flutter',
     'Dart',
     'Mobile Development',
+    'AI',
+    'Cloud (Azure, AWS)',
+    'Project Planning',
+    'High-Traffic Backend Architects',
     'Team Leadership',
-    'Project Management',
     'Clean Architecture',
     'State Management',
     'CI/CD',
@@ -66,9 +115,14 @@ const info = {
   ],
   contact: {
     github: 'https://github.com/gurkanfikretgunak',
-    email: 'gurkanfikretgunak@masterfabric.co',
-    company: 'https://masterfabric.co'
-  }
+    email: 'gurkangunak@ticimax.com',
+    ossEmail: 'gurkanfikretgunak@masterfabric.co',
+    company: 'Ticimax - https://ticimax.com',
+    ossCompany: 'MasterFabric - https://masterfabric.co'
+  },
+  volunteer: [
+    { title: 'Cursor Ambassador', description: { en: 'Community program representing experienced developers worldwide. Documentation, events, hackathon/workshop organization, Cursor workflow optimization support.', tr: 'Cursor\'un dünya çapında deneyimli geliştiricileri temsil eden topluluk programı. Dokümantasyon, etkinlikler, hackathon/workshop, Cursor workflow optimizasyonu desteği.' } }
+  ]
 };
 
 function displayInfo() {
@@ -77,37 +131,45 @@ ${chalk.bold.cyan('╔═══════════════════�
 ${chalk.bold.cyan('║')}  ${chalk.bold.white('GURKAN FIKRET GUNAK - Mobile Team Lead')}  ${chalk.bold.cyan('║')}
 ${chalk.bold.cyan('╚══════════════════════════════════════════╝')}
 
-${chalk.bold('👤 Name:')}        ${info.name}
-${chalk.bold('💼 Roles:')}       ${info.roles.map(r => chalk.green(r)).join(chalk.dim(' | '))}
-${chalk.bold('🏢 Company:')}     ${chalk.magenta(info.company.name)} - ${chalk.cyan(info.company.website)}
-${chalk.bold('📍 Location:')}    ${info.location}
+${chalk.bold('👤 ' + t.labels.name + ':')}        ${info.name}
+${chalk.bold('💼 ' + t.labels.roles + ':')}       ${info.roles.map(r => chalk.green(r)).join(chalk.dim(' | '))}
+${chalk.bold('🏢 ' + t.labels.company + ':')}     ${chalk.magenta(info.company.name)} - ${chalk.cyan(info.company.website)}
+${chalk.bold('🌐 ' + t.labels.ossCompany + ':')}  ${chalk.magenta(info.company.ossCompany.name)} - ${chalk.cyan(info.company.ossCompany.website)}
+${chalk.bold('📍 ' + t.labels.location + ':')}    ${t.location}
 ${chalk.bold('🔗 GitHub:')}      ${chalk.cyan(info.githubUrl)}
 
-${chalk.bold('🏢 About Masterfabric:')}
-   ${chalk.dim(info.company.description)}
+${chalk.bold('🏢 ' + t.labels.aboutMasterfabric + ':')}
+   ${chalk.dim(t.about.masterfabric)}
 
-${chalk.bold('🌐 Open Source Development:')}
-   ${chalk.dim(info.company.openSource.description)}
-   ${chalk.dim('Run --opensource for details')}
+${chalk.bold('🏢 ' + t.labels.aboutTicimax + ':')}
+   ${chalk.dim(t.about.ticimax)}
 
-${chalk.bold('📦 Key Repositories:')}
-${info.repositories.map(repo => `   ${chalk.green('•')} ${chalk.bold(repo.name)}`)
-  .join('\n')}
-   ${chalk.dim('Run --repos for details')}
+${chalk.bold('🌐 ' + t.labels.openSource + ':')}
+   ${chalk.dim(info.company.ossCompany.openSource.description)}
+   ${chalk.dim(t.labels.runOpensource)}
 
-${chalk.bold('🛠️  Skills:')}
-${info.skills.map(skill => `   • ${chalk.green(skill)}`).join('\n')}
+${chalk.bold('📦 ' + t.labels.keyRepos + ':')}
+${info.repositories.map(repo => `   ${chalk.green('•')} ${chalk.bold(repo.name)}`).join('\n')}
+   ${chalk.dim(t.labels.runRepos)}
 
-${chalk.bold('🎯 Interests:')}
-${info.interests.map(interest => `   • ${chalk.yellow(interest)}`).join('\n')}
+${chalk.bold('🤝 ' + t.labels.volunteer + ':')}
+${info.volunteer.map(v => `   ${chalk.green('•')} ${chalk.bold(v.title)} - ${chalk.dim(v.description[lang])}`).join('\n')}
 
-${chalk.bold('📧 Contact:')}
+${chalk.bold('🛠️  ' + t.labels.skills + ':')}
+${t.skills.map(skill => `   • ${chalk.green(skill)}`).join('\n')}
+
+${chalk.bold('🎯 ' + t.labels.interests + ':')}
+${t.interests.map(interest => `   • ${chalk.yellow(interest)}`).join('\n')}
+
+${chalk.bold('📧 ' + t.labels.contact + ':')}
    ${chalk.cyan('GitHub:')} ${info.contact.github}
    ${chalk.cyan('Email:')}  ${info.contact.email}
-   ${chalk.cyan('Company:')} ${info.contact.company}
+   ${chalk.cyan('OSS Email:')} ${info.contact.ossEmail}
+   ${chalk.cyan(t.labels.company + ':')} ${info.contact.company}
+   ${chalk.cyan(t.labels.ossCompany + ':')} ${info.contact.ossCompany}
 
 ${chalk.dim('───────────────────────────────────────────────────────────')}
-${chalk.dim('Run with --help for more options')}
+${chalk.dim(t.labels.helpHint)}
 `;
 
   console.log(boxen(output, {
@@ -136,6 +198,7 @@ ${chalk.bold('Options:')}
   --masterfabric, -m   Show Masterfabric company information
   --opensource, -o     Show MasterFabric open source projects
   --version, -v        Show version number
+  --tr, -tr            Turkish version
 
 ${chalk.bold('Examples:')}
   npx gurkan
@@ -145,13 +208,14 @@ ${chalk.bold('Examples:')}
   npx gurkan --repos
   npx gurkan --masterfabric
   npx gurkan --opensource
+  npx gurkan -tr
 `;
   console.log(help);
 }
 
 function displaySkills() {
-  console.log(chalk.bold.cyan('\n🛠️  Skills:\n'));
-  info.skills.forEach(skill => {
+  console.log(chalk.bold.cyan('\n🛠️  ' + t.labels.skills + ':\n'));
+  t.skills.forEach(skill => {
     console.log(`   ${chalk.green('•')} ${chalk.green(skill)}`);
   });
   console.log('');
@@ -160,8 +224,10 @@ function displaySkills() {
 function displayContact() {
   console.log(chalk.bold.cyan('\n📧 Contact Information:\n'));
   console.log(`   ${chalk.bold('GitHub:')} ${chalk.cyan(info.contact.github)}`);
-  console.log(`   ${chalk.bold('Email:')}  ${chalk.yellow(info.contact.email)}`);
-  console.log(`   ${chalk.bold('Company:')} ${chalk.magenta(info.contact.company)}`);
+  console.log(`   ${chalk.bold('Email:')} ${chalk.yellow(info.contact.email)}`);
+  console.log(`   ${chalk.bold('OSS Email:')} ${chalk.yellow(info.contact.ossEmail)}`);
+  console.log(`   ${chalk.bold(t.labels.company + ':')} ${chalk.magenta(info.contact.company)}`);
+  console.log(`   ${chalk.bold(t.labels.ossCompany + ':')} ${chalk.magenta(info.contact.ossCompany)}`);
   console.log('');
 }
 
@@ -181,18 +247,18 @@ ${chalk.bold.magenta('╔══════════════════�
 ${chalk.bold.magenta('║')}              ${chalk.bold.white('MASTERFABRIC')}              ${chalk.bold.magenta('║')}
 ${chalk.bold.magenta('╚═══════════════════════════════════════════════════════╝')}
 
-${chalk.bold('🏢 Company:')}     ${chalk.magenta(info.company.name)}
-${chalk.bold('🌐 Website:')}      ${chalk.cyan(info.company.website)}
-${chalk.bold('📧 Email:')}       ${chalk.yellow(info.contact.email)}
+${chalk.bold('🏢 Company:')}     ${chalk.magenta(info.company.ossCompany.name)}
+${chalk.bold('🌐 Website:')}      ${chalk.cyan(info.company.ossCompany.website)}
+${chalk.bold('📧 OSS Email:')}   ${chalk.yellow(info.contact.ossEmail)}
 
 ${chalk.bold('📝 About:')}
-   ${info.company.description}
+   ${info.company.ossCompany.description}
 
 ${chalk.bold('👨‍💼 Team Lead:')}  ${info.name}
 ${chalk.bold('💼 Roles:')}       ${info.roles.map(r => chalk.green(r)).join(chalk.dim(' | '))}
 
 ${chalk.bold('🌐 Open Source Development:')}
-   ${info.company.openSource.description}
+   ${info.company.ossCompany.openSource.description}
 
 ${chalk.bold('📦 Key Projects:')}
 ${info.repositories.map(repo => 
@@ -208,7 +274,7 @@ ${chalk.bold('🛠️  Technologies:')}
    ${chalk.green('•')} Open Source Contributions
 
 ${chalk.dim('───────────────────────────────────────────────────────────')}
-${chalk.dim('Visit:')} ${chalk.cyan(info.company.website)}
+${chalk.dim('Visit:')} ${chalk.cyan(info.company.ossCompany.website)}
 ${chalk.dim('Run --opensource for open source projects')}
 `;
 
@@ -227,11 +293,11 @@ ${chalk.bold.green('╔═══════════════════
 ${chalk.bold.green('║')}      ${chalk.bold.white('MASTERFABRIC OPEN SOURCE')}      ${chalk.bold.green('║')}
 ${chalk.bold.green('╚═══════════════════════════════════════════════════════╝')}
 
-${chalk.bold('🌐 ' + info.company.openSource.title + ':')}
-   ${info.company.openSource.description}
+${chalk.bold('🌐 ' + info.company.ossCompany.openSource.title + ':')}
+   ${info.company.ossCompany.openSource.description}
 
 ${chalk.bold('📦 Open Source Projects:')}
-${info.company.openSource.projects.map(project => 
+${info.company.ossCompany.openSource.projects.map(project => 
   `   ${chalk.green('•')} ${chalk.bold(project)}`
 ).join('\n')}
 
@@ -240,7 +306,7 @@ ${chalk.bold('💼 Roles:')}       ${info.roles.map(r => chalk.green(r)).join(ch
 
 ${chalk.bold('🔗 Explore More:')}
    ${chalk.cyan('GitHub:')} ${info.githubUrl}
-   ${chalk.cyan('Company:')} ${info.company.website}
+   ${chalk.cyan('Company:')} ${info.company.ossCompany.website}
 
 ${chalk.dim('───────────────────────────────────────────────────────────')}
 ${chalk.dim('All projects are open source and available on GitHub')}
@@ -276,8 +342,6 @@ function openGitHub() {
 }
 
 // Parse command line arguments
-const args = process.argv.slice(2);
-
 if (args.includes('--help') || args.includes('-h')) {
   displayHelp();
 } else if (args.includes('--skills') || args.includes('-s')) {
