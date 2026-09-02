@@ -1,6 +1,6 @@
 # Gurkan CLI
 
-CLI tool to get information about **Gurkan Fikret Gunak** — Mobile Team Lead at Ticimax, Open Source Development Lead at MasterFabric, Cursor Ambassador.
+CLI tool to get information about **Gurkan Fikret Gunak** — Mobile Team Lead at Ticimax, Open Source Development Lead at MasterFabric, SpaceXAI Ambassador, MasterFabric Academy.
 
 ## Installation
 
@@ -85,15 +85,24 @@ npx gurkan --version
 - Ticimax Mobile Team Lead
 - MasterFabric Open Sourced Development Lead
 
+### Volunteer
+- **SpaceXAI Ambassador** — Community program: documentation, events, hackathon/workshop, workflow optimization
+- **MasterFabric Academy** — Volunteer, free education track
+  - Website: [academy.masterfabric.co](https://academy.masterfabric.co)
+  - Curriculum / MCP: [masterfabric/one-hundered-days](https://github.com/masterfabric/one-hundered-days)
+  - Certificates & progress: [academy-app.masterfabric.co](https://academy-app.masterfabric.co)
+
 ### Repositories
 - **masterfabric** — Core platform and infrastructure
 - **masterfabric-mobile** — Flutter-based mobile application
+- **one-hundered-days** — MasterFabric Academy curriculum and education MCP
 
 ### Open Source Projects
 - MasterFabric Platform — Self-hosted BaaS platform
 - OSMEA — Mobile E-commerce Architecture Framework
 - MasterFabric Welcome — Developer onboarding portal
 - Developer Manifesto — Manifesto publishing platform
+- MasterFabric Academy — Free volunteer education track with MCP curriculum
 
 ## Examples
 
@@ -162,4 +171,4 @@ MIT
 
 ## Author
 
-Gurkan Fikret Gunak — [Ticimax](https://ticimax.com) · [MasterFabric](https://masterfabric.co)
+Gurkan Fikret Gunak — [Ticimax](https://ticimax.com) · [MasterFabric](https://masterfabric.co) · [MasterFabric Academy](https://academy.masterfabric.co)
