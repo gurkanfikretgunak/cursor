@@ -1,6 +1,6 @@
 # Gurkan CLI
 
-CLI tool to get information about **Gurkan Fikret Gunak** — Mobile Team Lead at Ticimax, Open Source Development Lead at MasterFabric, SpaceXAI Ambassador, MasterFabric Academy.
+CLI tool to get information about **Gurkan Fikret Gunak** — AI | Mobile Team Lead at Ticimax, Open Source Development Lead at MasterFabric, SpaceXAI Ambassador, MasterFabric Academy.
 
 ## Installation
 
@@ -82,6 +82,7 @@ npx gurkan --version
 - **MasterFabric** — AI-powered product development, education, open source first. Flutter, BaaS platforms, developer tools.
 
 ### Roles
+- AI | Mobile Team Lead
 - Ticimax Mobile Team Lead
 - MasterFabric Open Sourced Development Lead
 
