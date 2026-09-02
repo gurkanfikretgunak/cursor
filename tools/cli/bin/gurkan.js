@@ -61,7 +61,8 @@ const info = {
           'MasterFabric Platform - Self-hosted BaaS platform',
           'OSMEA - Mobile E-commerce Architecture Framework',
           'MasterFabric Welcome - Developer onboarding portal',
-          'Developer Manifesto - Manifesto publishing platform'
+          'Developer Manifesto - Manifesto publishing platform',
+          'MasterFabric Academy - Free volunteer education track with MCP curriculum'
         ]
       }
     }
@@ -85,6 +86,11 @@ const info = {
       name: 'masterfabric-mobile',
       url: 'https://github.com/masterfabric-mobile',
       description: 'MasterFabric Mobile App - Flutter-based mobile application'
+    },
+    {
+      name: 'one-hundered-days',
+      url: 'https://github.com/masterfabric/one-hundered-days',
+      description: 'MasterFabric Academy curriculum and education MCP'
     }
   ],
   skills: [
@@ -121,7 +127,19 @@ const info = {
     ossCompany: 'MasterFabric - https://masterfabric.co'
   },
   volunteer: [
-    { title: 'Cursor Ambassador', description: { en: 'Community program representing experienced developers worldwide. Documentation, events, hackathon/workshop organization, Cursor workflow optimization support.', tr: 'Cursor\'un dünya çapında deneyimli geliştiricileri temsil eden topluluk programı. Dokümantasyon, etkinlikler, hackathon/workshop, Cursor workflow optimizasyonu desteği.' } }
+    { title: 'SpaceXAI Ambassador', description: { en: 'Community program representing experienced developers worldwide. Documentation, events, hackathon/workshop organization, SpaceXAI workflow optimization support.', tr: 'SpaceXAI\'ın dünya çapında deneyimli geliştiricileri temsil eden topluluk programı. Dokümantasyon, etkinlikler, hackathon/workshop, SpaceXAI workflow optimizasyonu desteği.' } },
+    {
+      title: 'MasterFabric Academy',
+      description: {
+        en: 'Volunteer, free education track. Curriculum and education MCP live in the open-source repo; learners continue on the academy app to track progress and earn certificates.',
+        tr: 'Gönüllü, ücretsiz eğitim akışı. Müfredat ve eğitim MCP açık kaynak deposunda; öğrenenler ilerlemeyi takip edip sertifika almak için academy uygulamasında devam edebilir.'
+      },
+      links: [
+        { label: { en: 'Website', tr: 'Website' }, url: 'https://academy.masterfabric.co' },
+        { label: { en: 'Curriculum / MCP', tr: 'Müfredat / MCP' }, url: 'https://github.com/masterfabric/one-hundered-days' },
+        { label: { en: 'Certificates & Progress', tr: 'Sertifika ve İlerleme' }, url: 'https://academy-app.masterfabric.co' }
+      ]
+    }
   ]
 };
 
@@ -153,7 +171,14 @@ ${info.repositories.map(repo => `   ${chalk.green('•')} ${chalk.bold(repo.name
    ${chalk.dim(t.labels.runRepos)}
 
 ${chalk.bold('🤝 ' + t.labels.volunteer + ':')}
-${info.volunteer.map(v => `   ${chalk.green('•')} ${chalk.bold(v.title)} - ${chalk.dim(v.description[lang])}`).join('\n')}
+${info.volunteer.map(v => {
+    const line = `   ${chalk.green('•')} ${chalk.bold(v.title)} - ${chalk.dim(v.description[lang])}`;
+    const links = (v.links || []).map(l => {
+      const label = typeof l.label === 'string' ? l.label : l.label[lang];
+      return `     ${chalk.dim(label + ':')} ${chalk.cyan(l.url)}`;
+    }).join('\n');
+    return links ? `${line}\n${links}` : line;
+  }).join('\n')}
 
 ${chalk.bold('🛠️  ' + t.labels.skills + ':')}
 ${t.skills.map(skill => `   • ${chalk.green(skill)}`).join('\n')}
@@ -243,9 +268,9 @@ function displayRepositories() {
 
 function displayMasterfabric() {
   const output = `
-${chalk.bold.magenta('╔═══════════════════════════════════════════════════════╗')}
+${chalk.bold.magenta('╔══════════════════════════════════════════════════════╗')}
 ${chalk.bold.magenta('║')}              ${chalk.bold.white('MASTERFABRIC')}              ${chalk.bold.magenta('║')}
-${chalk.bold.magenta('╚═══════════════════════════════════════════════════════╝')}
+${chalk.bold.magenta('╚══════════════════════════════════════════════════════╝')}
 
 ${chalk.bold('🏢 Company:')}     ${chalk.magenta(info.company.ossCompany.name)}
 ${chalk.bold('🌐 Website:')}      ${chalk.cyan(info.company.ossCompany.website)}
@@ -289,9 +314,9 @@ ${chalk.dim('Run --opensource for open source projects')}
 
 function displayOpenSource() {
   const output = `
-${chalk.bold.green('╔═══════════════════════════════════════════════════════╗')}
+${chalk.bold.green('╔══════════════════════════════════════════════════════╗')}
 ${chalk.bold.green('║')}      ${chalk.bold.white('MASTERFABRIC OPEN SOURCE')}      ${chalk.bold.green('║')}
-${chalk.bold.green('╚═══════════════════════════════════════════════════════╝')}
+${chalk.bold.green('╚══════════════════════════════════════════════════════╝')}
 
 ${chalk.bold('🌐 ' + info.company.ossCompany.openSource.title + ':')}
    ${info.company.ossCompany.openSource.description}
@@ -308,7 +333,7 @@ ${chalk.bold('🔗 Explore More:')}
    ${chalk.cyan('GitHub:')} ${info.githubUrl}
    ${chalk.cyan('Company:')} ${info.company.ossCompany.website}
 
-${chalk.dim('───────────────────────────────────────────────────────────')}
+${chalk.dim('──────────────────────═════════════════════════════════════')}
 ${chalk.dim('All projects are open source and available on GitHub')}
 `;
 
@@ -362,4 +387,3 @@ if (args.includes('--help') || args.includes('-h')) {
 } else {
   displayInfo();
 }
-
