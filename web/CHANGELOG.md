@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.6...v0.1.7) (2026-09-02)
+
+
+### Features
+
+* add SpaceXAI Ambassador and MasterFabric Academy to CLI volunteer output ([a0be447](https://github.com/gurkanfikretgunak/cursor/commit/a0be447a5a761bada5697d1cd50717fcfa3f22f4))
+* update CLI volunteer profile for SpaceXAI Ambassador and MasterFabric Academy ([ca139d4](https://github.com/gurkanfikretgunak/cursor/commit/ca139d49367173098517f0b0235ad9b3d6876e03))
+
 ### [0.1.6](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.5...v0.1.6) (2026-04-19)
 
 ### [0.1.5](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.4...v0.1.5) (2026-02-25)
