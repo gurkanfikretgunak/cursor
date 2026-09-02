@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.9...v0.1.10) (2026-09-02)
+
+
+### Features
+
+* show AI | Mobile Team Lead as the gurkan CLI banner title ([490f40a](https://github.com/gurkanfikretgunak/cursor/commit/490f40ab6021edd0e00e7f28dd42bdb6afc1757e))
+
+
+### Bug Fixes
+
+* restore full gurkan CLI after truncated banner commit ([ab19930](https://github.com/gurkanfikretgunak/cursor/commit/ab19930fc6ede71b0ed2bf43a7d6ae516e623afe))
+
 ### [0.1.8](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.7...v0.1.8) (2026-09-02)
 
 ### [0.1.7](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.6...v0.1.7) (2026-09-02)
