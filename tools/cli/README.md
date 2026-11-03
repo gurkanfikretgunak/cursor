@@ -88,6 +88,7 @@ npx gurkan --version
 
 ### Volunteer
 - **SpaceXSI · Builder & Grok Bot Ambassador** — Community program: documentation, events, hackathon/workshop, workflow optimization
+- **Cursor Ambassador** (past, Nov 2025 – Sep 2026) — Mentorship for global AI development communities
 - **MasterFabric Academy** — Volunteer, free education track
   - Website: [academy.masterfabric.co](https://academy.masterfabric.co)
   - Curriculum / MCP: [masterfabric/one-hundered-days](https://github.com/masterfabric/one-hundered-days)

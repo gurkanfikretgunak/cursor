@@ -17,7 +17,7 @@ const i18n = {
       aboutMasterfabric: 'About MasterFabric', aboutTicimax: 'About Ticimax', openSource: 'Open Source Development',
       keyRepos: 'Key Repositories', volunteer: 'Volunteer', skills: 'Skills', interests: 'Interests', contact: 'Contact',
       runOpensource: 'Run --opensource for details', runRepos: 'Run --repos for details', helpHint: 'Run with --help for more options' },
-    skills: ['Flutter', 'Dart', 'Mobile Development', 'AI', 'Cloud (Azure, AWS)', 'Project Planning', 'High-Traffic Backend Architects', 'Team Leadership', 'Clean Architecture', 'State Management', 'CI/CD', 'RESTful APIs', 'Firebase', 'Git', 'Agile/Scrum'],
+    skills: ['Flutter', 'Dart', 'Mobile Development', 'AI', 'Cloud (Azure, AWS)', 'Project Planning', 'High-Traffic Backend Architects', 'Team Leadership', 'Clean Architecture', 'State Management', 'CI/CD', 'RESTful APIs', 'Firebase', 'Git', 'Agile/Scrum', 'Go (Golang)', 'NestJS', 'Swift', 'Kotlin', 'Java', 'React & React Native', 'Serverpod', 'Solution Architecture', 'Platform Engineering (White-label, Tenant-based)', 'Server-Driven UI (SDUI)', 'IoT (MQTT)', 'MCP (Model Context Protocol)', 'Agentic Workflows', 'LLM Integration', 'GitHub Copilot Enterprise', 'Azure DevOps Pipelines', 'Mobile DevOps', 'DevSecOps & AppSec', 'Appium (QA Automation)'],
     interests: ['Mobile App Development', 'Flutter Ecosystem', 'Software Architecture', 'Team Leadership', 'Open Source', 'Innovative Solutions', 'Cross-platform Development']
   },
   tr: {
@@ -30,7 +30,7 @@ const i18n = {
       aboutMasterfabric: 'MasterFabric Hakkında', aboutTicimax: 'Ticimax Hakkında', openSource: 'Açık Kaynak Geliştirme',
       keyRepos: 'Ana Depolar', volunteer: 'Gönüllülük', skills: 'Yetenekler', interests: 'İlgi Alanları', contact: 'İletişim',
       runOpensource: 'Detaylar için --opensource', runRepos: 'Detaylar için --repos', helpHint: 'Daha fazla seçenek için --help' },
-    skills: ['Flutter', 'Dart', 'Mobil Geliştirme', 'AI', 'Cloud (Azure, AWS)', 'Proje Planlama', 'Yüksek Trafikli Backend Mimarları', 'Takım Liderliği', 'Clean Architecture', 'State Management', 'CI/CD', 'RESTful APIs', 'Firebase', 'Git', 'Agile/Scrum'],
+    skills: ['Flutter', 'Dart', 'Mobil Geliştirme', 'AI', 'Cloud (Azure, AWS)', 'Proje Planlama', 'Yüksek Trafikli Backend Mimarları', 'Takım Liderliği', 'Clean Architecture', 'State Management', 'CI/CD', 'RESTful APIs', 'Firebase', 'Git', 'Agile/Scrum', 'Go (Golang)', 'NestJS', 'Swift', 'Kotlin', 'Java', 'React & React Native', 'Serverpod', 'Çözüm Mimarisi', 'Platform Mühendisliği (White-label, Tenant tabanlı)', 'Server-Driven UI (SDUI)', 'IoT (MQTT)', 'MCP (Model Context Protocol)', 'Agentic İş Akışları', 'LLM Entegrasyonu', 'GitHub Copilot Enterprise', 'Azure DevOps Pipelines', 'Mobil DevOps', 'DevSecOps & AppSec', 'Appium (QA Otomasyonu)'],
     interests: ['Mobil Uygulama Geliştirme', 'Flutter Ekosistemi', 'Yazılım Mimarisi', 'Takım Liderliği', 'Açık Kaynak', 'Yenilikçi Çözümler', 'Cross-platform Geliştirme']
   }
 };
@@ -108,7 +108,26 @@ const info = {
     'RESTful APIs',
     'Firebase',
     'Git',
-    'Agile/Scrum'
+    'Agile/Scrum',
+    'Go (Golang)',
+    'NestJS',
+    'Swift',
+    'Kotlin',
+    'Java',
+    'React & React Native',
+    'Serverpod',
+    'Solution Architecture',
+    'Platform Engineering (White-label, Tenant-based)',
+    'Server-Driven UI (SDUI)',
+    'IoT (MQTT)',
+    'MCP (Model Context Protocol)',
+    'Agentic Workflows',
+    'LLM Integration',
+    'GitHub Copilot Enterprise',
+    'Azure DevOps Pipelines',
+    'Mobile DevOps',
+    'DevSecOps & AppSec',
+    'Appium (QA Automation)'
   ],
   interests: [
     'Mobile App Development',
@@ -128,6 +147,7 @@ const info = {
   },
   volunteer: [
     { title: 'SpaceXSI · Builder & Grok Bot Ambassador', description: { en: 'Community program representing experienced developers worldwide. Documentation, events, hackathon/workshop organization, SpaceXSI workflow optimization support.', tr: 'SpaceXSI\'ın dünya çapında deneyimli geliştiricileri temsil eden topluluk programı. Dokümantasyon, etkinlikler, hackathon/workshop, SpaceXSI workflow optimizasyonu desteği.' } },
+    { title: 'Cursor Ambassador (Nov 2025 – Sep 2026)', description: { en: 'Past role. Mentorship for global AI development communities and wider adoption of AI-native software tools, until the program evolved.', tr: 'Geçmiş rol. Küresel AI geliştirici topluluklarına mentorluk ve AI-native yazılım araçlarının yaygınlaşması; program evrilene kadar.' } },
     {
       title: 'MasterFabric Academy',
       description: {
