@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.11...v0.1.12) (2026-11-03)
+
+
+### Bug Fixes
+
+* **cli:** keep box rows on separate lines; harden --github (v1.0.8) ([0670793](https://github.com/gurkanfikretgunak/cursor/commit/06707933ddf1e2cfe89bf66815c11b30530ff6ee))
+
 ### [0.1.11](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.10...v0.1.11) (2026-11-03)
 
 
