@@ -11,10 +11,10 @@ const i18n = {
     location: 'İstanbul, Türkiye',
     about: {
       masterfabric: 'MasterFabric - AI-powered product development, education, open source first. Innovative mobile and web solutions with Flutter, BaaS platforms, and developer tools.',
-      ticimax: 'Ticimax - One of Turkey\'s leading e-commerce platforms. 14,000+ companies. Omnichannel, B2B, marketplace integrations, 99.9% uptime cloud.'
+      ticimax: 'Ticimax by team.blue - One of Turkey\'s leading e-commerce platforms. 14,000+ companies. Omnichannel, B2B, marketplace integrations, 99.9% uptime cloud. AI transformation: GitHub Copilot Enterprise rollout, led the company\'s Claude Team & Enterprise adoption, AI workflows on team.blue\'s internal BlueCode and BlueAI infrastructure.'
     },
     labels: { name: 'Name', roles: 'Roles', company: 'Company', ossCompany: 'OSS Company', location: 'Location',
-      aboutMasterfabric: 'About MasterFabric', aboutTicimax: 'About Ticimax', openSource: 'Open Source Development',
+      aboutMasterfabric: 'About MasterFabric', aboutTicimax: 'About Ticimax by team.blue', openSource: 'Open Source Development',
       keyRepos: 'Key Repositories', volunteer: 'Volunteer', skills: 'Skills', interests: 'Interests', contact: 'Contact',
       runOpensource: 'Run --opensource for details', runRepos: 'Run --repos for details', helpHint: 'Run with --help for more options' },
     skills: ['Flutter', 'Dart', 'Mobile Development', 'AI', 'Cloud (Azure, AWS)', 'Project Planning', 'High-Traffic Backend Architects', 'Team Leadership', 'Clean Architecture', 'State Management', 'CI/CD', 'RESTful APIs', 'Firebase', 'Git', 'Agile/Scrum', 'Go (Golang)', 'NestJS', 'Swift', 'Kotlin', 'Java', 'React & React Native', 'Serverpod', 'Solution Architecture', 'Platform Engineering (White-label, Tenant-based)', 'Server-Driven UI (SDUI)', 'IoT (MQTT)', 'MCP (Model Context Protocol)', 'Agentic Workflows', 'LLM Integration', 'GitHub Copilot Enterprise', 'Azure DevOps Pipelines', 'Mobile DevOps', 'DevSecOps & AppSec', 'Appium (QA Automation)'],
@@ -24,10 +24,10 @@ const i18n = {
     location: 'İstanbul, Türkiye',
     about: {
       masterfabric: 'MasterFabric - AI destekli ürün geliştirme, eğitim, açık kaynak öncelikli. Flutter, BaaS platformları ve geliştirici araçları.',
-      ticimax: 'Ticimax - Türkiye\'nin önde gelen e-ticaret platformlarından biri. 14.000+ şirket. Omnichannel, B2B, marketplace entegrasyonları.'
+      ticimax: 'Ticimax by team.blue - Türkiye\'nin önde gelen e-ticaret platformlarından biri. 14.000+ şirket. Omnichannel, B2B, marketplace entegrasyonları. AI dönüşümü: GitHub Copilot Enterprise yaygınlaştırması, şirketin Claude Team & Enterprise adaptasyonuna liderlik, team.blue\'nun dahili BlueCode ve BlueAI altyapıları üzerinde AI iş akışları.'
     },
     labels: { name: 'İsim', roles: 'Roller', company: 'Şirket', ossCompany: 'Açık Kaynak Şirketi', location: 'Konum',
-      aboutMasterfabric: 'MasterFabric Hakkında', aboutTicimax: 'Ticimax Hakkında', openSource: 'Açık Kaynak Geliştirme',
+      aboutMasterfabric: 'MasterFabric Hakkında', aboutTicimax: 'Ticimax by team.blue Hakkında', openSource: 'Açık Kaynak Geliştirme',
       keyRepos: 'Ana Depolar', volunteer: 'Gönüllülük', skills: 'Yetenekler', interests: 'İlgi Alanları', contact: 'İletişim',
       runOpensource: 'Detaylar için --opensource', runRepos: 'Detaylar için --repos', helpHint: 'Daha fazla seçenek için --help' },
     skills: ['Flutter', 'Dart', 'Mobil Geliştirme', 'AI', 'Cloud (Azure, AWS)', 'Proje Planlama', 'Yüksek Trafikli Backend Mimarları', 'Takım Liderliği', 'Clean Architecture', 'State Management', 'CI/CD', 'RESTful APIs', 'Firebase', 'Git', 'Agile/Scrum', 'Go (Golang)', 'NestJS', 'Swift', 'Kotlin', 'Java', 'React & React Native', 'Serverpod', 'Çözüm Mimarisi', 'Platform Mühendisliği (White-label, Tenant tabanlı)', 'Server-Driven UI (SDUI)', 'IoT (MQTT)', 'MCP (Model Context Protocol)', 'Agentic İş Akışları', 'LLM Entegrasyonu', 'GitHub Copilot Enterprise', 'Azure DevOps Pipelines', 'Mobil DevOps', 'DevSecOps & AppSec', 'Appium (QA Otomasyonu)'],
@@ -41,14 +41,14 @@ const info = {
   name: 'Gurkan Fikret Gunak',
   role: 'AI | Mobile Team Lead',
   roles: [
-    'Ticimax Mobile Team Lead',
+    'Ticimax by team.blue Mobile Team Lead',
     'MasterFabric Open Sourced Development Lead'
   ],
   github: 'gurkanfikretgunak',
   githubUrl: 'https://github.com/gurkanfikretgunak',
   location: 'İstanbul, Türkiye',
   company: {
-    name: 'Ticimax',
+    name: 'Ticimax by team.blue',
     website: 'https://ticimax.com',
     ossCompany: {
       name: 'MasterFabric',
@@ -69,7 +69,7 @@ const info = {
   },
   about: {
     masterfabric: 'MasterFabric - AI-powered product development, education, open source first. Innovative mobile and web solutions with Flutter, BaaS platforms, and developer tools.',
-    ticimax: 'Ticimax - One of Turkey\'s leading e-commerce platforms. 14,000+ companies. Omnichannel, B2B, marketplace integrations, 99.9% uptime cloud.'
+    ticimax: 'Ticimax by team.blue - One of Turkey\'s leading e-commerce platforms. 14,000+ companies. Omnichannel, B2B, marketplace integrations, 99.9% uptime cloud. AI transformation: GitHub Copilot Enterprise rollout, led the company\'s Claude Team & Enterprise adoption, AI workflows on team.blue\'s internal BlueCode and BlueAI infrastructure.'
   },
   repositories: [
     {
@@ -142,7 +142,7 @@ const info = {
     github: 'https://github.com/gurkanfikretgunak',
     email: 'gurkangunak@ticimax.com',
     ossEmail: 'gurkanfikretgunak@masterfabric.co',
-    company: 'Ticimax - https://ticimax.com',
+    company: 'Ticimax by team.blue - https://ticimax.com',
     ossCompany: 'MasterFabric - https://masterfabric.co'
   },
   volunteer: [

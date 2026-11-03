@@ -1,6 +1,6 @@
 # Gurkan CLI
 
-CLI tool to get information about **Gurkan Fikret Gunak** — AI | Mobile Team Lead at Ticimax, Open Source Development Lead at MasterFabric, Build Ambassador at SpaceXSI Community, MasterFabric Academy.
+CLI tool to get information about **Gurkan Fikret Gunak** — AI | Mobile Team Lead at Ticimax by team.blue, Open Source Development Lead at MasterFabric, Build Ambassador at SpaceXSI Community, MasterFabric Academy.
 
 ## Installation
 
@@ -78,12 +78,12 @@ npx gurkan --version
 - **Turkish** (`-tr` or `--tr`) — labels, skills, interests, about sections
 
 ### Company Information
-- **Ticimax** — Turkey's leading e-commerce platform. 14,000+ companies. Omnichannel, B2B, marketplace integrations.
+- **Ticimax by team.blue** — Turkey's leading e-commerce platform. 14,000+ companies. Omnichannel, B2B, marketplace integrations. AI transformation: GitHub Copilot Enterprise, Claude Team & Enterprise adoption, team.blue's internal BlueCode and BlueAI infrastructure.
 - **MasterFabric** — AI-powered product development, education, open source first. Flutter, BaaS platforms, developer tools.
 
 ### Roles
 - AI | Mobile Team Lead
-- Ticimax Mobile Team Lead
+- Ticimax by team.blue Mobile Team Lead
 - MasterFabric Open Sourced Development Lead
 
 ### Volunteer
@@ -173,4 +173,4 @@ MIT
 
 ## Author
 
-Gurkan Fikret Gunak — [Ticimax](https://ticimax.com) · [MasterFabric](https://masterfabric.co) · [MasterFabric Academy](https://academy.masterfabric.co)
+Gurkan Fikret Gunak — [Ticimax by team.blue](https://ticimax.com) · [MasterFabric](https://masterfabric.co) · [MasterFabric Academy](https://academy.masterfabric.co)
