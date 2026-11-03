@@ -2,6 +2,64 @@
 
 const chalk = require('chalk');
 const boxen = require('boxen');
+const wrapAnsi = require('wrap-ansi');
+const stringWidth = require('string-width');
+const stripAnsi = require('strip-ansi');
+
+// Exit quietly when output is piped into a command that closes early (e.g. `| head`).
+process.stdout.on('error', (err) => {
+  if (err && err.code === 'EPIPE') process.exit(0);
+  throw err;
+});
+
+const BOX_MAX_WIDTH = 100; // total box width cap, including margins and borders
+const BOX_MARGIN_X = 3; // boxen turns `margin: 1` into 3 columns left/right
+const BOX_PADDING_X = 3; // boxen turns `padding: 1` into 3 columns left/right
+
+function terminalColumns() {
+  const fromStream = (process.stdout && process.stdout.columns) || (process.stderr && process.stderr.columns);
+  const fromEnv = parseInt(process.env.COLUMNS, 10);
+  const cols = fromStream || (fromEnv > 0 ? fromEnv : 0) || 80;
+  return Math.max(cols, 20);
+}
+
+// Wrap every line ourselves so the box is always narrower than the terminal.
+// boxen@5 drops the newlines between box rows when the box reaches the full
+// terminal width (it relies on the terminal auto-wrapping), which turns the
+// whole box into one huge line when piped and garbles it in many terminals.
+function wrapContent(text, width) {
+  return text.split(/\r?\n/).map((line) => {
+    const indentMatch = line.match(/^ */);
+    const indent = indentMatch ? indentMatch[0].length : 0;
+    const body = line.slice(indent);
+    // Hang continuation lines under the text after a bullet or a "Label:   " column.
+    const plain = stripAnsi(body);
+    const labelMatch = plain.match(/^(\S.*?:\s{2,})\S/);
+    let hang = indent;
+    if (/^•/.test(plain)) hang = indent + 2;
+    else if (labelMatch && stringWidth(labelMatch[1]) < width / 2) hang = indent + stringWidth(labelMatch[1]);
+    const available = Math.max(width - hang, 10);
+    const wrapped = wrapAnsi(body, Math.max(width - indent, 10), { hard: true, trim: true }).split('\n');
+    if (wrapped.length === 1) return line;
+    const rest = wrapAnsi(wrapped.slice(1).join(' '), available, { hard: true, trim: true }).split('\n');
+    return [' '.repeat(indent) + wrapped[0]].concat(rest.map((l) => ' '.repeat(hang) + l)).join('\n');
+  }).join('\n');
+}
+
+function renderBox(content, options) {
+  const columns = terminalColumns();
+  const total = Math.min(columns - 1, BOX_MAX_WIDTH); // keep at least one free column
+  let marginX = BOX_MARGIN_X;
+  let paddingX = BOX_PADDING_X;
+  if (total < 60) { marginX = 0; paddingX = 1; }
+  const inner = Math.max(total - 2 * marginX - 2 - 2 * paddingX, 10);
+  const body = wrapContent(content, inner);
+  return boxen(body, Object.assign({
+    padding: { top: 1, bottom: 1, left: paddingX, right: paddingX },
+    margin: { top: 1, bottom: 1, left: marginX, right: marginX },
+    borderStyle: 'round'
+  }, options));
+}
 
 const args = process.argv.slice(2);
 const lang = (args.includes('-tr') || args.includes('--tr')) ? 'tr' : 'en';
@@ -217,10 +275,7 @@ ${chalk.dim('──────────────────────�
 ${chalk.dim(t.labels.helpHint)}
 `;
 
-  console.log(boxen(output, {
-    padding: 1,
-    margin: 1,
-    borderStyle: 'round',
+  console.log(renderBox(output, {
     borderColor: 'cyan',
     backgroundColor: '#1a1a1a'
   }));
@@ -239,7 +294,7 @@ ${chalk.bold('Options:')}
   --skills, -s         Show skills only
   --contact, -c        Show contact information only
   --repos, -r          Show repositories information
-  --projects, -p        Show projects and repositories
+  --projects, -p       Show projects and repositories
   --masterfabric, -m   Show Masterfabric company information
   --opensource, -o     Show MasterFabric open source projects
   --version, -v        Show version number
@@ -323,10 +378,7 @@ ${chalk.dim('Visit:')} ${chalk.cyan(info.company.ossCompany.website)}
 ${chalk.dim('Run --opensource for open source projects')}
 `;
 
-  console.log(boxen(output, {
-    padding: 1,
-    margin: 1,
-    borderStyle: 'round',
+  console.log(renderBox(output, {
     borderColor: 'magenta',
     backgroundColor: '#1a1a1a'
   }));
@@ -357,33 +409,47 @@ ${chalk.dim('──────────────────────�
 ${chalk.dim('All projects are open source and available on GitHub')}
 `;
 
-  console.log(boxen(output, {
-    padding: 1,
-    margin: 1,
-    borderStyle: 'round',
+  console.log(renderBox(output, {
     borderColor: 'green',
     backgroundColor: '#1a1a1a'
   }));
 }
 
 function openGitHub() {
-  const { exec } = require('child_process');
+  const url = info.contact.github;
+  // Always print the URL so headless / SSH / CI users still get it.
+  console.log(chalk.cyan(`\nGitHub: ${url}\n`));
+
+  const { spawn } = require('child_process');
   const platform = process.platform;
   let command;
+  let commandArgs;
 
   if (platform === 'darwin') {
-    command = `open ${info.contact.github}`;
+    command = 'open';
+    commandArgs = [url];
   } else if (platform === 'win32') {
-    command = `start ${info.contact.github}`;
+    command = 'cmd';
+    commandArgs = ['/c', 'start', '""', url.replace(/&/g, '^&')];
   } else {
-    command = `xdg-open ${info.contact.github}`;
+    // No graphical session (SSH, Docker, CI): printing the URL is enough.
+    if (!process.env.DISPLAY && !process.env.WAYLAND_DISPLAY && !process.env.WSL_DISTRO_NAME) return;
+    command = 'xdg-open';
+    commandArgs = [url];
   }
 
-  exec(command, (error) => {
-    if (error) {
-      console.log(chalk.cyan(`\nGitHub: ${info.contact.github}\n`));
-    }
-  });
+  try {
+    const child = spawn(command, commandArgs, {
+      stdio: 'ignore',
+      detached: platform !== 'win32',
+      windowsHide: true,
+      windowsVerbatimArguments: platform === 'win32'
+    });
+    child.on('error', () => {}); // e.g. xdg-open not installed: URL is already printed
+    child.unref();
+  } catch (e) {
+    // URL is already printed above.
+  }
 }
 
 // Parse command line arguments

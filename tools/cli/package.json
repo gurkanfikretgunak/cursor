@@ -1,6 +1,6 @@
 {
   "name": "gurkan",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "CLI tool to get information about Gurkan Fikret Gunak",
   "main": "index.js",
   "bin": {
@@ -31,6 +31,12 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "boxen": "^5.1.2"
-  }
+    "boxen": "^5.1.2",
+    "wrap-ansi": "^7.0.0",
+    "string-width": "^4.2.3",
+    "strip-ansi": "^6.0.1"
+  },
+  "files": [
+    "bin/"
+  ]
 }
