@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.10...v0.1.11) (2026-11-03)
+
+
+### Features
+
+* **cli:** add past Cursor Ambassador role and CV skills (EN/TR) ([8bae4f3](https://github.com/gurkanfikretgunak/cursor/commit/8bae4f35d51bc76a651ce2bbb22984e9e02ead0d))
+
 ### [0.1.10](https://github.com/gurkanfikretgunak/cursor/compare/v0.1.9...v0.1.10) (2026-09-02)
 
 
