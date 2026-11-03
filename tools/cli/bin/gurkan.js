@@ -8,7 +8,7 @@ const lang = (args.includes('-tr') || args.includes('--tr')) ? 'tr' : 'en';
 
 const i18n = {
   en: {
-    location: 'Turkey',
+    location: 'İstanbul, Türkiye',
     about: {
       masterfabric: 'MasterFabric - AI-powered product development, education, open source first. Innovative mobile and web solutions with Flutter, BaaS platforms, and developer tools.',
       ticimax: 'Ticimax - One of Turkey\'s leading e-commerce platforms. 14,000+ companies. Omnichannel, B2B, marketplace integrations, 99.9% uptime cloud.'
@@ -21,7 +21,7 @@ const i18n = {
     interests: ['Mobile App Development', 'Flutter Ecosystem', 'Software Architecture', 'Team Leadership', 'Open Source', 'Innovative Solutions', 'Cross-platform Development']
   },
   tr: {
-    location: 'Türkiye',
+    location: 'İstanbul, Türkiye',
     about: {
       masterfabric: 'MasterFabric - AI destekli ürün geliştirme, eğitim, açık kaynak öncelikli. Flutter, BaaS platformları ve geliştirici araçları.',
       ticimax: 'Ticimax - Türkiye\'nin önde gelen e-ticaret platformlarından biri. 14.000+ şirket. Omnichannel, B2B, marketplace entegrasyonları.'
@@ -46,7 +46,7 @@ const info = {
   ],
   github: 'gurkanfikretgunak',
   githubUrl: 'https://github.com/gurkanfikretgunak',
-  location: 'Türkiye',
+  location: 'İstanbul, Türkiye',
   company: {
     name: 'Ticimax',
     website: 'https://ticimax.com',
@@ -127,7 +127,7 @@ const info = {
     ossCompany: 'MasterFabric - https://masterfabric.co'
   },
   volunteer: [
-    { title: 'SpaceXAI Ambassador', description: { en: 'Community program representing experienced developers worldwide. Documentation, events, hackathon/workshop organization, SpaceXAI workflow optimization support.', tr: 'SpaceXAI\'ın dünya çapında deneyimli geliştiricileri temsil eden topluluk programı. Dokümantasyon, etkinlikler, hackathon/workshop, SpaceXAI workflow optimizasyonu desteği.' } },
+    { title: 'SpaceXSI · Builder & Grok Bot Ambassador', description: { en: 'Community program representing experienced developers worldwide. Documentation, events, hackathon/workshop organization, SpaceXSI workflow optimization support.', tr: 'SpaceXSI\'ın dünya çapında deneyimli geliştiricileri temsil eden topluluk programı. Dokümantasyon, etkinlikler, hackathon/workshop, SpaceXSI workflow optimizasyonu desteği.' } },
     {
       title: 'MasterFabric Academy',
       description: {

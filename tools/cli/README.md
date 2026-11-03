@@ -1,6 +1,6 @@
 # Gurkan CLI
 
-CLI tool to get information about **Gurkan Fikret Gunak** — AI | Mobile Team Lead at Ticimax, Open Source Development Lead at MasterFabric, SpaceXAI Ambassador, MasterFabric Academy.
+CLI tool to get information about **Gurkan Fikret Gunak** — AI | Mobile Team Lead at Ticimax, Open Source Development Lead at MasterFabric, SpaceXSI · Builder & Grok Bot Ambassador, MasterFabric Academy.
 
 ## Installation
 
@@ -87,7 +87,7 @@ npx gurkan --version
 - MasterFabric Open Sourced Development Lead
 
 ### Volunteer
-- **SpaceXAI Ambassador** — Community program: documentation, events, hackathon/workshop, workflow optimization
+- **SpaceXSI · Builder & Grok Bot Ambassador** — Community program: documentation, events, hackathon/workshop, workflow optimization
 - **MasterFabric Academy** — Volunteer, free education track
   - Website: [academy.masterfabric.co](https://academy.masterfabric.co)
   - Curriculum / MCP: [masterfabric/one-hundered-days](https://github.com/masterfabric/one-hundered-days)
