@@ -147,7 +147,7 @@ const info = {
   },
   volunteer: [
     { title: 'Build Ambassador · SpaceXSI Community', description: { en: 'SpaceXSI Community program representing experienced developers worldwide. Documentation, events, hackathon/workshop organization, SpaceXSI workflow optimization support.', tr: 'SpaceXSI Community\'nin dünya çapında deneyimli geliştiricileri temsil eden topluluk programı. Dokümantasyon, etkinlikler, hackathon/workshop, SpaceXSI workflow optimizasyonu desteği.' } },
-    { title: 'Cursor Ambassador (Nov 2025 – Sep 2026)', description: { en: 'Past role. Mentorship for global AI development communities and wider adoption of AI-native software tools, until the program evolved.', tr: 'Geçmiş rol. Küresel AI geliştirici topluluklarına mentorluk ve AI-native yazılım araçlarının yaygınlaşması; program evrilene kadar.' } },
+    { title: 'Cursor Ambassador (Nov 2025 – Sep 2026)', description: { en: 'Previous role. Mentorship for global AI development communities and wider adoption of AI-native software tools. Continued as Build Ambassador at SpaceXSI Community after Cursor joined SpaceXSI.', tr: 'Önceki rol. Küresel AI geliştirici topluluklarına mentorluk ve AI-native yazılım araçlarının yaygınlaşması. Cursor\'ın SpaceXSI\'a katılmasıyla SpaceXSI Community\'de Build Ambassador olarak devam ediyor.' } },
     {
       title: 'MasterFabric Academy',
       description: {

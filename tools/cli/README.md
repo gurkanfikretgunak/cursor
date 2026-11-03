@@ -88,7 +88,7 @@ npx gurkan --version
 
 ### Volunteer
 - **Build Ambassador · SpaceXSI Community** — Community program: documentation, events, hackathon/workshop, workflow optimization
-- **Cursor Ambassador** (past, Nov 2025 – Sep 2026) — Mentorship for global AI development communities
+- **Cursor Ambassador** (previous, Nov 2025 – Sep 2026) — Mentorship for global AI development communities. Continued as Build Ambassador at SpaceXSI Community after Cursor joined SpaceXSI
 - **MasterFabric Academy** — Volunteer, free education track
   - Website: [academy.masterfabric.co](https://academy.masterfabric.co)
   - Curriculum / MCP: [masterfabric/one-hundered-days](https://github.com/masterfabric/one-hundered-days)
